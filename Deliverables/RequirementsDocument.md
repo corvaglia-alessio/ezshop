@@ -45,15 +45,16 @@ EZShop is a software application to:
 | Manager | Manages the application, the items in the inventory, and the users in database |
 | Employees | Handle sales and can access the inventory |
 | Customers | Buy items and may have a fidelity card |
+| Suppliers | Suppliy the shop with new items |
 | Maintainers | Ensure the well fonctionnement of the application |
 
 
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
 
-\<actors are a subset of stakeholders>
+ ![](context_diagram.jpg)
+
 
 ## Interfaces
 \<describe here each interface in the context diagram>
