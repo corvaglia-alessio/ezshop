@@ -80,11 +80,12 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:-------------|
 |  FR1     | Manage Sales |
 |  FR2     | Manage Inventory  |
-|  FR2.1   | Create new item, update the quantity of an existing item |
-|  FR2.2   | Delete an item |
-|  FR2.3   | Decrease the quantity of an item |
-|  FR2.4   | List all items available |
-|  FR2.5   | Search for a specific item |
+|  FR2.1   | Create new item |
+|  FR2.2   | Update the quantity of an existing item |
+|  FR2.3   | Delete an item |
+|  FR2.4   | Decrease the quantity of an item |
+|  FR2.5   | List all items available |
+|  FR2.6   | Search for a specific item |
 |  FR3     | Manage Customers |
 |  FR3.1   | Add a customer |
 |  FR3.2   | Modify an existing customer |
@@ -140,20 +141,61 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:-------------:|
 |  Precondition     | Employee E is logged in |  
 |  Post condition     | Transaction T is added to the database |
-|   | Quantity of Item I is reduced by 1 |
+|   | Quantity of Item I is reduced |
 |  Nominal Scenario     | A customer buy an Item I and Employee E succesfully handle the transaction |
 |  Variants     | A customer can buy multiple products and multiple entities of the same product |
 
 ##### Scenario 1.1
 
-| Scenario 1.1 | |
+| Scenario 1.1 | Customer C doesn't have an Account |
 | ------------- |:-------------:|
-|  Preconditions    | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post conditions     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Preconditions    | Customer C does not exist |
+|  Post conditions     | Quantity of Item I is reduced |
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | The Customer C presents the product |  
+|  2     | The Employee E logs in |
+|  3     | E searchs the Item I |
+|  4     | E finds the price of I |
+|  5     | C pays the price of I |
+|  6     | The quantity of I is reduced |
+
+##### Scenario 1.2
+
+| Scenario 1.2 | Customer C has an Account |
+| ------------- |:-------------:|
+|  Preconditions    | Customer C exists |
+|  Post conditions     | Quantity of Item I is reduced |
+|    | Customer C gains points on its fidelity card |
+| Step#        | Description  |
+|  1     | The Customer C presents the product |  
+|  2     | The Employee E logs in |
+|  3     | E searchs the Item I |
+|  4     | E finds the price of I |
+|  5     | C presents the fidelity card |
+|  6     | E checks if C exists |
+|  7     | C pays the price of I |
+|  8     | C gains points on fidelity card |
+|  9     | The quantity of I is reduced |
+
+##### Scenario 1.3
+
+| Scenario 1.3 | Customer C has an Account and uses points from his fidelity card |
+| ------------- |:-------------:|
+|  Preconditions    | Customer C exists |
+|    | C has enough points on its fidelity card |
+|  Post conditions     | Quantity of Item I is reduced |
+|         | Points on fidelity card of C is modified |
+| Step#        | Description  |
+|  1     | The Customer C presents the product |  
+|  2     | The Employee E logs in |
+|  3     | E searchs the Item I |
+|  4     | E finds the price of I |
+|  5     | C presents the fidelity card |
+|  6     | E checks if C exists |
+|  7     | C uses points from its card |
+|  8     | C pays the remaining |
+|  9     | C gains points on fidelity card |
+|  10     | The quantity of I is reduced |
 
 
 ### Use case 2, UC2 - Create Item
@@ -228,6 +270,45 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Post conditions     |  |
 |  Nominal Scenario     | The list of Customers is returned. |
 |  Variants   |  The list is empty and the Employee E is notified |
+
+### Use case 11, UC11 - Search a Customer
+| Actors Involved        | Employee |
+| ------------- |:-------------:|
+|  Preconditions     | Employee E is logged in |
+|  Post conditions     |  |
+|  Nominal Scenario     | The Employee E look for an Customer C. The Customer is found and details about the Customer are returned |
+|  Variants  | The Employee E look for an Customer C. The Customer C does not exists in the system and the Employee E is notified |
+
+### Use case 12, UC12 - Support Accounting
+| Actors Involved        | Owner |
+| ------------- |:-------------:|
+|  Preconditions     | Owner O is logged in |
+|  Post conditions     |  |
+|  Nominal Scenario     | A variety of statistics and informations are displayed to the Owner O. |
+
+### Use case 13, UC13 - Create an Employee Account
+| Actors Involved        | Owner |
+| ------------- |:-------------:|
+|  Preconditions     | Owner O is logged in |
+|    | Employee E does not exists |
+|  Post conditions     | Employee E is created |
+|  Nominal Scenario     | A new Employee E is hired and the Owner O creates its account and give the credentials to the Employee E |
+
+### Use case 14, UC14 - Delete an Employee Account
+| Actors Involved        | Owner |
+| ------------- |:-------------:|
+|  Preconditions     | Owner O is logged in |
+|    | Employee E exists |
+|  Post conditions     | Employee E is deleted from the system |
+|  Nominal Scenario     | An Employee leaves the shop and the Owner O deletes its account |
+
+### Use case 15, UC15 - Add or remove rights
+| Actors Involved        | Owner |
+| ------------- |:-------------:|
+|  Preconditions     | Owner O is logged in |
+|    | Employee E exists |
+|  Post conditions     | The rights of Employee E are modified |
+|  Nominal Scenario     | An Employee E becomes a Manager M or a Manager M becomes an Employee E and the Owner O makes the modification in the system |
 
 
 
