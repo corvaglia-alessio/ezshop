@@ -45,7 +45,6 @@ EZShop is a software application to:
 | Manager | Manages the application, the items in the inventory, and the users in database |
 | Employees | Handle sales and can access the inventory |
 | Customers | Buy items and may have a fidelity card |
-| Suppliers | Suppliy the shop with new items |
 | Maintainers | Ensure the well fonctionnement of the application |
 | Suppliers	  | Provide products bought by the owner |
 
@@ -64,7 +63,8 @@ EZShop is a software application to:
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-|   Actor x..     |  |  |
+| Employees, Manager | Application GUI | Screen keyboard on PC |
+| Owner | Application GUI | Screen keyboard on PC |
 
 # Stories and personas
 \<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
