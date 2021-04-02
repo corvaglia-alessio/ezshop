@@ -86,10 +86,11 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR2.4   | List all items available |
 |  FR2.5   | Search for a specific item |
 |  FR3     | Manage Customers |
-|  FR3.1   | Add a customer, modify an existing customer |
-|  FR3.2   | Delete a customer |
-|  FR3.3   | List all customers |
-|  FR3.4   | Search a customer |
+|  FR3.1   | Add a customer |
+|  FR3.2   | Modify an existing customer |
+|  FR3.3   | Delete a customer |
+|  FR3.4   | List all customers |
+|  FR3.5   | Search a customer |
 |  FR4     | Support accounting |
 |  FR4.1   | List all transactions |
 |  FR4.2   | Search a transaction |
@@ -107,9 +108,10 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | FR1 | yes | yes | yes |
 | FR2 | yes | yes | no |
 | FR3.1 | yes | yes | yes |
-| FR3.2 | yes | yes | no |
+| FR3.2 | yes | yes | yes |
 | FR3.3 | yes | yes | no |
 | FR3.4 | yes | yes | yes |
+| FR3.5 | yes | yes | yes |
 | FR4 | yes | no | no |
 | FR5 | yes | no | no |
 
@@ -185,6 +187,47 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Post conditions     |  |
 |  Nominal Scenario     | The list of Items is returned. |
 |  Variants   |  The list is empty and the Manager M is notified |
+
+### Use case 6, UC6 - Update quantity of an existing item
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|    | Item I exists |
+|  Post conditions     | The quantity of the Item I is modified |
+|  Nominal Scenario     | The Manager M receives new entities of the Item I and add them in the system |
+
+### Use case 7, UC7 - Add a customer
+| Actors Involved        | Employee |
+| ------------- |:-------------:|
+|  Preconditions     | Employee E is logged in |
+|    | Customer C does not exist |
+|  Post conditions     | Customer C is created |
+|     | Customer C receives a fidelity card |
+|  Nominal Scenario     | A Customer C wants to get a fidelity card and ask the Employee E to create an account |
+
+### Use case 8, UC8 - Modify an existing customer  
+| Actors Involved        | Employee |
+| ------------- |:-------------:|
+|  Preconditions     | Employee E is logged in |
+|    | Customer C exists |
+|  Post conditions     | Customer C is modified |
+|  Nominal Scenario     | A Customer C wants to modify informations about him (like its adress, phone number) / use points from fidelity card |
+
+### Use case 9, UC9 - Delete a customer
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|    | Customer C exists |
+|  Post conditions     | Customer C is deleted from the system |
+|  Nominal Scenario     | A Customer C wants to give up its fidelity card and its account in the shop |
+
+### Use case 10, UC10 - List all customers
+| Actors Involved        | Employee |
+| ------------- |:-------------:|
+|  Preconditions     | Employee E is logged in |
+|  Post conditions     |  |
+|  Nominal Scenario     | The list of Customers is returned. |
+|  Variants   |  The list is empty and the Employee E is notified |
 
 
 
