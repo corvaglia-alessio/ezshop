@@ -69,22 +69,35 @@ David is 48, is the owner of a small shop and decided to use EZShop to manage hi
 
 Bob is 50, is an employee of David's shop. Every time that he sells a product to a customer, he handles the transaction on the application. When a customer wants to buy a product, he checks if he has a fidelity card, and asks him if he wants one. If needed, he updates the account of the customer on EZShop.
 
-Elice is 35, is a manager of David's shop. Periodically, she checks the inventory via the application and orders what she might need from his suppliers and update the inventory when she receives it.
+Alice is 35, is a manager of David's shop. Periodically, she checks the inventory via the application and orders what she might need from the suppliers and update the inventory when she receives it.
 
 
 # Functional and non functional requirements
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<they match to high level use cases>
-
 | ID        | Description  |
 | ------------- |:-------------:|
-|  FR1     |  |
-|  FR2     |   |
-| FRx..  | |
+|  FR1     | Manage Sales |
+|  FR1.1   | Start transaction |
+|  FR1.2   | Store the transaction details in a database |
+|  FR1.3   | End the transaction |
+|  FR2     | Manage Inventory  |
+|  FR2.1   | Create new item, update the quantity of an existing item |
+|  FR2.2   | Decrease the quantity of an item |
+|  FR2.3   | List all items available |
+|  FR2.4   | Search for a specific item |
+|  FR3     | Manage Customers |
+|  FR3.1   | Add a customer, modify an existing customer |
+|  FR3.2   | Delete a customer |
+|  FR3.3   | List all customers |
+|  FR3.4   | Search a customer |
+|  FR4     | Support accounting |
+|  FR4.1   | List all transactions |
+|  FR4.2   | Search a transaction |
+|  FR4.3   | Compute the total of income for a specific period |
+|  FR4.4   | List the most and least sold products |
+|  FR5     | Manage right. Authorize access to functions to specific actors according to access rights |
 
 ## Non Functional Requirements
 
