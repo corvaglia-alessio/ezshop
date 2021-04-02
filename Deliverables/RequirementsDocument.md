@@ -108,11 +108,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ---------- |:-----:|:-------:|:----------:|
 | FR1 | yes | yes | yes |
 | FR2 | yes | yes | no |
-| FR3.1 | yes | yes | yes |
-| FR3.2 | yes | yes | yes |
-| FR3.3 | yes | yes | no |
-| FR3.4 | yes | yes | yes |
-| FR3.5 | yes | yes | yes |
+| FR3 | yes | yes | yes |
 | FR4 | yes | no | no |
 | FR5 | yes | no | no |
 
@@ -132,9 +128,13 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ## Use case diagram
 
-![](use_cases_diagram.jpg)
+![Main Use Cases Diagram](use_cases_diagram.jpg)
 
-![](use_cases_diagram_complement.jpg)
+![Includes of Manage Inventory](use_cases_diagram_complement1.jpg)
+
+![Includes of Manage Customers](use_cases_diagram_complement2.jpg)
+
+![Includes of Manage Rights](use_cases_diagram_complement3.jpg)
 
 ### Use case 1, UC1 - Manage Sales
 | Actors Involved        | Employee |
@@ -153,11 +153,10 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Post conditions     | Quantity of Item I is reduced |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | The Employee E logs in |
-|  3     | E searchs the Item I |
-|  4     | E finds the price of I |
-|  5     | C pays the price of I |
-|  6     | The quantity of I is reduced |
+|  2     | E searchs the Item I |
+|  3     | E finds the price of I |
+|  4     | C pays the price of I |
+|  5     | The quantity of I is reduced |
 
 ##### Scenario 1.2
 
@@ -168,14 +167,13 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |    | Customer C gains points on its fidelity card |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | The Employee E logs in |
-|  3     | E searchs the Item I |
-|  4     | E finds the price of I |
-|  5     | C presents the fidelity card |
-|  6     | E checks if C exists |
-|  7     | C pays the price of I |
-|  8     | C gains points on fidelity card |
-|  9     | The quantity of I is reduced |
+|  2     | E searchs the Item I |
+|  3     | E finds the price of I |
+|  4     | C presents the fidelity card |
+|  5     | E checks if C exists |
+|  6     | C pays the price of I |
+|  7     | C gains points on fidelity card |
+|  8     | The quantity of I is reduced |
 
 ##### Scenario 1.3
 
@@ -187,15 +185,14 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |         | Points on fidelity card of C is modified |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | The Employee E logs in |
-|  3     | E searchs the Item I |
-|  4     | E finds the price of I |
-|  5     | C presents the fidelity card |
-|  6     | E checks if C exists |
-|  7     | C uses points from its card |
-|  8     | C pays the remaining |
-|  9     | C gains points on fidelity card |
-|  10     | The quantity of I is reduced |
+|  2     | E searchs the Item I |
+|  3     | E finds the price of I |
+|  4     | C presents the fidelity card |
+|  5     | E checks if C exists |
+|  6     | C uses points from its card |
+|  7     | C pays the remaining |
+|  8     | C gains points on fidelity card |
+|  9     | The quantity of I is reduced |
 
 
 ### Use case 2, UC2 - Create Item
