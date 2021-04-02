@@ -97,18 +97,31 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR4.2   | Search a transaction |
 |  FR4.3   | Compute the total of income for a specific period |
 |  FR4.4   | List the most and least sold products |
-|  FR5     | Manage right. Authorize access to functions to specific actors according to access rights |
+|  FR5     | Manage rights. Authorize access to functions to specific actors according to access rights |
+
+Access rigth, Actor vs functions
+
+| Function   | Owner | Manager | Employees |
+| ---------- |:-----:|:-------:|:----------:|
+| FR1 | yes | yes | yes |
+| FR2 | yes | yes | no |
+| FR3.1 | yes | yes | yes |
+| FR3.2 | yes | yes | no |
+| FR3.3 | yes | yes | no |
+| FR3.4 | yes | yes | no |
+| FR4 | yes | no | no |
+| FR5 | yes | no | no | 
 
 ## Non Functional Requirements
 
 \<Describe constraints on functional requirements>
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
-| ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
-| NFRx .. | | | |
+| ------------- |:-------------:| :----- | -----:|
+|  NFR1     | Usability  | Application should be used after a small training of no more than 2 hours for employees and no additional training for manager and owner | All FR |
+|  NFR2     | Performance | All functions should complete in < 1sec | FR1, FR2, and FR3 |
+|  NFR3     | Portability | The application should be installable on any Operating System (Windows, MacOS, Linux) | All FR |
+|  NFR4     | Privacy | The data of customers should not be disclosed | All FR |
 
 
 # Use case diagram and use cases
