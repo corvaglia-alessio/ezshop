@@ -133,42 +133,58 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ![](use_cases_diagram_complement.jpg)
 
-### Use case 1, UC1
-| Actors Involved        |  |
+### Use case 1, UC1 - Manage Sales
+| Actors Involved        | Employee |
 | ------------- |:-------------:|
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |  
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other executions, ex in case of errors> |
+|  Precondition     | Employee E is logged in |  
+|  Post condition     | Transaction T is added to the database |
+|   | Quantity of Item I is reduced by 1 |
+|  Nominal Scenario     | A customer buy an Item I and Employee E succesfully handle the transaction |
+|  Variants     | A customer can buy multiple products and multiple entities of the same product |
 
 ##### Scenario 1.1
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
 | Scenario 1.1 | |
 | ------------- |:-------------:|
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Preconditions    | \<Boolean expression, must evaluate to true before the scenario can start> |
+|  Post conditions     | \<Boolean expression, must evaluate to true after scenario is finished> |
 | Step#        | Description  |
 |  1     |  |  
 |  2     |  |
 |  ...     |  |
 
-##### Scenario 1.2
 
-##### Scenario 1.x
+### Use case 2, UC2 - Create Item
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|    | Item I does not exist |
+|  Post condition     | Item I is created |
+|  Nominal Scenario     | The Manager M receives an item not registered in the database and add it |
 
-### Use case 2, UC2
-..
+### Use case 3, UC3 - Delete an Item
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|    | Item I exists |
+|  Post conditions     | Item I is deleted from the system |
+|  Nominal Scenario     | The Manager M wants to delete an Item I because the shop won't sell it anymore |
 
-### Use case x, UCx
-..
+### Use case 4, UC4 - Search for a specific item
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|  Post conditions     |  |
+|  Nominal Scenario     | The Manager M look for an Item I. The Item is found and details about the Item are returned |
+|  Variants  | The Manager M look for an Item I. The Item I does not exists in the system and the Manager M is notified |
+
+### Use case 5, UC5 - List all items
+| Actors Involved        | Manager |
+| ------------- |:-------------:|
+|  Preconditions     | Manager M is logged in |
+|  Post conditions     |  |
+|  Nominal Scenario     | The list of Items is returned. |
+|  Variants   |  The list is empty and the Manager M is notified |
 
 
 
