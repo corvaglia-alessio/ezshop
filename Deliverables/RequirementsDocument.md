@@ -114,7 +114,6 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :----- | -----:|
