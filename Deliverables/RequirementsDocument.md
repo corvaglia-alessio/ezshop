@@ -99,7 +99,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR4.4   | List the most and least sold products |
 |  FR5     | Manage rights. Authorize access to functions to specific actors according to access rights |
 
-Access rigth, Actor vs functions
+### Access rigth, Actor vs functions
 
 | Function   | Owner | Manager | Employees |
 | ---------- |:-----:|:-------:|:----------:|
@@ -108,9 +108,9 @@ Access rigth, Actor vs functions
 | FR3.1 | yes | yes | yes |
 | FR3.2 | yes | yes | no |
 | FR3.3 | yes | yes | no |
-| FR3.4 | yes | yes | no |
+| FR3.4 | yes | yes | yes |
 | FR4 | yes | no | no |
-| FR5 | yes | no | no | 
+| FR5 | yes | no | no |
 
 ## Non Functional Requirements
 
