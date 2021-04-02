@@ -57,21 +57,19 @@ EZShop is a software application to:
 
 
 ## Interfaces
-\<describe here each interface in the context diagram>
 
-\<GUIs will be described graphically in a separate document>
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-| Employees, Manager | Application GUI | Screen keyboard on PC |
-| Owner | Application GUI | Screen keyboard on PC |
+| Employees, Manager, Owner | Application GUI | Screen keyboard on PC |
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
 
-\<Persona is-an-instance-of actor>
+David is 48, is the owner of a small shop and decided to use EZShop to manage his inventory.  At the end of the week, he checks the income, the outcome and the trend of the products to get some statistics and anticipate followings orders.
 
-\<stories will be formalized later as scenarios in use cases>
+Bob is 50, is an employee of David's shop. Every time that he sells a product to a customer, he handles the transaction on the application. When a customer wants to buy a product, he checks if he has a fidelity card, and asks him if he wants one. If needed, he updates the account of the customer on EZShop.
+
+Elice is 35, is a manager of David's shop. Periodically, she checks the inventory via the application and orders what she might need from his suppliers and update the inventory when she receives it.
 
 
 # Functional and non functional requirements
