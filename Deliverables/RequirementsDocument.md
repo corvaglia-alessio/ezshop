@@ -47,6 +47,7 @@ EZShop is a software application to:
 | Customers | Buy items and may have a fidelity card |
 | Suppliers | Suppliy the shop with new items |
 | Maintainers | Ensure the well fonctionnement of the application |
+| Suppliers	  | Provide products bought by the owner |
 
 
 # Context Diagram and interfaces
