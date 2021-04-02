@@ -77,7 +77,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 ## Functional Requirements
 
 | ID        | Description  |
-| ------------- |-------------:|
+| ------------- |:-------------|
 |  FR1     | Manage Sales |
 |  FR1.1   | Start transaction |
 |  FR1.2   | Store the transaction details in a database |
