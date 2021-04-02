@@ -79,14 +79,12 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ID        | Description  |
 | ------------- |:-------------|
 |  FR1     | Manage Sales |
-|  FR1.1   | Start transaction |
-|  FR1.2   | Store the transaction details in a database |
-|  FR1.3   | End the transaction |
 |  FR2     | Manage Inventory  |
 |  FR2.1   | Create new item, update the quantity of an existing item |
-|  FR2.2   | Decrease the quantity of an item |
-|  FR2.3   | List all items available |
-|  FR2.4   | Search for a specific item |
+|  FR2.2   | Delete an item |
+|  FR2.3   | Decrease the quantity of an item |
+|  FR2.4   | List all items available |
+|  FR2.5   | Search for a specific item |
 |  FR3     | Manage Customers |
 |  FR3.1   | Add a customer, modify an existing customer |
 |  FR3.2   | Delete a customer |
@@ -98,6 +96,9 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR4.3   | Compute the total of income for a specific period |
 |  FR4.4   | List the most and least sold products |
 |  FR5     | Manage rights. Authorize access to functions to specific actors according to access rights |
+|  FR5.1   | Create an employee account |
+|  FR5.2   | Delete an employee account |
+|  FR5.3   | Add or remove right to an account |
 
 ### Access rigth, Actor vs functions
 
@@ -127,10 +128,11 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 
+![](use_cases_diagram.jpg)
 
-\<next describe here each use case in the UCD>
+![](use_cases_diagram_complement.jpg)
+
 ### Use case 1, UC1
 | Actors Involved        |  |
 | ------------- |:-------------:|
