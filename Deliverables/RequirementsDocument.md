@@ -54,7 +54,7 @@ EZShop is a software application to:
 
 ## Context Diagram
 
- ![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuR9opIt8oQzCJRLIiAdHrLMmyatCIqnFBR92bj7LjLFGS8qApiWlqEIoyY_F0ygZ2WArPUQL0366Z4DgNWhG8W00)
+ ![](http://www.plantuml.com/plantuml/uml/SoWkIImgAStDuR9opIt8oQzCJRLIiAdHrLMmyatCIqnFBR92bj7LjLFGS8qApiWlqEIoyY_F0ygZ2WArPUQL036cJ81_i49mPN59QYwQZ4DgNWhG2G00)
 
 
 ## Interfaces
@@ -332,15 +332,12 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships>
-
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
+![Glossary](http://www.plantuml.com/plantuml/png/TLB1hjem4BpxAwmSd_IYzju32AZ40Ke5frwGYLV4ghrsxNLHHFllNO8J9RIzWBspCpixyIAHYfIT5IkhKfARRyVMXt8vHAzpGsj8JJI1V9HtWSg1C5heKZGUnILtvn1D0oA1jUNuUox2rAzP8Hdg61gAx-z_3ocyOmx16XYkM_m9o6WddXQPEgcDfqUvUgi6rKB-4ZN4kzXgiLO4IzGdus3gPnXMw4-2uDzI-bZzr-V61Uix05um9uXzFgrABUXpOFpcenwps2bKLnOUEPz-iNgf3bvl276ovEnUx0tyGbdbHDwD2f-D1ijxhLJKxEhnjy_kmlZ16wGazknHyivFiqkj8wGaTifOTZfZLn_gcdSl4RpCEKM5IJLaFFRP7bJd06a7rFfPqgmwwMMrKUcbpbFg-krVMQCdaDnZ3NuN6zMqaYPCpfj1ReZI-GYItVd6g1wx6UBc5cGeRqxeKLPg283Qu9NfVTEFyYRanUThIu9H-PZzQdJy0WlkoCx-0G00)
 
 # System Design
-\<describe here system design>
 
-\<must be consistent with Context diagram>
+Not meaningful in this case. Only software component are needed.
 
 # Deployment Diagram
 
-\<describe here deployment diagram >
+![Deployment Diagram](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuShBJqbL2726qC6fHMMfHLnfcJcf2gvHmHdv1V5EYSdPgNafA69kHVbv9I3106S5NLqCKOWfO1c46L3bIbfA80ce4Yk5JA2MehpK4eMSpBniBWUWAg2Z0000)
