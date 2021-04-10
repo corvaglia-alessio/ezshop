@@ -53,7 +53,7 @@ EZShop is a software application to:
 
 ## Context Diagram
 
- ![](context_diagram.jpg)
+ ![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuR9opIt8oQzCJRLIiAdHrLMmyatCIqnFBR92bj7LjLFGS8qApiWlqEIoyY_F0ygZ2WArPUQL0366Z4DgNWhG8W00)
 
 
 ## Interfaces
