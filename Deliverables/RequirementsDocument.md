@@ -47,6 +47,7 @@ EZShop is a software application to:
 | Customers | Buy items and may have a fidelity card |
 | Maintainers | Ensure the well fonctionnement of the application |
 | Suppliers	  | Provide products bought by the owner |
+| POS System | Handle the payment and issue a ticket |
 
 
 # Context Diagram and interfaces
@@ -62,6 +63,7 @@ EZShop is a software application to:
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
 | Employees, Manager, Owner | Application GUI | Screen keyboard on PC |
+| POS System | API | USB Link |
 
 # Stories and personas
 
