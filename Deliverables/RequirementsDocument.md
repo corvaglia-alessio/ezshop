@@ -101,8 +101,11 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR5.1   | Create an employee account |
 |  FR5.2   | Delete an employee account |
 |  FR5.3   | Add or remove right to an account |
+|  FR6     | Identify Employees |
+|  FR6.1   | Log in |
+|  FR6.2   | Log out |
 
-### Access rigth, Actor vs functions
+### Access rights, Actor vs functions
 
 | Function   | Owner | Manager | Employees |
 | ---------- |:-----:|:-------:|:----------:|
@@ -111,6 +114,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | FR3 | yes | yes | yes |
 | FR4 | yes | no | no |
 | FR5 | yes | no | no |
+| FR6 | yes | yes | yes |
 
 ## Non Functional Requirements
 
@@ -307,6 +311,19 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Post conditions     | The rights of Employee E are modified |
 |  Nominal Scenario     | An Employee E becomes a Manager M or a Manager M becomes an Employee E and the Owner O makes the modification in the system |
 
+### Use case 16, UC16 - Log In
+| Actors Involved     | Employee |
+| ------------- |:------------:|
+| Preconditions   | Employee E has an account |
+| Post conditions | Employees E is logged in |
+| Nominal Scenario   | An Employee E uses its credentials and the database match them with the right account |
+
+### use case 17, UC17 - Log out
+| Actors Involved     | Employee |
+| ------------- |:------------:|
+| Preconditions   | Employee E is logged in |
+| Post conditions | Employees E is not logged in |
+| Nominal Scenario   | An Employee E asks to be disconnected and the system disconnects him |
 
 
 # Glossary
