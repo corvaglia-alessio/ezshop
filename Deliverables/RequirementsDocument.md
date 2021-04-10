@@ -63,7 +63,7 @@ EZShop is a software application to:
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
 | Employees, Manager, Owner | Application GUI | Screen keyboard on PC |
-| POS System | API | USB Link |
+| POS System | API as described in : https://developer.sumup.com/rest-api/ | USB Link |
 
 # Stories and personas
 
