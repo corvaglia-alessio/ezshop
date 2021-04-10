@@ -132,13 +132,15 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ## Use case diagram
 
-![Main Use Cases Diagram](use_cases_diagram.jpg)
+![Main Use Cases Diagram](http://www.plantuml.com/plantuml/png/TO-n2W8n341tloAZ3ls18dABWuCu-0NbBfw5DZtIL2duyHOKqL3Nl9T7CcHnB2M6bTt79QIAQ67xC0RiqP6RaUqtCMO7wnU0x0BcpJywbYmf8ZVZK_eHFDsG975jmkbEoBswGYgjyBaiIs81Duwfa7YQ-_livwlqskegzTXXQiHVAk1xhXCzOK2QIWnF)
 
-![Includes of Manage Inventory](use_cases_diagram_complement1.jpg)
+![Includes of Manage Inventory](http://www.plantuml.com/plantuml/png/ZSqn3e9048NXtbEy4XeFO64eR4oqCXvWiZnmacN0tLcLsuksneJ-_zvhialoCiHDTHQJdb1xq7nCSutj7jNHCfF3-8GwXngxfGYnjFmdJfeT4kEtpol0TMh5YNiHS_KPOmSnyBNigFLhRm-CT7xaId2Xf713DoO8yiIWdOOVtD3QCiGt)
 
-![Includes of Manage Customers](use_cases_diagram_complement2.jpg)
+![Includes of Manage Customers](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuTBmJSnBJ4zLI2ujBidFJIqgrbJGirFGS4n9KKY42segM2bavYNdbAQaujBWafgJMf9AcXxV_9JCj4g5n3o5r8hCufBCl7HITFi0jIWavkGWn8dG59oQM9ISWSEP3gbvAS0m0G00)
 
-![Includes of Manage Rights](use_cases_diagram_complement3.jpg)
+![Includes of Manage Rights](http://www.plantuml.com/plantuml/png/dSun2i9G40JGtbDCcJGUm48Ysdg8vVyX1lRlocQ_uErDOvSgtS3mXfdMbCZUz3GynMGcOfbVkOuuNp7SWvA46DZUwbzkkHJlbYCkMAnehzoL3ogFoLkjy42m-UVV81rYUmiJhMxlVm00)
+
+![Includes of Identify Employees](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuTBmJ4dDAybCgrH8pIt8oQzCJItMLD2pKz3moKzNoCpJLB02aiavfIcf-9NcbvOWgtL8pKi16Wy0)
 
 ### Use case 1, UC1 - Manage Sales
 | Actors Involved        | Employee |
