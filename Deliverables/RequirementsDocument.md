@@ -41,12 +41,12 @@ EZShop is a software application to:
 
 | Stakeholder name  | Description |
 | ----------------- |:-----------:|
-| Owner | Owns the shop |
-| Manager | Manages the application, the items in the inventory, and the users in database |
-| Employees | Handle sales and can access the inventory |
-| Customers | Buy items and may have a fidelity card |
-| Maintainers | Ensure the well fonctionnement of the application |
-| Suppliers	  | Provide products bought by the owner |
+| Owner | Owns the shop, look at its statistics and manage employeer's accounts |
+| Manager | Manages the shop and the items in the inventory |
+| Employee | Handle sales and the customers in database |
+| Customer | Buy items and may have a fidelity card |
+| Maintainer | Ensure the well operation of the application |
+| Supplier	  | Provide products bought by the owner |
 | POS System | Handle the payment and issue a ticket |
 
 
@@ -62,8 +62,8 @@ EZShop is a software application to:
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-| Employees, Manager, Owner | Application GUI | Screen keyboard on PC |
-| POS System | API as described in : https://developer.sumup.com/rest-api/ | USB Link |
+| Employees, Manager, Owner | Application GUI | Screen, keyboard, mouse, barcode reader on PC |
+| POS System | API as described in : https://developer.sumup.com/rest-api/ | Internet connection |
 
 # Stories and personas
 
@@ -82,12 +82,11 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:-------------|
 |  FR1     | Manage Sales |
 |  FR2     | Manage Inventory  |
-|  FR2.1   | Create new item |
+|  FR2.1   | Insert new item |
 |  FR2.2   | Update the quantity of an existing item |
 |  FR2.3   | Delete an item |
-|  FR2.4   | Decrease the quantity of an item |
-|  FR2.5   | List all items available |
-|  FR2.6   | Search for a specific item |
+|  FR2.4   | List all items available |
+|  FR2.5   | Search for a specific item |
 |  FR3     | Manage Customers |
 |  FR3.1   | Add a customer |
 |  FR3.2   | Modify an existing customer |
@@ -124,7 +123,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :----- | -----:|
 |  NFR1     | Usability  | Application should be used after a small training of no more than 2 hours for employees and no additional training for manager and owner | All FR |
-|  NFR2     | Performance | All functions should complete in < 1sec | FR1, FR2, and FR3 |
+|  NFR2     | Performance | All functions should complete in < 1sec | At least FR1, FR2, and FR3 |
 |  NFR3     | Portability | The application should be installable on any Operating System (Windows, MacOS, Linux) | All FR |
 |  NFR4     | Privacy | The data of customers should not be disclosed | All FR |
 
@@ -155,7 +154,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ##### Scenario 1.1
 
-| Scenario 1.1 | Customer C doesn't have an Account |
+| Scenario 1.1 | Customer C doesn't have a fidelity card |
 | ------------- |:-------------:|
 |  Preconditions    | Customer C does not exist |
 |  Post conditions     | Quantity of Item I is reduced |
@@ -168,7 +167,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ##### Scenario 1.2
 
-| Scenario 1.2 | Customer C has an Account |
+| Scenario 1.2 | Customer C has a fidelity card |
 | ------------- |:-------------:|
 |  Preconditions    | Customer C exists |
 |  Post conditions     | Quantity of Item I is reduced |
@@ -185,7 +184,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ##### Scenario 1.3
 
-| Scenario 1.3 | Customer C has an Account and uses points from his fidelity card |
+| Scenario 1.3 | Customer C has a fidelity card and uses points from his fidelity card |
 | ------------- |:-------------:|
 |  Preconditions    | Customer C exists |
 |    | C has enough points on its fidelity card |
@@ -224,8 +223,8 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:-------------:|
 |  Preconditions     | Manager M is logged in |
 |  Post conditions     |  |
-|  Nominal Scenario     | The Manager M look for an Item I. The Item is found and details about the Item are returned |
-|  Variants  | The Manager M look for an Item I. The Item I does not exists in the system and the Manager M is notified |
+|  Nominal Scenario     | The Manager M looks for an Item I. The Item is found and details about the Item are returned |
+|  Variants  | The Manager M looks for an Item I. The Item I does not exists in the system and the Manager M is notified |
 
 ### Use case 5, UC5 - List all items
 | Actors Involved        | Manager |
@@ -241,7 +240,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Preconditions     | Manager M is logged in |
 |    | Item I exists |
 |  Post conditions     | The quantity of the Item I is modified |
-|  Nominal Scenario     | The Manager M receives new entities of the Item I and add them in the system |
+|  Nominal Scenario     | The Manager M receives new entities of the Item I and adds them in the system |
 
 ### Use case 7, UC7 - Add a customer
 | Actors Involved        | Employee |
@@ -258,7 +257,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Preconditions     | Employee E is logged in |
 |    | Customer C exists |
 |  Post conditions     | Customer C is modified |
-|  Nominal Scenario     | A Customer C wants to modify informations about him (like its adress, phone number) / use points from fidelity card |
+|  Nominal Scenario     | A Customer C wants to modify informations about him (like its email address, phone number) / use points from fidelity card |
 
 ### Use case 9, UC9 - Delete a customer
 | Actors Involved        | Manager |
@@ -281,8 +280,8 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:-------------:|
 |  Preconditions     | Employee E is logged in |
 |  Post conditions     |  |
-|  Nominal Scenario     | The Employee E look for an Customer C. The Customer is found and details about the Customer are returned |
-|  Variants  | The Employee E look for an Customer C. The Customer C does not exists in the system and the Employee E is notified |
+|  Nominal Scenario     | The Employee E looks for a Customer C. The Customer is found and details about the Customer are returned |
+|  Variants  | The Employee E looks for an Customer C. The Customer C does not exists in the system and the Employee E is notified |
 
 ### Use case 12, UC12 - Support Accounting
 | Actors Involved        | Owner |
@@ -332,7 +331,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 # Glossary
 
-![Glossary](http://www.plantuml.com/plantuml/png/TLB1hjem4BpxAwmSd_IYzju32AZ40Ke5frwGYLV4ghrsxNLHHFllNO8J9RIzWBspCpixyIAHYfIT5IkhKfARRyVMXt8vHAzpGsj8JJI1V9HtWSg1C5heKZGUnILtvn1D0oA1jUNuUox2rAzP8Hdg61gAx-z_3ocyOmx16XYkM_m9o6WddXQPEgcDfqUvUgi6rKB-4ZN4kzXgiLO4IzGdus3gPnXMw4-2uDzI-bZzr-V61Uix05um9uXzFgrABUXpOFpcenwps2bKLnOUEPz-iNgf3bvl276ovEnUx0tyGbdbHDwD2f-D1ijxhLJKxEhnjy_kmlZ16wGazknHyivFiqkj8wGaTifOTZfZLn_gcdSl4RpCEKM5IJLaFFRP7bJd06a7rFfPqgmwwMMrKUcbpbFg-krVMQCdaDnZ3NuN6zMqaYPCpfj1ReZI-GYItVd6g1wx6UBc5cGeRqxeKLPg283Qu9NfVTEFyYRanUThIu9H-PZzQdJy0WlkoCx-0G00)
+![Glossary](http://www.plantuml.com/plantuml/png/TLBBhjem4DtxAwmiaOZAlWigIgKkQAbWrTqa7X6hVhX-W2BQV-zWx03flHk8vppcpDZh4C77f1NRA0Y1RtyU1klAOU-jI7tyZA7tqaNh-PKPqCYaOA8KfJMiI-FUonvPGANkNtzVBKW8Pv0AEeK_4fWeuqYSYYwN__Sg1eVad99OZr_D6GsX8xid9UbJRVgwbPj5KrsB-BiNwAyvFKJyPCHHqZ2_7tbgiohF0aQ_fRHgtisvrKxP4P4cJG5zNfCZu6AzcBQn0mCdSfp87_-GRQdMa1U3_Z7T_9npLNsHR5A8LayENwH0HGDjm0kAqzFVjwGxmfsL9ePyXvo5T4-96gIYY2-ovaFRhfewzAp1qOC9qD_kFc_JmQZHn1t6mRxibboVkEGsEStgrALj5szjrzY8d3XAcbzi2_t0uvDoW40W4JpNrYEdTBQNaB6BZ4GUaBloofYORBb0XqP8So9v9jLNm3kRJaDaXF9RxtdGQVLhOYIj_W40)
 
 # System Design
 
