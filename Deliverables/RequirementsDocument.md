@@ -1,6 +1,6 @@
 # Requirements Document
 
-Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
 Date: 02/04/2021
 
@@ -331,7 +331,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 # Glossary
 
-![Glossary](http://www.plantuml.com/plantuml/png/TLBBhjem4DtxAwmiaOZAlWigIgKkQAbWrTqa7X6hVhX-W2BQV-zWx03flHk8vppcpDZh4C77f1NRA0Y1RtyU1klAOU-jI7tyZA7tqaNh-PKPqCYaOA8KfJMiI-FUonvPGANkNtzVBKW8Pv0AEeK_4fWeuqYSYYwN__Sg1eVad99OZr_D6GsX8xid9UbJRVgwbPj5KrsB-BiNwAyvFKJyPCHHqZ2_7tbgiohF0aQ_fRHgtisvrKxP4P4cJG5zNfCZu6AzcBQn0mCdSfp87_-GRQdMa1U3_Z7T_9npLNsHR5A8LayENwH0HGDjm0kAqzFVjwGxmfsL9ePyXvo5T4-96gIYY2-ovaFRhfewzAp1qOC9qD_kFc_JmQZHn1t6mRxibboVkEGsEStgrALj5szjrzY8d3XAcbzi2_t0uvDoW40W4JpNrYEdTBQNaB6BZ4GUaBloofYORBb0XqP8So9v9jLNm3kRJaDaXF9RxtdGQVLhOYIj_W40)
+![Glossary](http://www.plantuml.com/plantuml/png/TL9Bxn8n4B_tKpHx966ZTmyOnCG3Ye6JjzdjX6tie_O1sQ3VtQ6qwwxmly1sVe_vpRIR4C77f1NRAWY1xtuS1-lAuU2jI7tyXA7tqaNh-OqPqCYaOA8KfJMiI-F1onvPGAKUNt-M5YI42qW5dSBl2KoKSIHEHTVhvrx5u9YSKnBhyOkve25qP8-aTsdplfdLfwyChPhgN0o-UO7-bYU0Y1-DE4aQwDU_JBLXbMS1ox-rsLjPTzefEoBIj2cWpwjo15oj5zD6zc3WJ8uJ-SDligtL4l9gq2ydVAvHjkfHPDiKejMJosSfKD5GM_228lNqzpNfZd1dfOaXtoLd8JsIeWQfAEP2rhnhMsfUClpNuEJ11EZlRo1lrC6eqSGzni4kzakkC-wJsmpBOsMyRLUlDcriH4uy9SrFjeD-u76c7Y0GI0JFjVN8AQNj9MJiAYEH1-Ikl3ec9bikqA4Hqfn9dadrHV3EflCG6Q7ytljLsEaQDiHAMlq5)
 
 # System Design
 
