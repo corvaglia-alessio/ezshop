@@ -81,6 +81,9 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ID        | Description  |
 | ------------- |:-------------|
 |  FR1     | Manage Sales |
+|  FR1.1   | Add items to a transaction  |
+|  FR1.2   | Handle payment  |
+|  FR1.3   | Update customer fidelity points  |
 |  FR2     | Manage Inventory  |
 |  FR2.1   | Insert new item |
 |  FR2.2   | Update the quantity of an existing item |
