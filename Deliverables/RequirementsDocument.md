@@ -138,6 +138,8 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 ![Main Use Cases Diagram](http://www.plantuml.com/plantuml/png/TO-n2W8n341tloAZ3ls18dABWuCu-0NbBfw5DZtIL2duyHOKqL3Nl9T7CcHnB2M6bTt79QIAQ67xC0RiqP6RaUqtCMO7wnU0x0BcpJywbYmf8ZVZK_eHFDsG975jmkbEoBswGYgjyBaiIs81Duwfa7YQ-_livwlqskegzTXXQiHVAk1xhXCzOK2QIWnF)
 
+![Includes of Manage sales](http://www.plantuml.com/plantuml/png/XSiX3i9G30PWpob-kHaEW233OP0Se5aBQTBNjwp_4xiz5a62_xwbA3j7YzFqa9IteIIiPfolc6wgS5ehi4F0NR9afVUSSO7d6aFjLxnBQXWsEPeb_-3dfaB3EegzsOwNguNpmDOzMTzxiTJHuWC0)
+
 ![Includes of Manage Inventory](http://www.plantuml.com/plantuml/png/ZSqn3e9048NXtbEy4XeFO64eR4oqCXvWiZnmacN0tLcLsuksneJ-_zvhialoCiHDTHQJdb1xq7nCSutj7jNHCfF3-8GwXngxfGYnjFmdJfeT4kEtpol0TMh5YNiHS_KPOmSnyBNigFLhRm-CT7xaId2Xf713DoO8yiIWdOOVtD3QCiGt)
 
 ![Includes of Manage Customers](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuTBmJSnBJ4zLI2ujBidFJIqgrbJGirFGS4n9KKY42segM2bavYNdbAQaujBWafgJMf9AcXxV_9JCj4g5n3o5r8hCufBCl7HITFi0jIWavkGWn8dG59oQM9ISWSEP3gbvAS0m0G00)
