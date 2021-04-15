@@ -41,7 +41,7 @@ EZShop is a software application to:
 
 | Stakeholder name  | Description |
 | ----------------- |:-----------:|
-| Owner | Owns the shop, look at its statistics and manage employeer's accounts |
+| Owner | Owns the shop, look at its statistics and manage employees' accounts |
 | Manager | Manages the shop and the items in the inventory |
 | Employee | Handle sales and the customers in database |
 | Customer | Buy items and may have a fidelity card |
@@ -165,7 +165,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Post conditions     | Quantity of Item I is reduced |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | E searchs the Item I |
+|  2     | E searches the Item I |
 |  3     | E finds the price of I |
 |  4     | C pays the price of I |
 |  5     | The quantity of I is reduced |
@@ -179,7 +179,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |    | Customer C gains points on its fidelity card |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | E searchs the Item I |
+|  2     | E searches the Item I |
 |  3     | E finds the price of I |
 |  4     | C presents the fidelity card |
 |  5     | E checks if C exists |
@@ -197,13 +197,13 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |         | Points on fidelity card of C is modified |
 | Step#        | Description  |
 |  1     | The Customer C presents the product |  
-|  2     | E searchs the Item I |
+|  2     | E searches the Item I |
 |  3     | E finds the price of I |
 |  4     | C presents the fidelity card |
 |  5     | E checks if C exists |
 |  6     | C uses points from its card |
 |  7     | C pays the remaining |
-|  8     | C gains points on fidelity card |
+|  8     | C loses points on fidelity card |
 |  9     | The quantity of I is reduced |
 
 
@@ -262,12 +262,12 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  Preconditions     | Employee E is logged in |
 |    | Customer C exists |
 |  Post conditions     | Customer C is modified |
-|  Nominal Scenario     | A Customer C wants to modify informations about him (like its email address, phone number) / use points from fidelity card |
+|  Nominal Scenario     | A Customer C wants to modify informations about him (like its email address, phone number) |
 
 ### Use case 9, UC9 - Delete a customer
-| Actors Involved        | Manager |
+| Actors Involved        | Employee |
 | ------------- |:-------------:|
-|  Preconditions     | Manager M is logged in |
+|  Preconditions     | Employee E is logged in |
 |    | Customer C exists |
 |  Post conditions     | Customer C is deleted from the system |
 |  Nominal Scenario     | A Customer C wants to give up its fidelity card and its account in the shop |
@@ -324,7 +324,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 | ------------- |:------------:|
 | Preconditions   | Employee E has an account |
 | Post conditions | Employees E is logged in |
-| Nominal Scenario   | An Employee E uses its credentials and the database match them with the right account |
+| Nominal Scenario   | An Employee E uses his credentials and the database match them with the right account |
 
 ### use case 17, UC17 - Log out
 | Actors Involved     | Employee |
