@@ -97,7 +97,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR3.4   | List all customers |
 |  FR3.5   | Search a customer |
 |  FR4     | Support accounting |
-|  FR4.1   | List transactions according to a filter |
+|  FR4.1   | List all transactions |
 |  FR4.2   | Search a transaction |
 |  FR4.3   | Compute the total of income for a specific period |
 |  FR5     | Manage rights. Authorize access to functions to specific actors according to access rights |
@@ -335,7 +335,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 
 # Glossary
 
-![Glossary](http://www.plantuml.com/plantuml/png/RL8zpzem4DxzAon69A9sxq15gTI1bgfCtIxnYLYrpwu_G17jVtylYR722rFYUpxkEP-tCK58sHgnCn2ZtF_-rJjV3iVWLExI5unTq3wv86-2mABGIgXIr8v4cuTZq1sAYCRCV_yVBLW85z06MeC_Cr3IQM3E7LrzNCdDPlmyznJ5wHjTaFWyY3bZ4IpgzM-2rjNhxh2tthW1aSFaY66Qn3DmTK7DSyLSghqZb9HjYq7KMGv0SEP2zVdqZnkLQk7yk1A6nuJFDOvszoYoNOx9sUhoLIiqV4Kx28hJTlpvFeVnJbEAKrfPuw85RJZcWspreMdgjRvlS0f04RfnUxTncnu6YvGEc7h7kuM4dqcTj4LsNN2Vt9OOZpNZJRD-jKTo2INpZAO_OWzTBzD2tKDaa0b1MXTGSahNQPYmgqvCxb7wybw4ghPIeKTIciuidqX_o_kIhSldFWb6vTZxTTZ5AhRCpDQy0G00)
+![Glossary](http://www.plantuml.com/plantuml/png/RL8zRnin3DtrAmYF0NAmXov5XnIk2tH8cwAPYYxqYV49bSYhFcmOQVzx2ProECUPJlVUuzCZnRkKCUOIlDbwJ0bsFtyCChQVXoYszFaJfJwwCKk4PyCOo3XhR0ETiDcNyqDqFPb4ta-dVvSMMeX7T1xtdhuNvEpoMJKlx6gpWjlR-hcwqpIdBtmarl-pcJAsWWK-dofrCtkPbzx2wELCf65AebWx6PKuIRHJNwaqT10cu1Bs5CtSopqo7XIOVJxyrOiQsZJVJapnCk4Lfj7cBAriMrAMCBjyTfQyZcYBqMhQNZzVfp2ZECwffeKvBWLqNcEoP09FJ_azR81A5EWbHagZi4sG1GxesF51sUhJ_MBO7Ka7jbcl9oYzBa5MaTHtHW-HTA1wLkW9tjKxKcSkugxMNJS_v-l67YDomkhmR9pLyPy3SRwdF8Zk56RwoFRH1T9k5jehjoMduvpuhhjvQt_gL5Jd7VysE-m7o8lg0PEIAeWG919eIkaTLkxaiee7Wh7jwRprghOq4bkTffPNqP-srx2NSXYoKHRqRdexx685xbHPWlyFhttp://www.plantuml.com/plantuml/png/RL8zpzem4DxzAon69A9sxq15gTI1bgfCtIxnYLYrpwu_G17jVtylYR722rFYUpxkEP-tCK58sHgnCn2ZtF_-rJjV3iVWLExI5unTq3wv86-2mABGIgXIr8v4cuTZq1sAYCRCV_yVBLW85z06MeC_Cr3IQM3E7LrzNCdDPlmyznJ5wHjTaFWyY3bZ4IpgzM-2rjNhxh2tthW1aSFaY66Qn3DmTK7DSyLSghqZb9HjYq7KMGv0SEP2zVdqZnkLQk7yk1A6nuJFDOvszoYoNOx9sUhoLIiqV4Kx28hJTlpvFeVnJbEAKrfPuw85RJZcWspreMdgjRvlS0f04RfnUxTncnu6YvGEc7h7kuM4dqcTj4LsNN2Vt9OOZpNZJRD-jKTo2INpZAO_OWzTBzD2tKDaa0b1MXTGSahNQPYmgqvCxb7wybw4ghPIeKTIciuidqX_o_kIhSldFWb6vTZxTTZ5AhRCpDQy0G00)
 
 # System Design
 
