@@ -97,7 +97,7 @@ Alice is 35, is a manager of David's shop. Periodically, she checks the inventor
 |  FR3.4   | List all customers |
 |  FR3.5   | Search a customer |
 |  FR4     | Support accounting |
-|  FR4.1   | List all transactions |
+|  FR4.1   | List transactions according to a filter |
 |  FR4.2   | Search a transaction |
 |  FR4.3   | Compute the total of income for a specific period |
 |  FR5     | Manage rights. Authorize access to functions to specific actors according to access rights |
