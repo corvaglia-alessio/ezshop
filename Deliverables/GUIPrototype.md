@@ -9,7 +9,7 @@ Version: 1.0
 ![Log In](GUI_Frames/Login.png)
 *Log In*
 
-After logging in, an employee will be directly redirected to a new transaction, while Managers and Owners will be redirected to their respectives homes.
+**After logging in, an employee will be directly redirected to a new transaction, while Managers and Owners will be redirected to their respectives homes.**
 
 ![Manager Home](GUI_Frames/Home_Manager.png)
 *Manager Home*
@@ -17,7 +17,7 @@ After logging in, an employee will be directly redirected to a new transaction, 
 ![Owner Home](GUI_Frames/Home_Owner.png)
 *Owner Home*
 
-At any time, when a user click on its profile icon on the top right corner, it will display a popup, allowing the user to disconnect or go back to the home
+**At any time, when a user click on its profile icon on the top right corner, it will display a popup, allowing the user to disconnect or go back to the home.**
 
 ![LogOut/Return Popup](GUI_Frames/Home_Manager_POPUP.png)
 *Log Out / Return to Home*
@@ -25,7 +25,7 @@ At any time, when a user click on its profile icon on the top right corner, it w
 ![New Transaction](GUI_Frames/Transaction.png)
 *New Transaction*
 
-The page above is accessed by pressing the button "New Transaction" on the Manager or the Owner Home or when an employee log in.
+**The page above is accessed by pressing the button "New Transaction" on the Manager or the Owner Home or when an employee log in.**
 
 ![Transaction](GUI_Frames/Transaction_Filled.png)
 *Transaction*
@@ -33,7 +33,7 @@ The page above is accessed by pressing the button "New Transaction" on the Manag
 ![List All Customers](GUI_Frames/FidelityCard_Manage.png)
 *List all Fidelity Cards / Customers*
 
-The page above is accessed by pressing the button "Manage Customers" on the Transaction Frame or on the Manager or the Owner Home.
+**The page above is accessed by pressing the button "Manage Customers" on the Transaction Frame or on the Manager or the Owner Home.**
 
 ![New Fidelity Card](GUI_Frames/FidelityCard_New.png)
 *Add a new Fidelity Card / Register a Customer*
@@ -47,7 +47,7 @@ The page above is accessed by pressing the button "Manage Customers" on the Tran
 ![List All Products](GUI_Frames/Inventory_Manage.png)
 *List all products*
 
-The page above is accessed by pressing the button "Manage Inventory" on the Manager or the Owner Home.
+**The page above is accessed by pressing the button "Manage Inventory" on the Manager or the Owner Home.**
 
 ![New Product](GUI_Frames/Inventory_New.png)
 *Add a new product to the Inventory*
@@ -61,7 +61,7 @@ The page above is accessed by pressing the button "Manage Inventory" on the Mana
 ![List All Employees](GUI_Frames/Employee_Manage.png)
 *List all employees*
 
-The page above is accessed by pressing the button "Manage Employees" on the Owner Home.
+**The page above is accessed by pressing the button "Manage Employees" on the Owner Home.**
 
 ![New Employee](GUI_Frames/Employee_New.png)
 *Add a new employee*
@@ -72,7 +72,7 @@ The page above is accessed by pressing the button "Manage Employees" on the Owne
 ![Accounting](GUI_Frames/Accounting.png)
 *Accounting*
 
-The page above is accessed by pressing the button "Accounting" on the Owner Home.
+**The page above is accessed by pressing the button "Accounting" on the Owner Home.**
 
 ![Accounting Details](GUI_Frames/Accounting_POPUP.png)
 *Details of a transaction*
