@@ -76,3 +76,11 @@ Version: 1.0
 
 ![Accounting Details](GUI_Frames/Accounting_POPUP.png)
 *Details of a transaction*
+
+### Frames relationships
+
+#### Frames available to employee user
+![](GUI_Frames/employee_flow.png)
+#### Frames available to employee manager
+
+#### Frames available to employee owner
