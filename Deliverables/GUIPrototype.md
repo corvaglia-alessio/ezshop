@@ -81,6 +81,7 @@ Version: 1.0
 
 #### Frames available to employee user
 ![](GUI_Frames/employee_flow.png)
-#### Frames available to employee manager
-
-#### Frames available to employee owner
+#### Frames available to manager user
+![](GUI_Frames/manager_flow.png)
+#### Frames available to owner user
+![](GUI_Frames/owner_flow.png)
