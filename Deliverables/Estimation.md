@@ -75,7 +75,7 @@ Version: 1.0
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirements planning | |
+| <b>Requirements planning</b> | |
 |   Review existing systems | |
 |   Identify user requirements | |
 |   Identify performance requirements | |
