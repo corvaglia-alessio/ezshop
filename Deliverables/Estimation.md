@@ -75,6 +75,24 @@ Version: 1.0
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirements planning | |
+|   Review existing systems | |
+|   Identify user requirements | |
+|   Identify performance requirements | |
+|   Define requirements document | |
+|   Define GUI prototype | |
+|   Define project estimation | |
+|   Verificaton and validation of requirements | |
+| Design | |
+|   Define architecture | |
+|   Define high level design | |
+|   Define low level design | |
+|   Verificaton and validation of design | |
+| Development | |
+|   Skeleton of the classes implemetation | |
+|   Method implemetation | |
+| Testing | |
+|   Unit testing | |
+|   Integration testing | |
 ###
 Insert here Gantt chart with above activities
