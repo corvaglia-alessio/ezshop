@@ -51,8 +51,11 @@
 51
 # Project Estimation  
 Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
+
 Date: 23 April 2021
+
 Version: 1.0
+
 # Contents
 - [Estimate by product decomposition]
 - [Estimate by activity decomposition ]
