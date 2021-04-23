@@ -75,7 +75,7 @@ Version: 1.0
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| <b>Requirements planning</b> | |
+| **Requirements planning** | |
 |   Review existing systems | |
 |   Identify user requirements | |
 |   Identify performance requirements | |
@@ -83,15 +83,15 @@ Version: 1.0
 |   Define GUI prototype | |
 |   Define project estimation | |
 |   Verificaton and validation of requirements | |
-| Design | |
+| **Design** | |
 |   Define architecture | |
 |   Define high level design | |
 |   Define low level design | |
 |   Verificaton and validation of design | |
-| Development | |
+| **Development** | |
 |   Skeleton of the classes implemetation | |
 |   Method implemetation | |
-| Testing | |
+| **Testing** | |
 |   Unit testing | |
 |   Integration testing | |
 ###
