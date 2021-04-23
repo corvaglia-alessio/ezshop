@@ -96,3 +96,5 @@ Version: 1.0
 |   Integration testing | 30 |
 ###
 Insert here Gantt chart with above activities
+
+![Gantt chart](gantt.png)
