@@ -11,16 +11,18 @@ Version: 1.0
 
 # Estimation approach
 
-# Estimate by product decomposition
+# Estimate by product decomposition*
 ### 
 |             | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC =  Estimated number of classes to be developed   |             12   (?)           |             
-|  A = Estimated average size per class, in LOC       |              250 (?)             | 
-| S = Estimated size of project, in LOC (= NC * A) | 3000 (?) |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                896                    |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 26880 | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |        6            |
+| NC =  Estimated number of classes to be developed   |             14              |             
+|  A = Estimated average size per class, in LOC       |              250              | 
+| S = Estimated size of project, in LOC (= NC * A) | 3500  |
+| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                350                    |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 10500 | 
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |        2            |
+
+* This figures are related only to the code part. Does not include time spent in documetation and testing.
 
 # Estimate by activity decomposition
 ### 
