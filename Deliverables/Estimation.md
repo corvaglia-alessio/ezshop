@@ -22,7 +22,7 @@ Version: 1.0
 | C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 10500 | 
 | Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |        2            |
 
-* This figures are related only to the code part. Does not include time spent in documetation and testing.
+*This figures are related only to the code part. Does not include time spent in documetation and testing.
 
 # Estimate by activity decomposition
 ### 
