@@ -22,10 +22,11 @@ The design must satisfy the Official Requirements document, notably functional a
 # High level design 
 
 <discuss architectural styles used, if any>
+The followed architectural pattern is the MVC pattern, with a 2-tier structure. 
 
 ## Package diagram
 <report package diagram>
-![package Diagram](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLK7AD2ix8Br1IgEPIKE2gvN98pKi1oWC0)
+![package Diagram](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLK7AD2ix8Br1IgEPIKE2gHOYxXtgYIN51-0fwUdOAS5akXzIy5A210000)
 
 
 
