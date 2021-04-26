@@ -22,9 +22,11 @@ The design must satisfy the Official Requirements document, notably functional a
 # High level design 
 
 <discuss architectural styles used, if any>
+
+## Package diagram
 <report package diagram>
 
-
+http://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLK7AD2ix8Br1IgEPIKE2gvN98pKi1oWC0
 
 
 
