@@ -25,8 +25,11 @@ The design must satisfy the Official Requirements document, notably functional a
 
 ## Package diagram
 <report package diagram>
-
-http://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLK7AD2ix8Br1IgEPIKE2gvN98pKi1oWC0
+```plantuml
+package "EZShop" {
+  
+}
+```
 
 
 
