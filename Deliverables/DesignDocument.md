@@ -45,8 +45,9 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 
 \<for each functional requirement from the requirement document, list which classes concur to implement it>
 
-| asd |   |   |   |   |   |   |   |   |   |   |
+|     |   |   |   |   |   |   |   |   |   |   |
 |-----|---|---|---|---|---|---|---|---|---|---|
+|     |   |   |   |   |   |   |   |   |   |   |
 |     |   |   |   |   |   |   |   |   |   |   |
 |     |   |   |   |   |   |   |   |   |   |   |
 |     |   |   |   |   |   |   |   |   |   |   |
