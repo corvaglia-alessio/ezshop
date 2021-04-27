@@ -66,5 +66,5 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
-[! Product order Scenario](http://www.plantuml.com/plantuml/png/TP7BIeCn48NtVOhp0WQyInTI11Skj4LTkHkJgGR-9d4oKVwtDo5U2YNRoJTdlaDMMKcqxAR5qtjCznJeZGL7rxXzQGCiSMnmbtDXH74iYpvlnFx24YS63r7zTePljEluCFNKO4FpGUODJHGihnCBgO-XacVrViWiYi1VUEq0uXz1mQ4aHyg_ZqF7SuDrEuX4tWtLBWmUsKRvgG0IyPyqxQLk9BfYzNbENFdB9cY5AJC-2WNrMejjaJhLzzaDhQuC_llQk4iJQyLN75pzbsy0)
+![Product order Scenario](http://www.plantuml.com/plantuml/png/TP7BIeCn48NtVOhp0WQyInTI11Skj4LTkHkJgGR-9d4oKVwtDo5U2YNRoJTdlaDMMKcqxAR5qtjCznJeZGL7rxXzQGCiSMnmbtDXH74iYpvlnFx24YS63r7zTePljEluCFNKO4FpGUODJHGihnCBgO-XacVrViWiYi1VUEq0uXz1mQ4aHyg_ZqF7SuDrEuX4tWtLBWmUsKRvgG0IyPyqxQLk9BfYzNbENFdB9cY5AJC-2WNrMejjaJhLzzaDhQuC_llQk4iJQyLN75pzbsy0)
 
