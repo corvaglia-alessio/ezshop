@@ -64,16 +64,15 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 
 
 # Verification sequence diagrams 
-\<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
-#Order a product Scenario
+# Order a product Scenario
 ![Product order Scenario](http://www.plantuml.com/plantuml/png/TP7BIeCn48NtVOhp0WQyInTI11Skj4LTkHkJgGR-9d4oKVwtDo5U2YNRoJTdlaDMMKcqxAR5qtjCznJeZGL7rxXzQGCiSMnmbtDXH74iYpvlnFx24YS63r7zTePljEluCFNKO4FpGUODJHGihnCBgO-XacVrViWiYi1VUEq0uXz1mQ4aHyg_ZqF7SuDrEuX4tWtLBWmUsKRvgG0IyPyqxQLk9BfYzNbENFdB9cY5AJC-2WNrMejjaJhLzzaDhQuC_llQk4iJQyLN75pzbsy0)
 
-#Sale Transaction Scenario
+# Sale Transaction Scenario
 ![Sale transaction Scenario](http://www.plantuml.com/plantuml/png/ZPB1ZXCn44Jl-Ohw0KQ4NHR80Iq43aWW45akt3fs3x7aQPjsMsZ-7ezcDmJ9h3ZNgsgxLBV5IArESREdSWgiUF8QxxyVJYbZX-s0mwB3bAIGiv1aiweBTw38Tt-K7Pvr-6xmLGCT2R8cNvtXIEgIvuqaOqGURTU2E6FKDE4Abd03KePoPZBsg68Xmawil0WFGML1oVj_Fx8TlnxmnYyHeV5fR2bd_wE-vysNSvpXGt6fYi7I-GTXH5OkB9SPNrRnRixS_3S3th5Jfi9dsyzAOi7cHm-_w1qk3Rli-U85tSfV3lZAv17JJD5cE5AFmXeeGkfqR7XOkt2rM9fOSQA29DoDUpLW7rFX_vt6zcd7q1zTMzqd4lh1o3HFVpVwO6ZOChRg79SorjX1FwuVtPFwHhV5VSkUZ95J42iNu5kA98u_PrQwRtnxZGzIM0t2lt1S0QGpGU9HrxXxSNFBukiKVmC0)
 
-#Manage payment with credit card Scenario
+# Manage payment with credit card Scenario
 ![Manage payment with credit card Scenario](http://www.plantuml.com/plantuml/png/PS-xIWOn40NWFaznNi205vijP2LOM2a85dPZCii6SmapIU7RkyeAWR-Qudo7cLcra_IHat6aUsJ1rGEUFjxssh3WskAvA4k75mxn62J1dF4CRopUASL0dMUACl8dozHmVw4xCXV5ZyCjkBLur2_q-bzLIemcqREvzFFQEulNNuP6SRxh_6N1lSLBOw4UQu4Exrbr6obzex5iLJ87it898wSV)
 
-#Insert new customer and give a loyalty card Scenario
+# Insert new customer and give a loyalty card Scenario
 ![Insert new customer and give a loyalty card Scenario](http://www.plantuml.com/plantuml/png/XPBFJiCm38VlUmg_01NXFnpGgehR10TktAmqKoFIkeeTfhuz5fbeYhPoYwpl-zcnl6N1AAaFcmQvyox2nJCqYOLwVJ-1gQ3cJnXTP1emG8k280JIER17R7FaivjZLBsgvg0nqfTl7KFdUHbMzdtvUEzeLFLQrUXG70pkCASSl7HPocGvQsqjfK5Klbd8cEkRlrpPxhQ2rna5-sEtSvFYKtSdqPEVk5_C4MZ281DOZ6NoBfSRhQhoS5ufmRBBOnweP5UdCfSLrCnalI9BJUXtMslxDMOzuVzz6psDNUbXZZktTAFtyAPNW-9f04xMEkPz2c42hUufzYfktT3g7Ny3)
