@@ -74,5 +74,5 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 # Manage payment with credit card Scenario
 ![Manage payment with credit card Scenario](http://www.plantuml.com/plantuml/png/PS-xIWOn40NWFaznNi205vijP2LOM2a85dPZCii6SmapIU7RkyeAWR-Qudo7cLcra_IHat6aUsJ1rGEUFjxssh3WskAvA4k75mxn62J1dF4CRopUASL0dMUACl8dozHmVw4xCXV5ZyCjkBLur2_q-bzLIemcqREvzFFQEulNNuP6SRxh_6N1lSLBOw4UQu4Exrbr6obzex5iLJ87it898wSV)
 
-# Insert new customer and give a loyalty card Scenario
-![Insert new customer and give a loyalty card Scenario](http://www.plantuml.com/plantuml/png/XPBFJiCm38VlUmg_01NXFnpGgehR10TktAmqKoFIkeeTfhuz5fbeYhPoYwpl-zcnl6N1AAaFcmQvyox2nJCqYOLwVJ-1gQ3cJnXTP1emG8k280JIER17R7FaivjZLBsgvg0nqfTl7KFdUHbMzdtvUEzeLFLQrUXG70pkCASSl7HPocGvQsqjfK5Klbd8cEkRlrpPxhQ2rna5-sEtSvFYKtSdqPEVk5_C4MZ281DOZ6NoBfSRhQhoS5ufmRBBOnweP5UdCfSLrCnalI9BJUXtMslxDMOzuVzz6psDNUbXZZktTAFtyAPNW-9f04xMEkPz2c42hUufzYfktT3g7Ny3)
+# Insert new customer and attach a new Loyalty Card - Scenarios 4.1 4.2
+![Insert new customer and give a loyalty card Scenario](http://www.plantuml.com/plantuml/png/XOwxJiH034NxVCKjeM34ycOAj6X5HmSqT5R6Q2AIJ3HsGFltC0fM4XwYzFNnyTsAKjQnQokgDMNiI6B3sQPHD7MVO_MLu-W65i9Zut0hhnWuI-gfHI0bQ896HcstnfTRqtYSk5aqvFJM11R4HjQovT-xvuUO1dYSEWH-QNesmS5XDIs_rJjpwFaTC_QhxjoXpapAEyfXfRfFUsfrNt9uN4osHVY7yDA1LAcEXNbC_xMySX1Myrc-VkznFL6pQx7zsNLpNEWduUBSSX_6hlq0)
