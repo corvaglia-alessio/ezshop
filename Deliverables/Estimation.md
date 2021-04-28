@@ -6,8 +6,8 @@ Date: 23 April 2021
 Version: 1.0
 
 # Contents
-- Estimate by product decomposition
-- Estimate by activity decomposition
+- [Estimate by product decomposition](#estimate-by-product-decomposition)
+- [Estimate by activity decomposition](#estimate-by-activity-decomposition)
 
 # Estimation approach
 
