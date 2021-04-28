@@ -56,23 +56,13 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 |FR8  |  X | X  |   |   |   |   |   |   |   |   |   |
 
 
-
-
-
-
-
-
-
 # Verification sequence diagrams 
 
 # Issue, pay and order arrival - Scenarios 3.1 3.2 3.3
 ![Product order Scenario](http://www.plantuml.com/plantuml/png/VP7BQiCm44Nt_efPjeiA-duiYbteihZ5pIQxGHeIWIE9qIZ1Vn_5SOWnSNRYtgEh0ogZ84lQj4MbnJCqQnz-qE6Ak1YTuUuJlfU703xWNe6DCL7DXlZcjXYAZFH99XuKEDh10CmEFIe8sCtFF2c898sWqBaV3pmhODAUpHUsw3GjWfcoGrC7OXJhNRxrShIRDbT4Nq_lz6OLizrYUr7vRKRvbxr9MlwxG9bwxwc_X4wiT1aioPdy2Ni0)
 
-# Sale Transaction Scenario
+# Sale Transaction Scenario - Scenarios 6.1 6.2 6.3 6.4 6.6
 ![Sale transaction Scenario](http://www.plantuml.com/plantuml/png/ZPB1ZXCn44Jl-Ohw0KQ4NHR80Iq43aWW45akt3fs3x7aQPjsMsZ-7ezcDmJ9h3ZNgsgxLBV5IArESREdSWgiUF8QxxyVJYbZX-s0mwB3bAIGiv1aiweBTw38Tt-K7Pvr-6xmLGCT2R8cNvtXIEgIvuqaOqGURTU2E6FKDE4Abd03KePoPZBsg68Xmawil0WFGML1oVj_Fx8TlnxmnYyHeV5fR2bd_wE-vysNSvpXGt6fYi7I-GTXH5OkB9SPNrRnRixS_3S3th5Jfi9dsyzAOi7cHm-_w1qk3Rli-U85tSfV3lZAv17JJD5cE5AFmXeeGkfqR7XOkt2rM9fOSQA29DoDUpLW7rFX_vt6zcd7q1zTMzqd4lh1o3HFVpVwO6ZOChRg79SorjX1FwuVtPFwHhV5VSkUZ95J42iNu5kA98u_PrQwRtnxZGzIM0t2lt1S0QGpGU9HrxXxSNFBukiKVmC0)
-
-# Manage payment with credit card Scenario
-![Manage payment with credit card Scenario](http://www.plantuml.com/plantuml/png/PS-xIWOn40NWFaznNi205vijP2LOM2a85dPZCii6SmapIU7RkyeAWR-Qudo7cLcra_IHat6aUsJ1rGEUFjxssh3WskAvA4k75mxn62J1dF4CRopUASL0dMUACl8dozHmVw4xCXV5ZyCjkBLur2_q-bzLIemcqREvzFFQEulNNuP6SRxh_6N1lSLBOw4UQu4Exrbr6obzex5iLJ87it898wSV)
 
 # Insert new customer and attach a new Loyalty Card - Scenarios 4.1 4.2
 ![Insert new customer and give a loyalty card Scenario](http://www.plantuml.com/plantuml/png/XOwxJiH034NxVCKjeM34ycOAj6X5HmSqT5R6Q2AIJ3HsGFltC0fM4XwYzFNnyTsAKjQnQokgDMNiI6B3sQPHD7MVO_MLu-W65i9Zut0hhnWuI-gfHI0bQ896HcstnfTRqtYSk5aqvFJM11R4HjQovT-xvuUO1dYSEWH-QNesmS5XDIs_rJjpwFaTC_QhxjoXpapAEyfXfRfFUsfrNt9uN4osHVY7yDA1LAcEXNbC_xMySX1Myrc-VkznFL6pQx7zsNLpNEWduUBSSX_6hlq0)
