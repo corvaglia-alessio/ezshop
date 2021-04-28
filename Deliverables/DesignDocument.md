@@ -58,17 +58,19 @@ The followed architectural pattern is the MVC pattern, with a 2-tier structure.
 
 # Verification sequence diagrams 
 
+# Create new ProductType and assign a position - Scenarios 1.1 1.2
+![Create new ProductType and assign a position](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCBialKWZEo2_mJSnBJ4yjuk92uYZesYcuHe445AmK3FKKaejI4qjI0uhoKqgJIq8g2r8rDBaWyY2LIE90vKPw2dcfvGeeYd6QRQodK5gG0Z8xlpYp93C_3u_19deAnQabI0gHf46gOJ9M2gPG9o2KEgJcfG2z3G00)
+
 # Issue, pay and order arrival - Scenarios 3.1 3.2 3.3
 ![Issue, pay and order arrival](http://www.plantuml.com/plantuml/png/VP7BQiCm44Nt_efPjeiA-duiYbteihZ5pIQxGHeIWIE9qIZ1Vn_5SOWnSNRYtgEh0ogZ84lQj4MbnJCqQnz-qE6Ak1YTuUuJlfU703xWNe6DCL7DXlZcjXYAZFH99XuKEDh10CmEFIe8sCtFF2c898sWqBaV3pmhODAUpHUsw3GjWfcoGrC7OXJhNRxrShIRDbT4Nq_lz6OLizrYUr7vRKRvbxr9MlwxG9bwxwc_X4wiT1aioPdy2Ni0)
-
-# Sale Transaction - Scenarios 6.1 6.2 6.3 6.4 6.6
-![Sale Transaction](http://www.plantuml.com/plantuml/png/bPDBZzCm4CVl-HHpX0E1xfiSq8fbEO48f7lXDegdn9BZiIOJKBuzTjBIz2rkLV-FtupjF7QAedthCgoL1PwmQon9bgr_m9iFyFopQZX00OiSHdk5ZfQ2leiPo_xLwsoo9FEULi1L3fx-m446ZYAkSq1ZIc7Jrxhab8hrdfN0qKeBg9G2h8HRk0PbU00K0g50g6IWzseTQ4D2en2ceYvPO-zipWrY25J0JGw_I4knDPKaBzxgpawpkP-zoW05t8vRxGifTPnm5u-Ez3kc0JNvZYr_dmE7L8OEC0GtVB9TpJ7o0vMMF1LU7ErXsvAOyuuJtFVdkUaIpjrnUXdl_XkwM6mJDRUXLohPUkq-inmGl_20JeSd59EYLpkmANOA4r-KK4tsDoMvnA4b7yyGtlxxMyXOJTKRySAkD_b8dSnVIHisboAtOwHIrBwRUsTpterpifYFwD3Nz18CAksOrygtG8ARvllfyzgNOkwHlEbRznS0)
 
 # Insert new customer and attach a new Loyalty Card - Scenarios 4.1 4.2
 ![Insert new customer and attach a loyalty card](http://www.plantuml.com/plantuml/png/XOwxJiH034NxVCKjeM34ycOAj6X5HmSqT5R6Q2AIJ3HsGFltC0fM4XwYzFNnyTsAKjQnQokgDMNiI6B3sQPHD7MVO_MLu-W65i9Zut0hhnWuI-gfHI0bQ896HcstnfTRqtYSk5aqvFJM11R4HjQovT-xvuUO1dYSEWH-QNesmS5XDIs_rJjpwFaTC_QhxjoXpapAEyfXfRfFUsfrNt9uN4osHVY7yDA1LAcEXNbC_xMySX1Myrc-VkznFL6pQx7zsNLpNEWduUBSSX_6hlq0)
 
-# Create new ProductType and assign a position - Scenarios 1.1 1.2
-![Create new ProductType and assign a position](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCBialKWZEo2_mJSnBJ4yjuk92uYZesYcuHe445AmK3FKKaejI4qjI0uhoKqgJIq8g2r8rDBaWyY2LIE90vKPw2dcfvGeeYd6QRQodK5gG0Z8xlpYp93C_3u_19deAnQabI0gHf46gOJ9M2gPG9o2KEgJcfG2z3G00)
+
+# Sale Transaction - Scenarios 6.1 6.2 6.3 6.4 6.6
+![Sale Transaction](http://www.plantuml.com/plantuml/png/bL8zZzH03EtpArn2GM1lEMv9WKuSHmKYaBs6pifuoKYJySXnGFdtp2IxaFtMTL7UntiU-xvJ5ErRbs6jBF20NMD9icpx0Qy-mEFFgk401Ino6EaLEbeB-YvgBFiNBxE9aiW7M04tENZw0qSQE1cnp06DAOLDN-kQaohQUrO2Hnije58Ai15kOGdAi08K0g50g6IWzseTQ4D28n0ceovHe--ivovY25J0snn-aPPYQof9dhpLlPbclH-zoW05t8vJ7G99TJhXNNmwqkyzne8QUIU7lyk1Gp931nY26pxPhkOuqmzKMlDaUBNQQkOIC-SUPtBVNyvDIxYqutGPRvuTkbW0UNDWTOvxyz-zvZRqIYLRhzrdbgDsNtX0fyC3YadIvLwnINOk9jw1K4tsDoMunA4b7zyRNl_xBMIi9kiTUELTRiUzRybVIHisroJJgLIAsdTpxgpdtTYJnNn4Xxwcfs1GQO-yHRu54jmvhyQZFOAYxfwywLlt5m00)
+
 
 # Return Transaction - Scenarios 8.1 8.2
-![Return Transaction]()
+![Return Transaction](http://www.plantuml.com/plantuml/png/ZP9FJy904CNlV8e99qsm2W8g1qCa78reyU9jx3vjOzdTRASn_VQEPOdKFy53asRVxytCcyoy4WvIRyeUP-82BRZA2uHUB_xGoJKjdzBSUPhHCA5NICebre5jfOx2sQFZNzbHGctf1qWTR9UFaE8_L7MU9sJn7gN3ZSO9XHPT1MVgJ1IpJa0bNcH6_LJWQJoWoO2c2dgmm51jfIX9SWGGw-Utteh4qJDYGPZ-tgZh8dk3BAs4HhjEjaFkFNPonLdMZOV2Kzq5vBvcxIhD7pak4e8r_qrzkKlzAQwusS1gSZhTlGQOGXOSJDGERlsgdJ7Ijv3ScOEUuLbhIeMbhZhqrydepGHaBfWRBjbcUFI61HquAdSUWNULHzlzVfVKDuSrUgyV)
