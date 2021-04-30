@@ -10,7 +10,6 @@ These figures will not be used to evaluate neither the project nor the team, the
 
 | Week | requirement engineering | design | coding | unit testing | integration testing | acceptance testing | management | git maven |
 |:-----------:|:--------:|:-----------:|:-----------:|:----------:|:------------:|:---------------:|:-------------:|:--------------:|
-<<<<<<< Deliverables/TimeSheet.md
 | apr 5 - 11 | 18| | | | | | | |
 | apr 12 - 18| 14| | | | | | | | 
 | apr 19 - 25| | | | | | | 8 | | 
@@ -24,22 +23,4 @@ These figures will not be used to evaluate neither the project nor the team, the
 | jun 14 -20 | | | | | | | | | 
 | jun 21 -27 | | | | | | | | | 
 | jun 28 - 4 | | | | | | | | | 
-| jul 5 - 11 | | | | | | | | | 
-=======
-| apr 5 - 11 | 18| | | | | | | |
-| apr 12 - 18| 14| | | | | | | |
-| apr 19 - 25| | | | | | | | |
-| apr 26 - 2 | | | | | | | | |
-| may 3 - 9  | | | | | | | | |
-| may 10 - 16| | | | | | | | |
-| may 17 - 23| | | | | | | | |
-| may 24 - 30| | | | | | | | |
-| jun 31 - 6 | | | | | | | | |
-| jun 7 - 13 | | | | | | | | |
-| jun 14 -20 | | | | | | | | |
-| jun 21 -27 | | | | | | | | |
-| jun 28 - 4 | | | | | | | | |
 | jul 5 - 11 | | | | | | | | |
->>>>>>> Deliverables/TimeSheet.md
-| jul 12 -18 | | | | | | | | |
-| jul 19 -25 | | | | | | | | |
