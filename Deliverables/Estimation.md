@@ -1,77 +1,52 @@
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
 # Project Estimation  
-Authors:
-Date:
-Version:
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
+
+Date: 23 April 2021
+
+Version: 1.0
+
 # Contents
-- [Estimate by product decomposition]
-- [Estimate by activity decomposition ]
+- [Estimate by product decomposition](#estimate-by-product-decomposition)
+- [Estimate by activity decomposition](#estimate-by-activity-decomposition)
+
 # Estimation approach
-<Consider the EZGas  project as described in YOUR requirement document, assume that you are going to develop the project INDEPENDENT of the deadlines of the course>
+
 # Estimate by product decomposition
 ### 
 |             | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC =  Estimated number of classes to be developed   |                             |             
-|  A = Estimated average size per class, in LOC       |                            | 
-| S = Estimated size of project, in LOC (= NC * A) | |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                                      |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |                    |               
+| NC =  Estimated number of classes to be developed   |             15              |             
+|  A = Estimated average size per class, in LOC       |              600              | 
+| S = Estimated size of project, in LOC (= NC * A) | 8960  |
+| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                896                    |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | 26880 | 
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |        6            |
+
+
 # Estimate by activity decomposition
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
-###
-Insert here Gantt chart with above activities
+| **Requirements planning** | **224** |
+|   Review existing systems | 8 |
+|   Identify user requirements | 16 |
+|   Identify performance requirements | 8 |
+|   Define requirements document | 64 |
+|   Define GUI prototype | 80 |
+|   Define project estimation | 16 |
+|   Verification and validation of requirements | 32 |
+| **Design** | **128** |
+|   Define architecture | 12 |
+|   Define high level design | 20  |
+|   Define low level design | 64 |
+|   Verificaton and validation of design | 32 |
+| **Development** | **352** |
+|   Skeleton of the classes implemetation | 96 |
+|   Method implemetation | 256 |
+| **Testing** | **192** |
+|   Unit testing | 64 |
+|   Integration testing | 128 |
+### 
+
+# Gantt chart
+![Gantt chart](gantt.png)
