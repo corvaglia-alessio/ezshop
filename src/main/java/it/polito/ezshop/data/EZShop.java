@@ -245,7 +245,7 @@ public class EZShop implements EZShopInterface {
     	if(loggedInUser == null || !loggedInUser.getRole().equals("Administrator") || !loggedInUser.getRole().equals("Manager") || !loggedInUser.getRole().equals("Cashier")) {
             throw new UnauthorizedException("Function not available for the current user");
         }	
-    	if(newCustomerName == null || newCustomerName=="") {
+    	if(newCustomerName == null || newCustomerName.equals("")) {
     		throw new InvalidCustomerNameException("Invalid customer Name");
     	}
     	if(newCustomerCard == null || newCustomerCard.length()!=10) {
@@ -327,7 +327,7 @@ public class EZShop implements EZShopInterface {
     	if(customerId==null || customerId <= 0) {
     		throw new InvalidCustomerIdException();
     	}
-    	if(customerCard==null || customerCard=="" || customerCard.length()!=10) {
+    	if(customerCard==null || customerCard.equals("") || customerCard.length()!=10) {
     		throw new InvalidCustomerCardException();
     	}   	
     	if(loyaltyCards.get(customerCard).getCustomer()==null && customers.containsKey(customerId)) {
