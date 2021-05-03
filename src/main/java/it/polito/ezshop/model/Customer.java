@@ -9,7 +9,7 @@ public class Customer implements it.polito.ezshop.data.Customer {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
-		this.customerCard = null;
+		this.customerCard = "";
 	}
 
 	@Override

@@ -248,16 +248,27 @@ public class EZShop implements EZShopInterface {
     	if(newCustomerName == null || newCustomerName.equals("")) {
     		throw new InvalidCustomerNameException("Invalid customer Name");
     	}
-    	if(newCustomerCard == null || newCustomerCard.length()!=10) {
+    	if(newCustomerCard == null || (newCustomerCard.length()!=10 && !newCustomerCard.equals(""))) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
     	}
     	
+    	if(!customers.containsKey(id) || !loyaltyCards.containsKey(newCustomerCard)) {
+    		return false;
+    	}
     	
-    	Customer c = customers.get(id);
-        
-        c.setCustomerName(newCustomerName);
-        c.setCustomerCard(newCustomerCard);
-    	return false;
+    	
+    	it.polito.ezshop.model.Customer c = customers.get(id);
+    	LoyaltyCard card = loyaltyCards.get(newCustomerCard);
+
+    	if(card.getCustomer()!=null) {
+    		return false;
+    	}
+    	else {
+	        c.setCustomerName(newCustomerName);
+	        c.setCustomerCard(newCustomerCard);
+	        card.setCustomer(c);
+	    	return true;
+    	}
     }
 
     @Override
@@ -270,6 +281,11 @@ public class EZShop implements EZShopInterface {
     		throw new InvalidCustomerIdException("Invalid customer Id");
     	}
     	if(customers.containsKey(id)) {
+    		it.polito.ezshop.model.Customer c = customers.get(id);
+    		if(!c.getCustomerCard().equals("")) {		//that part is not in the interface description but might be needed
+    			loyaltyCards.get(c.getCustomerCard()).setCustomer(null);	
+    			loyaltyCards.get(c.getCustomerCard()).setPoints(0);			
+    		}
     		customers.remove(id);
     		return true;
     	}
