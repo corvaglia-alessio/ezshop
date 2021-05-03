@@ -12,6 +12,4 @@ public class LoyaltyCard {
 		this.customer = null;
 	}
 	
-	
-		
 }
