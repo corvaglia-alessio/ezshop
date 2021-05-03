@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import it.polito.ezshop.model.*;
@@ -243,9 +244,11 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-    	
-        return null;
-    }
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+        
+    	return customers.values().stream().collect(Collectors.toList());
+        }
 
     @Override
     public String createCard() throws UnauthorizedException {
@@ -280,7 +283,23 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        return false;
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null) {
+            throw new UnauthorizedException("Function not available for the current user");
+    	}
+    	if(customerCard == null || customerCard.length()!=10) {
+    		throw new InvalidCustomerCardException("Invalid customer Card");
+    	}
+    	
+    	if(!loyaltyCards.containsKey(customerCard)) {
+    		return false;
+    	}
+    	else if(loyaltyCards.get(customerCard).getPoints()+pointsToBeAdded < 0) {
+    		return false;
+    	}
+    	else {
+    		loyaltyCards.get(customerCard).setPoints(loyaltyCards.get(customerCard).getPoints()+pointsToBeAdded);
+    		return true;
+    	}
     }
 
     @Override
