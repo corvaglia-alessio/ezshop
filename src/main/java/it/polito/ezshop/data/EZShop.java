@@ -33,75 +33,128 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        Integer maxid = 0;
+        Integer maxid = 1;
 
-        if(password == "")
+        if(password.equals("") || password == null)
             throw new InvalidPasswordException("Password should not be empty");
 
-        if(username == "")
+        if(username.equals("") || username == null)
             throw new InvalidUsernameException("Username should not be empty");
 
         for(User u : users.values()){
-            if(u.getUsername() == username)
-                throw new InvalidUsernameException("Username already exists");
+            if(u.getUsername().equals(username))
+                return -1;
             else{
                 if(u.getId()>maxid)
                     maxid=u.getId();
             }
         }
 
-        if(role != "Administrator" && role != "Cashier" && role != "ShopManager")
+        if(role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")){
+            User u = new UserClass(maxid+1, username, password, role);
+            users.put(maxid+1, u);
+            //WRITE ON FILE AND IF ERROR -1
+        }
+        else{
             throw new InvalidRoleException("Non existing role");
-
-        User u = new UserClass(maxid+1, username, password, role);
-        users.put(maxid+1, u);
-        return maxid+1; // WHERE TO PUT RETURN -1 FOR ERRORS?
-                        // FILE
+        }
+            
+        return maxid+1;
     }
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        if(loggedInUser.getRole() != "Administrator" || loggedInUser == null)
-            throw new UnauthorizedException("Function not available for the current user");
+        if(id<=0 || id==null)
+            throw new InvalidUserIdException("Invalid id");
+        
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
 
-        if(users.get(id) != null)
-            users.remove(id);
-        else
-            throw new InvalidUserIdException("Non existing user");
-            //RETURN FALSE
+        if(loggedInUser.getRole().equals("Administrator")){
+            if(users.get(id) != null)
+                users.remove(id);
+                //WRITE ON FILE, IF ERROR, return FALSE
+            else
+                return false;
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return true;
     }
 
     @Override
     public List<User> getAllUsers() throws UnauthorizedException {
-        if(loggedInUser.getRole() != "Administrator" || loggedInUser == null)
-            throw new UnauthorizedException("Function not available for the current user");
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
 
-        List<User> u = new ArrayList<User>();
-        for(User us : users.values())
+        if(loggedInUser.getRole().equals("Administrator")){
+            List<User> u = new ArrayList<User>();
+            for(User us : users.values())
             u.add(us);
-        
-        return u;
+            return u;
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     }
 
     @Override
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        return null;
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
+        
+        if(id<=0 || id==null)
+            throw new InvalidUserIdException("Invalid id");
+
+        if(loggedInUser.getRole().equals("Administrator")){
+            return users.get(id);
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     }
 
     @Override
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
-        return false;
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
+
+        if(id<=0 || id==null)
+            throw new InvalidUserIdException("Invalid id");
+
+        if(role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")){
+            users.get(id).setRole(role);
+            //file
+            return true;
+        }
+        else
+            throw new InvalidRoleException("Non existing role");
     }
 
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+        if(password.equals("") || password == null)
+            throw new InvalidPasswordException("Password should not be empty");
+
+        if(username.equals("") || username == null)
+            throw new InvalidUsernameException("Username should not be empty");
+        
+        for(User us : users.values()){
+            if(us.getUsername().equals(username) && us.getPassword().equals(password)){
+                loggedInUser = us;
+                return loggedInUser;
+            }
+        }
         return null;
     }
 
     @Override
     public boolean logout() {
-        return false;
+        if(loggedInUser == null)
+            return false;
+        loggedInUser = null;
+        return true;
     }
 
     @Override
