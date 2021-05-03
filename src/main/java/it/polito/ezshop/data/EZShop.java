@@ -1,14 +1,17 @@
 package it.polito.ezshop.data;
 
 import it.polito.ezshop.exceptions.*;
-
+import it.polito.ezshop.model.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class EZShop implements EZShopInterface {
 
-
+	HashMap<Integer ,Customer> customers;
+	HashMap<String,LoyaltyCard> loyaltyCards;
+	
     @Override
     public void reset() {
 
@@ -116,12 +119,42 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        return null;
+        if(customers.values().stream().anyMatch((c)->{
+        	if(c.getCustomerName().compareTo(customerName)==0) {
+        		return true;
+        	}
+        	else
+        		return false;
+        
+        })){
+        	return -1;
+        }
+        else {       	
+        	customers.put(customers.size()+1, new it.polito.ezshop.model.Customer(customers.size()+1,customerName));
+        	return customers.size()+1;
+        }
+        
     }
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        return false;
+        
+    	
+    	if(newCustomerName == null || newCustomerName=="") {
+    		throw new InvalidCustomerNameException();
+    	}
+    	if(newCustomerCard == null || newCustomerCard.length()!=10) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	if(0==3) {
+    		throw new UnauthorizedException();
+    	}
+    	
+    	Customer c = customers.get(id);
+        
+        c.setCustomerName(newCustomerName);
+        c.setCustomerCard(newCustomerCard);
+    	return false;
     }
 
     @Override
@@ -141,12 +174,28 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public String createCard() throws UnauthorizedException {
-        return null;
+    	if(3==0) {
+    		throw new UnauthorizedException();
+    	}
+        String customerCard = GenerateAlphaNumericString.getRandomString(10);
+        while(loyaltyCards.containsKey(customerCard));
+        loyaltyCards.put(customerCard, new it.polito.ezshop.model.LoyaltyCard());
+        return customerCard;
     }
 
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        return false;
+        
+    	if(customerId==null || customerId <= 0) {
+    		throw new InvalidCustomerIdException();
+    	}
+    	if(customerCard==null || customerCard=="" || customerCard.length()!=10) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	if(loyaltyCards.get(customerCard)!=null) {
+        	
+        }
+    	return false;
     }
 
     @Override
