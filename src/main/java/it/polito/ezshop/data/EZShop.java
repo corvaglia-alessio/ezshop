@@ -4,10 +4,22 @@ import it.polito.ezshop.exceptions.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import it.polito.ezshop.model.*;
 
 
 public class EZShop implements EZShopInterface {
 
+    Map<Integer, User> users;
+    User loggedInUser;
+
+    public EZShop() {
+        users = new HashMap<Integer, User>();
+        loggedInUser = null;
+        //load everything from file
+    }
 
     @Override
     public void reset() {
@@ -16,17 +28,55 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        return null;
+        Integer maxid = 0;
+
+        if(password == "")
+            throw new InvalidPasswordException("Password should not be empty");
+
+        if(username == "")
+            throw new InvalidUsernameException("Username should not be empty");
+
+        for(User u : users.values()){
+            if(u.getUsername() == username)
+                throw new InvalidUsernameException("Username already exists");
+            else{
+                if(u.getId()>maxid)
+                    maxid=u.getId();
+            }
+        }
+
+        if(role != "Administrator" && role != "Cashier" && role != "ShopManager")
+            throw new InvalidRoleException("Non existing role");
+
+        User u = new UserClass(maxid+1, username, password, role);
+        users.put(maxid+1, u);
+        return maxid+1; // WHERE TO PUT RETURN -1 FOR ERRORS?
+                        // FILE
     }
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        return false;
+        if(loggedInUser.getRole() != "Administrator" || loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+
+        if(users.get(id) != null)
+            users.remove(id);
+        else
+            throw new InvalidUserIdException("Non existing user");
+            //RETURN FALSE
+        return true;
     }
 
     @Override
     public List<User> getAllUsers() throws UnauthorizedException {
-        return null;
+        if(loggedInUser.getRole() != "Administrator" || loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+
+        List<User> u = new ArrayList<User>();
+        for(User us : users.values())
+            u.add(us);
+        
+        return u;
     }
 
     @Override
