@@ -14,9 +14,8 @@ import it.polito.ezshop.model.*;
 public class EZShop implements EZShopInterface {
 
 
-	HashMap<Integer ,Customer> customers;
+	HashMap<Integer ,it.polito.ezshop.model.Customer> customers;
 	HashMap<String,LoyaltyCard> loyaltyCards;
-
     Map<Integer, User> users;
     User loggedInUser;
 
@@ -26,7 +25,6 @@ public class EZShop implements EZShopInterface {
         //load everything from file
     }
 
-//>>>>>>> branch 'Code' of https://git-softeng.polito.it:443/se-2021/group-47/ezshop.git
     @Override
     public void reset() {
 
@@ -172,7 +170,10 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        if(customers.values().stream().anyMatch((c)->{
+    	 if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+             throw new UnauthorizedException("Function not available for the current user");
+    	
+    	if(customers.values().stream().anyMatch((c)->{
         	if(c.getCustomerName().compareTo(customerName)==0) {
         		return true;
         	}
@@ -191,17 +192,16 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        
     	
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user"); 	
     	if(newCustomerName == null || newCustomerName=="") {
-    		throw new InvalidCustomerNameException();
+    		throw new InvalidCustomerNameException("Invalid customer Name");
     	}
     	if(newCustomerCard == null || newCustomerCard.length()!=10) {
-    		throw new InvalidCustomerCardException();
+    		throw new InvalidCustomerCardException("Invalid customer Card");
     	}
-    	if(0==3) {
-    		throw new UnauthorizedException();
-    	}
+    	
     	
     	Customer c = customers.get(id);
         
@@ -212,24 +212,46 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return false;
+    	
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+    	if(id==null || id<=0) {
+    		throw new InvalidCustomerIdException("Invalid customer Id");
+    	}
+    	if(customers.containsKey(id)) {
+    		customers.remove(id);
+    		return true;
+    	}
+    	else
+    		return false;
     }
 
     @Override
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return null;
+    	
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+    	if(id==null || id<=0) {
+    		throw new InvalidCustomerIdException("Invalid customer Id");
+    	}
+    	if(customers.containsKey(id)) {
+    		return customers.get(id);
+    	}
+    	else
+    		return null;
     }
 
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
+    	
         return null;
     }
 
     @Override
     public String createCard() throws UnauthorizedException {
-    	if(3==0) {
-    		throw new UnauthorizedException();
-    	}
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null)
+            throw new UnauthorizedException("Function not available for the current user");
+   	
         String customerCard = GenerateAlphaNumericString.getRandomString(10);
         while(loyaltyCards.containsKey(customerCard));
         loyaltyCards.put(customerCard, new it.polito.ezshop.model.LoyaltyCard());
@@ -238,17 +260,22 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        
+    	if(loggedInUser.getRole() != "Administrator" || loggedInUser.getRole() != "Manager"|| loggedInUser.getRole() != "Cashier"||loggedInUser == null) {
+            throw new UnauthorizedException("Function not available for the current user");
+    	}
     	if(customerId==null || customerId <= 0) {
     		throw new InvalidCustomerIdException();
     	}
     	if(customerCard==null || customerCard=="" || customerCard.length()!=10) {
     		throw new InvalidCustomerCardException();
+    	}   	
+    	if(loyaltyCards.get(customerCard).getCustomer()==null && customers.containsKey(customerId)) {
+    		customers.get(customerId).setCustomerCard(customerCard);
+    		loyaltyCards.get(customerCard).setCustomer(customers.get(customerId));
+    		return true;
     	}
-    	if(loyaltyCards.get(customerCard)!=null) {
-        	
-        }
-    	return false;
+    	else
+    		return false;
     }
 
     @Override
