@@ -5,9 +5,9 @@ public class LoyaltyCard {
 	private int points;
 	private Customer customer;
 	
-	public LoyaltyCard() {
+	public LoyaltyCard(String cardId) {
 		
-		this.cardId = GenerateAlphaNumericString.getRandomString(15);
+		this.cardId = cardId;
 		this.points = 0;
 		this.customer = null;
 	}
