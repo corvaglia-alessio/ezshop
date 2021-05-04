@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -232,9 +233,16 @@ public class EZShop implements EZShopInterface {
     	if(customers.values().stream().anyMatch((c)->c.getCustomerName().equals(customerName))){
         	return -1;
         }
-        else {       	
-        	customers.put(customers.size()+1, new it.polito.ezshop.model.Customer(customers.size()+1,customerName));
-        	return customers.size()+1;
+        else {
+        	Optional<Integer> max = customers.keySet().stream().max((n1,n2)->n1-n2);
+        	if(max.isPresent()) {
+        		customers.put(max.get()+1, new it.polito.ezshop.model.Customer(max.get()+1,customerName));
+        		return max.get()+1;
+        	}
+        	else {
+        		customers.put(1, new it.polito.ezshop.model.Customer(1,customerName));
+        		return 1;
+        	} 		
         }
         
     }
