@@ -16,7 +16,7 @@ public class FileReaderAndWriter {
     //one user per-line
     //user fields are the following, in the specified order <id>;<username>;<password>;<role>
     //field separator is ;
-    public Map<Integer, User>  UsersReader(){
+    static public Map<Integer, User>  UsersReader(){
         Map<Integer, User> users = new HashMap<Integer, User>();
         
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/users.txt");
@@ -46,7 +46,7 @@ public class FileReaderAndWriter {
     //one user per-line
     //user fields are the following, in the specified order: <id>;<username>;<password>;<role>
     //field separator is ;
-    public Boolean UsersWriter(Map<Integer, User> users){
+    static public Boolean UsersWriter(Map<Integer, User> users){
         String x = "";
         for(User u : users.values()){
             x = x + u.getId() + ";" + u.getUsername() + ";" + u.getPassword() + ";" + u.getRole() + "\n";

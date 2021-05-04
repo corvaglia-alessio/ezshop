@@ -26,8 +26,7 @@ public class EZShop implements EZShopInterface {
     User loggedInUser;
 
     public EZShop() {
-        FileReaderAndWriter x = new FileReaderAndWriter();
-        users = x.UsersReader();
+        users = FileReaderAndWriter.UsersReader();
         loggedInUser = null;
     }
 
@@ -59,8 +58,7 @@ public class EZShop implements EZShopInterface {
         if(role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")){
             User u = new UserClass(maxid+1, username, password, role);
             users.put(maxid+1, u);
-            FileReaderAndWriter x = new FileReaderAndWriter();
-            if(!x.UsersWriter(users))
+            if(!FileReaderAndWriter.UsersWriter(users))
                 return -1;
         }
         else{
@@ -82,7 +80,7 @@ public class EZShop implements EZShopInterface {
             if(users.get(id) != null){
                 users.remove(id);
                 FileReaderAndWriter x = new FileReaderAndWriter();
-                if(!x.UsersWriter(users))
+                if(!FileReaderAndWriter.UsersWriter(users))
                     return false;
                 else
                     return true;
@@ -103,7 +101,7 @@ public class EZShop implements EZShopInterface {
         if(loggedInUser.getRole().equals("Administrator")){
             List<User> u = new ArrayList<User>();
             for(User us : users.values())
-            u.add(us);
+                u.add(us);
             return u;
         }
         else{
@@ -131,6 +129,9 @@ public class EZShop implements EZShopInterface {
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         if(loggedInUser == null)
             throw new UnauthorizedException("No one is logged in");
+        
+        if(loggedInUser.getRole().compareTo("Administrator") != 0)
+            throw new UnauthorizedException("Function not available for the current user");
 
         if(id<=0 || id==null)
             throw new InvalidUserIdException("Invalid id");
@@ -141,7 +142,7 @@ public class EZShop implements EZShopInterface {
             else{
                 users.get(id).setRole(role);
                 FileReaderAndWriter x = new FileReaderAndWriter();
-                if(x.UsersWriter(users))
+                if(FileReaderAndWriter.UsersWriter(users))
                     return true;
             }
         }
@@ -165,6 +166,7 @@ public class EZShop implements EZShopInterface {
                 return loggedInUser;
             }
         }
+        loggedInUser = null;
         return null;
     }
 
