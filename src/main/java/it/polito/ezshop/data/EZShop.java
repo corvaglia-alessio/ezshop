@@ -2,10 +2,14 @@ package it.polito.ezshop.data;
 
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +25,9 @@ public class EZShop implements EZShopInterface {
     User loggedInUser;
 
     public EZShop() {
-        users = new HashMap<Integer, User>();
+        FileReaderAndWriter x = new FileReaderAndWriter();
+        users = x.UsersReader();
         loggedInUser = null;
-        //load everything from file
     }
 
     @Override
@@ -33,7 +37,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        Integer maxid = 1;
+        Integer maxid = 0;
 
         if(password.equals("") || password == null)
             throw new InvalidPasswordException("Password should not be empty");
@@ -42,8 +46,9 @@ public class EZShop implements EZShopInterface {
             throw new InvalidUsernameException("Username should not be empty");
 
         for(User u : users.values()){
-            if(u.getUsername().equals(username))
+            if(u.getUsername().equals(username)){
                 return -1;
+            }
             else{
                 if(u.getId()>maxid)
                     maxid=u.getId();
@@ -53,7 +58,9 @@ public class EZShop implements EZShopInterface {
         if(role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")){
             User u = new UserClass(maxid+1, username, password, role);
             users.put(maxid+1, u);
-            //WRITE ON FILE AND IF ERROR -1
+            FileReaderAndWriter x = new FileReaderAndWriter();
+            if(!x.UsersWriter(users))
+                return -1;
         }
         else{
             throw new InvalidRoleException("Non existing role");
@@ -71,16 +78,20 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("No one is logged in");
 
         if(loggedInUser.getRole().equals("Administrator")){
-            if(users.get(id) != null)
+            if(users.get(id) != null){
                 users.remove(id);
-                //WRITE ON FILE, IF ERROR, return FALSE
+                FileReaderAndWriter x = new FileReaderAndWriter();
+                if(!x.UsersWriter(users))
+                    return false;
+                else
+                    return true;
+            }
             else
                 return false;
         }
         else{
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return true;
     }
 
     @Override
@@ -124,12 +135,19 @@ public class EZShop implements EZShopInterface {
             throw new InvalidUserIdException("Invalid id");
 
         if(role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")){
-            users.get(id).setRole(role);
-            //file
-            return true;
+            if(users.get(id) == null)
+                return false;
+            else{
+                users.get(id).setRole(role);
+                FileReaderAndWriter x = new FileReaderAndWriter();
+                if(x.UsersWriter(users))
+                    return true;
+            }
         }
         else
             throw new InvalidRoleException("Non existing role");
+
+        return false;
     }
 
     @Override
