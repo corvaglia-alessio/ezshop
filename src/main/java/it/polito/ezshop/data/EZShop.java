@@ -24,12 +24,17 @@ public class EZShop implements EZShopInterface {
 	HashMap<Integer,it.polito.ezshop.model.Customer> customers;
 	HashMap<String,LoyaltyCard> loyaltyCards;
     Map<Integer, User> users;
+    Map<Integer, BalanceOperation> balanceOperations;
     User loggedInUser;
+    double currentBalance;
 
     public EZShop() {
         users = FileReaderAndWriter.UsersReader();
         
         loggedInUser = null;
+        currentBalance = 0;
+        //load balance operations from file!!
+
     }
 
     @Override
@@ -556,16 +561,79 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-        return false;
+        Integer maxid = 0;
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
+
+        if(loggedInUser.getRole().equals("Administrator") || loggedInUser.getRole().equals("ShopManager")){
+            if((currentBalance + toBeAdded) < 0)
+                return false;
+            else{
+                for(BalanceOperation bo : balanceOperations.values()){
+                    if(bo.getBalanceId()>maxid)
+                        maxid = bo.getBalanceId();
+                }
+                BalanceOperation b = new BalanceOperationClass(maxid+1, toBeAdded);
+                balanceOperations.put(maxid+1, b);
+                currentBalance+=toBeAdded;
+                return true;
+            } 
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     }
 
     @Override
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        return null;
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
+        
+        if(loggedInUser.getRole().equals("Administrator") || loggedInUser.getRole().equals("ShopManager")){
+            //important, check which roles are able to to this operation since it is not specified in the interface!!
+
+            List<BalanceOperation> l = new ArrayList<BalanceOperation>();
+
+            if(from == null && to == null)
+                l = this.balanceOperations.values().stream().collect(Collectors.toList());
+
+            if(from !=null && to == null){
+                for(BalanceOperation bo : balanceOperations.values()){
+                    if(bo.getDate().isAfter(from) || bo.getDate().isEqual(from))
+                        l.add(bo);
+                }
+            }
+            if(from == null && to != null){
+                for(BalanceOperation bo : balanceOperations.values()){
+                    if(bo.getDate().isBefore(to) || bo.getDate().isEqual(to))
+                        l.add(bo);
+                }
+            }
+            if(from != null && to != null){
+                for(BalanceOperation bo : balanceOperations.values()){
+                    if((bo.getDate().isBefore(to) || bo.getDate().isEqual(to)) && (bo.getDate().isAfter(from) || bo.getDate().isEqual(from)))
+                        l.add(bo);
+                }
+            } 
+
+            return l;
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     }
 
     @Override
     public double computeBalance() throws UnauthorizedException {
-        return 0;
+        if(loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in");
+        
+        if(loggedInUser.getRole().equals("Administrator") || loggedInUser.getRole().equals("ShopManager")){
+            //important, check which roles are able to to this operation since it is not specified in the interface!!
+            return this.currentBalance;
+        }
+        else{
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     }
 }
