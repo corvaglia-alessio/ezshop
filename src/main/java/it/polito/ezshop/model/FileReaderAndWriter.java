@@ -71,7 +71,8 @@ public class FileReaderAndWriter {
     /*Reading customers from the file*/
     static public HashMap<Integer,it.polito.ezshop.model.Customer> CustomersReader(){
     	HashMap<Integer, it.polito.ezshop.model.Customer> customers = new HashMap<Integer, it.polito.ezshop.model.Customer>();
-        
+        return customers;
+        /*
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/customers.txt");
         Scanner s = null;
         try {
@@ -79,7 +80,7 @@ public class FileReaderAndWriter {
             while(s.hasNextLine()){
                 String line = s.nextLine();
                 String[] res = line.split(";");
-                it.polito.ezshop.model.Customer c = new it.polito.ezshop.model.Customer(Integer.parseInt(res[0]), res[1], res[2]);
+                it.polito.ezshop.model.Customer c = new it.polito.ezshop.model.Customer(Integer.parseInt(res[0]), res[1], res[2],Integer.parseInt(res[3]));
                 customers.put(Integer.parseInt(res[0]), c);
             }
         } 	
@@ -92,67 +93,16 @@ public class FileReaderAndWriter {
             }
         }
         return customers;
+        */
     }
     
     /*writing customers to file*/
     static public Boolean CustomersWriter(HashMap<Integer, it.polito.ezshop.model.Customer> customers){
         String x = "";
         for(it.polito.ezshop.model.Customer c : customers.values()){
-            x = x + c.getId() + ";" + c.getCustomerName() + ";" + c.getCustomerCard()+"\n";
+            x = x + c.getId() + ";" + c.getCustomerName() + ";" + c.getCustomerCard()+";"+c.getPoints()+"\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/customers.txt");
-        PrintWriter out = null;
-        try{
-            out = new PrintWriter(outputFile);
-            out.print(x);
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-            return false;
-        }
-        finally{
-            if(out!=null)
-                out.close();
-        }
-
-        return true;
-    }
-    /*reader for loyaltyCards. Require to pass the customers Hashmap. First load customers in EZShop.java*/
-    static public HashMap<String,LoyaltyCard> LoyaltyCardsReader(HashMap<Integer,it.polito.ezshop.model.Customer> customers){
-    	HashMap<String, LoyaltyCard> cards = new HashMap<String, LoyaltyCard>();
-        
-        File inputFile = new File("./src/main/java/it/polito/ezshop/model/loyaltycards.txt");
-        Scanner s = null;
-        try {
-            s = new Scanner(inputFile);
-            while(s.hasNextLine()){
-                String line = s.nextLine();
-                String[] res = line.split(";");
-                
-                LoyaltyCard c = new LoyaltyCard(res[0]);
-                c.setCustomer(customers.get(Integer.parseInt(res[2])));
-                c.setPoints(Integer.parseInt(res[1]));
-                cards.put(res[0], c);
-            }
-        } 	
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        finally{
-            if(s!=null){
-                s.close();
-            }
-        }
-        return cards;
-    }
-    
-    /*writing loyaltyCards to file*/
-    static public Boolean LoyaltyCardsWriter(HashMap<String, LoyaltyCard> loyaltyCards){
-        String x = "";
-        for(LoyaltyCard c : loyaltyCards.values()){
-            x = x + c.getCardId() + ";" + c.getPoints() + ";" + c.getCustomer().getId()+"\n";
-        }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/loyaltycards.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);
