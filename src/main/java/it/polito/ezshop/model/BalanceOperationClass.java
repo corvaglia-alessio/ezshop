@@ -11,16 +11,12 @@ public class BalanceOperationClass implements BalanceOperation{
     double money;
     String type;
 
-    public BalanceOperationClass(int balanceId, double money){
+    public BalanceOperationClass(int balanceId, LocalDate date, double money, String type){
         this.balanceId = balanceId;
-        this.date = LocalDate.now();
+        this.date = date;
         this.money = money;
-        if(money<0)
-            this.type = "DEBIT";
-        else
-            this.type = "CREDIT";
+        this.type = type;
     }
-
 
     public int getBalanceId(){
         return this.balanceId;
