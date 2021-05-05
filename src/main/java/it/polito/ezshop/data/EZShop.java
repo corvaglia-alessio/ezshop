@@ -24,8 +24,7 @@ public class EZShop implements EZShopInterface {
 
     public EZShop() {
 
-        users = FileReaderAndWriter.UsersReader();
-        customers = FileReaderAndWriter.CustomersReader();
+        
         loggedInUser = null;
         currentBalance = 0;
         //load balance operations from file!!
@@ -39,6 +38,9 @@ public class EZShop implements EZShopInterface {
         this.currentBalance = 0;
         for (BalanceOperation bo : balanceOperations.values()) //after having loaded operations from file, update the current balance
             this.currentBalance+=bo.getMoney();
+        
+        //customers init
+        this.customers = FileReaderAndWriter.CustomersReader();
 
     }
 
@@ -293,17 +295,19 @@ public class EZShop implements EZShopInterface {
     	if (customers.containsKey(id)){
     		return false;
     	}
-    	customers.get(id).setCustomerName(newCustomerName);
     	
     	if(newCustomerCard == null) {
+    		customers.get(id).setCustomerName(newCustomerName);
+    		FileReaderAndWriter.CustomersWriter(customers);		//TO CHECK WHAT MORISIO SAYS
+    		return true;
+    	}
+    	
+    	if(newCustomerCard.isEmpty()) {
+    		customers.get(id).setCustomerName(newCustomerName);
+    		customers.get(id).setCustomerCard("");
     		FileReaderAndWriter.CustomersWriter(customers);
     		return true;
     	}
-    	/*
-    	if(newCustomerCard.isEmpty()) {
-    		
-    	}
-    	
     	
     	if(newCustomerCard.length()!=10) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
@@ -315,8 +319,13 @@ public class EZShop implements EZShopInterface {
     	catch(NumberFormatException nfe) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
     	}
-    	*/
-    	return true;
+    	
+    	if(customers.values().stream().anyMatch((c)->c.getCustomerCard().equals(newCustomerCard))){
+    		return false;
+    	}
+    	customers.get(id).setCustomerCard(newCustomerCard);
+    	FileReaderAndWriter.CustomersWriter(customers);
+		return true;
     }
 
     @Override
@@ -328,7 +337,14 @@ public class EZShop implements EZShopInterface {
     	if(id==null || id<=0) {
     		throw new InvalidCustomerIdException("Invalid customer Id");
     	}
-    	return false;
+    	
+    	if(!customers.containsKey(id))
+    		return false;
+    	else {
+    		customers.remove(id);
+        	FileReaderAndWriter.CustomersWriter(customers);
+        	return true;
+    	}
     }
 
     @Override
@@ -353,8 +369,7 @@ public class EZShop implements EZShopInterface {
     	
     	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
-        }
-        
+        }       
     	return customers.values().stream().collect(Collectors.toList());
     }
 
@@ -381,26 +396,24 @@ public class EZShop implements EZShopInterface {
     		throw new InvalidCustomerIdException();
     	}
     	if(customerCard==null || customerCard.equals("") || customerCard.length()!=10) {
-    		throw new InvalidCustomerCardException();
-    	}   	
-    	/*
-    	if(loyaltyCards.get(customerCard).getCustomer()==null && customers.containsKey(customerId)) {
-    		String oldCustomerCard = customers.get(customerId).getCustomerCard();
-    		it.polito.ezshop.model.Customer oldCustomer = loyaltyCards.get(customerCard).getCustomer();
-    		customers.get(customerId).setCustomerCard(customerCard);
-    		loyaltyCards.get(customerCard).setCustomer(customers.get(customerId));
-	        if(!FileReaderAndWriter.CustomersWriter(customers) || !FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
-	        	customers.get(customerId).setCustomerCard(oldCustomerCard);
-	    		loyaltyCards.get(customerCard).setCustomer(oldCustomer);
-	    		return false;
-	        }
-	    	else
-	    		return true;
+    		throw new InvalidCustomerCardException("Invalid customer Card");
+    	} 
+    	try {
+    		Integer.parseInt(customerCard);
     	}
-    	else
+    	catch(NumberFormatException nfe) {
+    		throw new InvalidCustomerCardException("Invalid customer Card");
+    	}
+    	if(customers.values().stream().anyMatch((c)->c.getCustomerCard().equals(customerCard))
+    			|| !customers.containsKey(customerId)){
     		return false;
-    		*/
-    	return false;
+    	}
+    	else {
+    		customers.get(customerId).setCustomerCard(customerCard);
+        	FileReaderAndWriter.CustomersWriter(customers);
+    		return true;
+    	}
+    	
     }
 
     @Override
@@ -420,25 +433,18 @@ public class EZShop implements EZShopInterface {
     	catch(NumberFormatException nfe) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
     	}
-    	/*
-    	if(!loyaltyCards.containsKey(customerCard)) {
-    		return false;
+    	
+    	Optional<it.polito.ezshop.model.Customer> optionalCustomer = customers.values().stream().filter((c)->c.getCustomerCard().equals(customerCard)).findFirst();
+    		
+    	if(optionalCustomer.isPresent()) {
+    		it.polito.ezshop.model.Customer c = optionalCustomer.get();
+    		if(c.getPoints()+pointsToBeAdded >= 0) {
+    			c.setPoints(c.getPoints()+pointsToBeAdded);
+            	FileReaderAndWriter.CustomersWriter(customers);
+    		}
     	}
-    	else if(loyaltyCards.get(customerCard).getPoints()+pointsToBeAdded < 0) {
-    		return false;
-    	}
-    	else {
-    		int oldPoints = loyaltyCards.get(customerCard).getPoints();
-    		loyaltyCards.get(customerCard).setPoints(loyaltyCards.get(customerCard).getPoints()+pointsToBeAdded);
-    		if(!FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
-	    		loyaltyCards.get(customerCard).setPoints(oldPoints);
-	    		return false;
-	    	}
-	    	else
-	    		return true;
-    	}
-    	*/
-    	return true;
+    	
+    	return false;
     }
 
     @Override

@@ -70,11 +70,14 @@ public class FileReaderAndWriter {
 
         return true;
     }
-    /*Reading customers from the file*/
+    //reads the users actually registered in the systems and return them in a Map
+    //one user per-line
+    //user fields are the following, in the specified order <id>;<customerName>;<customerCard>;<points>
+    //field separator is ;
     static public HashMap<Integer,it.polito.ezshop.model.Customer> CustomersReader(){
     	HashMap<Integer, it.polito.ezshop.model.Customer> customers = new HashMap<Integer, it.polito.ezshop.model.Customer>();
-        return customers;
-        /*
+        
+        
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/customers.txt");
         Scanner s = null;
         try {
@@ -95,7 +98,7 @@ public class FileReaderAndWriter {
             }
         }
         return customers;
-        */
+        
     }
     
     /*writing customers to file*/

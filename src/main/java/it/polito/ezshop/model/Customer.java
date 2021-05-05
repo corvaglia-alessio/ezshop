@@ -51,13 +51,13 @@ public class Customer implements it.polito.ezshop.data.Customer {
 
 	@Override
 	public Integer getPoints() {
-		return null; 
+		return this.points;
 	}
 
 	@Override
 	public void setPoints(Integer points) {
 		// TODO Auto-generated method stub
-
+		this.points = points;
 	}
 
 }
