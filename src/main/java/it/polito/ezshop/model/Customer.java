@@ -5,11 +5,14 @@ public class Customer implements it.polito.ezshop.data.Customer {
 	private String customerName;
 	private String customerCard;
 	
-	public Customer(int customerId, String customerName) {
+	public Customer(int customerId, String customerName, String customerCard) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
-		this.customerCard = "";
+		if(customerCard == null)
+			this.customerCard = "";
+		else
+			this.customerCard = customerCard;
 	}
 
 	@Override

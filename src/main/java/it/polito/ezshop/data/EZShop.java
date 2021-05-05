@@ -19,7 +19,8 @@ import it.polito.ezshop.model.*;
 
 public class EZShop implements EZShopInterface {
 
-
+	
+	
 	HashMap<Integer,it.polito.ezshop.model.Customer> customers;
 	HashMap<String,LoyaltyCard> loyaltyCards;
     Map<Integer, User> users;
@@ -27,6 +28,7 @@ public class EZShop implements EZShopInterface {
 
     public EZShop() {
         users = FileReaderAndWriter.UsersReader();
+        
         loggedInUser = null;
     }
 
@@ -256,12 +258,22 @@ public class EZShop implements EZShopInterface {
         else {
         	Optional<Integer> max = customers.keySet().stream().max((n1,n2)->n1-n2);
         	if(max.isPresent()) {
-        		customers.put(max.get()+1, new it.polito.ezshop.model.Customer(max.get()+1,customerName));
-        		return max.get()+1;
+        		customers.put(max.get()+1, new it.polito.ezshop.model.Customer(max.get()+1,customerName,""));
+        		if(FileReaderAndWriter.CustomersWriter(customers))
+    	        	return max.get()+1;
+    	        else {
+    	        	customers.remove(max.get()+1);
+    	        	return -1;
+    	        }
         	}
         	else {
-        		customers.put(1, new it.polito.ezshop.model.Customer(1,customerName));
-        		return 1;
+        		customers.put(1, new it.polito.ezshop.model.Customer(1,customerName,""));
+    	        if(FileReaderAndWriter.CustomersWriter(customers))
+    	        	return 1;
+    	        else {
+    	        	customers.remove(1);
+    	        	return -1;
+    	        }
         	} 		
         }
         
@@ -292,9 +304,20 @@ public class EZShop implements EZShopInterface {
     		return false;
     	}
     	else {
+    		String oldCustomerName = c.getCustomerName();
+    		String oldCustomerCard = c.getCustomerCard();
+    		it.polito.ezshop.model.Customer oldCustomer = card.getCustomer(); 
 	        c.setCustomerName(newCustomerName);
 	        c.setCustomerCard(newCustomerCard);
 	        card.setCustomer(c);
+	        
+	        if(!FileReaderAndWriter.CustomersWriter(customers) || !FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
+	        	c.setCustomerName(oldCustomerName);
+		        c.setCustomerCard(oldCustomerCard);
+		        card.setCustomer(oldCustomer);
+		        return false;
+	        }
+	        
 	    	return true;
     	}
     }
@@ -311,10 +334,22 @@ public class EZShop implements EZShopInterface {
     	if(customers.containsKey(id)) {
     		it.polito.ezshop.model.Customer c = customers.get(id);
     		if(!c.getCustomerCard().equals("")) {		//that part is not in the interface description but might be needed
+    			it.polito.ezshop.model.Customer oldCustomer = loyaltyCards.get(c.getCustomerCard()).getCustomer();
+    			int oldPoints = loyaltyCards.get(c.getCustomerCard()).getPoints();
     			loyaltyCards.get(c.getCustomerCard()).setCustomer(null);	
-    			loyaltyCards.get(c.getCustomerCard()).setPoints(0);			
+    			loyaltyCards.get(c.getCustomerCard()).setPoints(0);
+    			if(!FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)){
+    				loyaltyCards.get(c.getCustomerCard()).setCustomer(oldCustomer);	
+        			loyaltyCards.get(c.getCustomerCard()).setPoints(oldPoints);
+        			return false;
+    			}
     		}
+    		it.polito.ezshop.model.Customer oldCustomer = customers.get(id);
     		customers.remove(id);
+    		if(!FileReaderAndWriter.CustomersWriter(customers)) {
+    			customers.put(oldCustomer.getId(),oldCustomer);
+    			return false;
+    		}
     		return true;
     	}
     	else
@@ -360,7 +395,12 @@ public class EZShop implements EZShopInterface {
         	customerCard = GenerateNumericString.getRandomString();
         }
         loyaltyCards.put(customerCard, new it.polito.ezshop.model.LoyaltyCard(customerCard));
-        return customerCard;
+        if(!FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
+            loyaltyCards.remove(customerCard);
+            return "";
+        }
+        else
+        	return customerCard;
     }
 
     @Override
@@ -377,9 +417,17 @@ public class EZShop implements EZShopInterface {
     		throw new InvalidCustomerCardException();
     	}   	
     	if(loyaltyCards.get(customerCard).getCustomer()==null && customers.containsKey(customerId)) {
+    		String oldCustomerCard = customers.get(customerId).getCustomerCard();
+    		it.polito.ezshop.model.Customer oldCustomer = loyaltyCards.get(customerCard).getCustomer();
     		customers.get(customerId).setCustomerCard(customerCard);
     		loyaltyCards.get(customerCard).setCustomer(customers.get(customerId));
-    		return true;
+	        if(!FileReaderAndWriter.CustomersWriter(customers) || !FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
+	        	customers.get(customerId).setCustomerCard(oldCustomerCard);
+	    		loyaltyCards.get(customerCard).setCustomer(oldCustomer);
+	    		return false;
+	        }
+	    	else
+	    		return true;
     	}
     	else
     		return false;
@@ -410,8 +458,14 @@ public class EZShop implements EZShopInterface {
     		return false;
     	}
     	else {
+    		int oldPoints = loyaltyCards.get(customerCard).getPoints();
     		loyaltyCards.get(customerCard).setPoints(loyaltyCards.get(customerCard).getPoints()+pointsToBeAdded);
-    		return true;
+    		if(!FileReaderAndWriter.LoyaltyCardsWriter(loyaltyCards)) {
+	    		loyaltyCards.get(customerCard).setPoints(oldPoints);
+	    		return false;
+	    	}
+	    	else
+	    		return true;
     	}
     }
 
