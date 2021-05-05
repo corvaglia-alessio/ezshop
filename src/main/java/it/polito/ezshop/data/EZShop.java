@@ -356,7 +356,9 @@ public class EZShop implements EZShopInterface {
         }
    	
         String customerCard = GenerateNumericString.getRandomString();
-        while(loyaltyCards.containsKey(customerCard));
+        while(loyaltyCards.containsKey(customerCard)) {
+        	customerCard = GenerateNumericString.getRandomString();
+        }
         loyaltyCards.put(customerCard, new it.polito.ezshop.model.LoyaltyCard(customerCard));
         return customerCard;
     }
