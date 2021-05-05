@@ -14,44 +14,42 @@ public class Customer implements it.polito.ezshop.data.Customer {
 
 	@Override
 	public String getCustomerName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.customerName;
+		
 	}
 
 	@Override
 	public void setCustomerName(String customerName) {
-		// TODO Auto-generated method stub
+		this.customerName = customerName;
+		
 
 	}
 
 	@Override
 	public String getCustomerCard() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.customerCard;
+
 	}
 
 	@Override
 	public void setCustomerCard(String customerCard) {
-		// TODO Auto-generated method stub
+		this.customerCard = customerCard;
 
 	}
 
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getId();
 	}
 
 	@Override
 	public void setId(Integer id) {
-		// TODO Auto-generated method stub
-
+		this.customerId=id;
 	}
 
 	@Override
 	public Integer getPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		return null; 
 	}
 
 	@Override
