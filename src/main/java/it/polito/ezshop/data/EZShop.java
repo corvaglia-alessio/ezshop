@@ -3,18 +3,13 @@ package it.polito.ezshop.data;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-import java.util.HashMap;
-import it.polito.ezshop.model.*;
 
 
 public class EZShop implements EZShopInterface {
@@ -28,11 +23,22 @@ public class EZShop implements EZShopInterface {
     double currentBalance;
 
     public EZShop() {
+
         users = FileReaderAndWriter.UsersReader();
         customers = FileReaderAndWriter.CustomersReader();
         loggedInUser = null;
         currentBalance = 0;
         //load balance operations from file!!
+        
+         //user init
+        this.users = FileReaderAndWriter.UsersReader();
+        this.loggedInUser = null;
+
+        //balance init
+        this.balanceOperations = FileReaderAndWriter.BalanceOperationsReader();
+        this.currentBalance = 0;
+        for (BalanceOperation bo : balanceOperations.values()) //after having loaded operations from file, update the current balance
+            this.currentBalance+=bo.getMoney();
 
     }
 
@@ -85,7 +91,6 @@ public class EZShop implements EZShopInterface {
         if(loggedInUser.getRole().equals("Administrator")){
             if(users.get(id) != null){
                 users.remove(id);
-                FileReaderAndWriter x = new FileReaderAndWriter();
                 if(!FileReaderAndWriter.UsersWriter(users))
                     return false;
                 else
@@ -147,7 +152,6 @@ public class EZShop implements EZShopInterface {
                 return false;
             else{
                 users.get(id).setRole(role);
-                FileReaderAndWriter x = new FileReaderAndWriter();
                 if(FileReaderAndWriter.UsersWriter(users))
                     return true;
             }
@@ -537,10 +541,13 @@ public class EZShop implements EZShopInterface {
                     if(bo.getBalanceId()>maxid)
                         maxid = bo.getBalanceId();
                 }
-                BalanceOperation b = new BalanceOperationClass(maxid+1, toBeAdded);
-                balanceOperations.put(maxid+1, b);
-                currentBalance+=toBeAdded;
-                return true;
+                BalanceOperation b = new BalanceOperationClass(maxid+1, LocalDate.now(), toBeAdded, toBeAdded<0 ? "DEBIT" : "CREDIT");
+                this.balanceOperations.put(maxid+1, b);
+                this.currentBalance+=toBeAdded;
+                if(!FileReaderAndWriter.balanceOperationsWriter(this.balanceOperations))
+                    return false;
+                else
+                    return true;
             } 
         }
         else{

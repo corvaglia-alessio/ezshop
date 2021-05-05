@@ -3,10 +3,12 @@ package it.polito.ezshop.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.data.User;
 
 
@@ -117,6 +119,62 @@ public class FileReaderAndWriter {
                 out.close();
         }
 
+        return true;
+    }
+
+ 
+    //reads the balanceOperations actually registered in the system and return them in a Map
+    //one balanceOperation per-line
+    //balanceOperation fields are the following, in the specified order <balanceId>;<date>;<money>;<type>
+    //field separator is ;
+    static public Map<Integer, BalanceOperation> BalanceOperationsReader(){
+        Map<Integer, BalanceOperation> bos = new HashMap<Integer, BalanceOperation>();
+        
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/balanceoperations.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                BalanceOperation bo = new BalanceOperationClass(Integer.parseInt(res[0]), LocalDate.parse(res[1]), Double.parseDouble(res[2]), res[3]);
+                bos.put(Integer.parseInt(res[0]), bo);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally{
+            if(s!=null){
+                s.close();
+            }
+        }
+        return bos;
+    }
+
+    //writes the balanceOperations Map received as parameter in the balanceoperations.txt file
+    //one balance operation per-line
+    //balanceOperation fields are the following, in the specified order: <balanceId>;<date>;<money>;<type>
+    //field separator is ;
+    static public Boolean balanceOperationsWriter(Map<Integer, BalanceOperation> balanceOperations){
+        String x = "";
+        for(BalanceOperation bo : balanceOperations.values()){
+            x = x + bo.getBalanceId() + ";" + bo.getDate().toString() + ";" + bo.getMoney() + ";" + bo.getType() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/balanceoperations.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
         return true;
     }
 }
