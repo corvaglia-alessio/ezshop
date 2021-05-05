@@ -355,7 +355,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
    	
-        String customerCard = GenerateAlphaNumericString.getRandomString(10);
+        String customerCard = GenerateNumericString.getRandomString();
         while(loyaltyCards.containsKey(customerCard));
         loyaltyCards.put(customerCard, new it.polito.ezshop.model.LoyaltyCard(customerCard));
         return customerCard;
@@ -391,6 +391,13 @@ public class EZShop implements EZShopInterface {
         }
     	
     	if(customerCard == null || customerCard.length()!=10) {
+    		throw new InvalidCustomerCardException("Invalid customer Card");
+    	}
+    	
+    	try {
+    		Integer.parseInt(customerCard);
+    	}
+    	catch(NumberFormatException nfe) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
     	}
     	
