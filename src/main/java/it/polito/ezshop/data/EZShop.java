@@ -292,7 +292,7 @@ public class EZShop implements EZShopInterface {
     		throw new InvalidCustomerNameException("Invalid customer Name");
     	}
     	
-    	if (customers.containsKey(id)){
+    	if (!customers.containsKey(id)){
     		return false;
     	}
     	
@@ -323,6 +323,7 @@ public class EZShop implements EZShopInterface {
     	if(customers.values().stream().anyMatch((c)->c.getCustomerCard().equals(newCustomerCard))){
     		return false;
     	}
+		customers.get(id).setCustomerName(newCustomerName);
     	customers.get(id).setCustomerCard(newCustomerCard);
     	FileReaderAndWriter.CustomersWriter(customers);
 		return true;
