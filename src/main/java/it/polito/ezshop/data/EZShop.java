@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 
 public class EZShop implements EZShopInterface {
-
-	
 	
 	HashMap<Integer,it.polito.ezshop.model.Customer> customers;
     Map<Integer, User> users;
@@ -27,7 +25,6 @@ public class EZShop implements EZShopInterface {
         
         loggedInUser = null;
         currentBalance = 0;
-        //load balance operations from file!!
         
          //user init
         this.users = FileReaderAndWriter.UsersReader();
@@ -207,7 +204,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<ProductType> getAllProductTypes() throws UnauthorizedException {
-        return null;
+        return new ArrayList<ProductType>(); //just for testing
     }
 
     @Override
@@ -217,7 +214,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<ProductType> getProductTypesByDescription(String description) throws UnauthorizedException {
-        return null;
+        return new ArrayList<ProductType>(); //just for testing
     }
 
     @Override
@@ -252,7 +249,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
-        return null;
+        return new ArrayList<Order>(); //just for testing
     }
 
     @Override
@@ -568,7 +565,6 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("No one is logged in");
         
         if(loggedInUser.getRole().equals("Administrator") || loggedInUser.getRole().equals("ShopManager")){
-            //important, check which roles are able to to this operation since it is not specified in the interface!!
 
             List<BalanceOperation> l = new ArrayList<BalanceOperation>();
 
@@ -607,7 +603,6 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("No one is logged in");
         
         if(loggedInUser.getRole().equals("Administrator") || loggedInUser.getRole().equals("ShopManager")){
-            //important, check which roles are able to to this operation since it is not specified in the interface!!
             return this.currentBalance;
         }
         else{

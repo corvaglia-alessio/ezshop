@@ -41,7 +41,7 @@ public class Customer implements it.polito.ezshop.data.Customer {
 
 	@Override
 	public Integer getId() {
-		return this.getId();
+		return this.customerId;
 	}
 
 	@Override
