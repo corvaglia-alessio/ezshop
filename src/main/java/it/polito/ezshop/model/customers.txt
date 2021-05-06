@@ -1,2 +1,4 @@
-1;testcustomer;;0
-5;testcustomer2;1234567890;20
+5;testcustomer2;1234567890;60
+6;ciao;1419315241;50
+7;fghj;9997775603;0
+8;testcustomer3;3433240215;0

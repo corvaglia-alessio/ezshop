@@ -255,9 +255,9 @@ public class EZShop implements EZShopInterface {
     @Override
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
     	
-    	if(loggedInUser == null || !loggedInUser.getRole().equals("Administrator") || !loggedInUser.getRole().equals("Manager") || !loggedInUser.getRole().equals("Cashier")) {
-             throw new UnauthorizedException("Function not available for the current user");
-         }
+    	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
     	
     	if(customers.values().stream().anyMatch((c)->c.getCustomerName().equals(customerName))){
         	return -1;
@@ -311,7 +311,7 @@ public class EZShop implements EZShopInterface {
     	}
     	
     	try {
-    		Integer.parseInt(newCustomerCard);
+    		Double.parseDouble(newCustomerCard);
     	}
     	catch(NumberFormatException nfe) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
@@ -426,7 +426,7 @@ public class EZShop implements EZShopInterface {
     	}
     	
     	try {
-    		Integer.parseInt(customerCard);
+    		Double.parseDouble(customerCard);
     	}
     	catch(NumberFormatException nfe) {
     		throw new InvalidCustomerCardException("Invalid customer Card");
@@ -439,6 +439,7 @@ public class EZShop implements EZShopInterface {
     		if(c.getPoints()+pointsToBeAdded >= 0) {
     			c.setPoints(c.getPoints()+pointsToBeAdded);
             	FileReaderAndWriter.CustomersWriter(customers);
+            	return true;
     		}
     	}
     	
