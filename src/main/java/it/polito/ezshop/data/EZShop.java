@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.swing.tree.TreeNode;
-
 import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
@@ -635,8 +633,10 @@ public class EZShop implements EZShopInterface {
         }
     }
 
+    //CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount)throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,UnauthorizedException {
+
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
@@ -659,17 +659,30 @@ public class EZShop implements EZShopInterface {
         if(getProductTypeByBarCode(productCode).getQuantity() < amount)
             return false;
         
-        TicketEntry t = new TicketEntryClass(transactionId, productCode, getProductTypeByBarCode(productCode).getProductDescription(), amount, getProductTypeByBarCode(productCode).getPricePerUnit(), 0D);
         List<TicketEntry> x = sales.get(transactionId).getEntries();
-        x.add(t);
-        sales.get(transactionId).setEntries(x);
-        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
+        TicketEntry t = null;
 
+        for(TicketEntry e : x)
+            if(e.getBarCode() == productCode){
+                t = e;
+            }
+
+        if(t == null){ //product not present
+            t = new TicketEntryClass(transactionId, productCode, getProductTypeByBarCode(productCode).getProductDescription(), amount, getProductTypeByBarCode(productCode).getPricePerUnit(), 0D);
+            x.add(t);
+            sales.get(transactionId).setEntries(x);
+        }
+        else{ //product already present
+            t.setAmount(amount);
+        }
+        
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
         getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()-amount);
 
         return true;
     }
 
+    //CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
