@@ -18,7 +18,6 @@ public class EZShop implements EZShopInterface {
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer , SaleTransaction> sales;
-    List<TicketEntryClass> entries;
     User loggedInUser;
     double currentBalance;
 
@@ -51,9 +50,14 @@ public class EZShop implements EZShopInterface {
 
         //sales init
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); //load all transactions
-        this.entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
+        List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
         
         //for each transaction, create a new list of ticketentries with transaction id = transaction considered and set it
+        //the list with ALL entries is local to the constructor, after that each entry has been assigned to the right transaction, will be deleted
+
+        //NOTE FOR ALESSIO 
+        //WHEN IS NECESSARY TO MAKE TRANSACTIONS AND ENTRIES PERSISTENT, REMBEMBER TO RE-GROUP IN A UNIQUE LIST ALL ENTRIES FROM TRANSACTIONS
+        //AND TO CREATE OBJECT OF TICKETENTRYCLASS (AND NOT TICKETENTRY) OTHERWISE IT IS NOT POSSIBLE TO RETRIVE THE TRANSACTION ID
         for (SaleTransaction t : sales.values()){ 
             List<TicketEntry> e = entries.stream().filter((e1) -> {return e1.getTransactionId()==t.getTicketNumber();}).collect(Collectors.toList());
             t.setEntries(e);
@@ -63,7 +67,6 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public void reset() {
-
     }
 
     @Override
