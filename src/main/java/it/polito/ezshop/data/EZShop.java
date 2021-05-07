@@ -720,7 +720,12 @@ public class EZShop implements EZShopInterface {
          if(t.getAmount() < amount) //if the amount already added are less the the desidered quantity to delete, it is not possible to delete
             return false;
         
-        t.setAmount(t.getAmount()-amount);
+        if(t.getAmount() == amount){
+            x.remove(t);
+        }
+        else{
+            t.setAmount(t.getAmount()-amount);
+        }
         
         sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() - (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
         getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()+amount);
