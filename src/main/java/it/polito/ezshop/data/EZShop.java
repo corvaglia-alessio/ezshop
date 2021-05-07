@@ -25,16 +25,13 @@ public class EZShop implements EZShopInterface {
     // transaction is being handled
     // when the transaction will be closed, it will be inserted in the sales map and
     // actualTransaction = null
-    // the same for actualEntries
-    SaleTransaction actualTransaction;
-    List<TicketEntry> actualEntries;
+    Integer actualTransaction;
 
     public EZShop() {
 
         loggedInUser = null;
         currentBalance = 0;
         actualTransaction = null;
-        actualEntries = null;
 
         // user init
         this.users = FileReaderAndWriter.UsersReader();
@@ -70,6 +67,8 @@ public class EZShop implements EZShopInterface {
             }).collect(Collectors.toList());
             t.setEntries(e);
         }
+
+        this.inventory = new HashMap<Integer, ProductType>(); //to change when persistence will be implemented
 
     }
 
@@ -344,19 +343,12 @@ public class EZShop implements EZShopInterface {
         if (!ProductTypeClass.VerifyBarCode(barCode))
             throw new InvalidProductCodeException("The barCode provided is not valid.");
 
-        List<ProductType> allProducts = getAllProductTypes();
-        allProducts.removeIf((pt) -> {
-            if (pt.getBarCode() != barCode) {
-                return true;
-            }
-            return false;
-        });
+        for(ProductType p : getAllProductTypes())
+                if(p.getBarCode().equals(barCode))
+                    return p;
 
-        if (allProducts.size() == 1) {
-            return allProducts.get(0);
-        } else {
-            return null;
-        }
+        return null;
+        
     }
 
     @Override
@@ -628,14 +620,14 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier")))
             throw new UnauthorizedException("Function not available for the current user");
 
-        this.actualEntries = new ArrayList<TicketEntry>();
-
         if (this.sales.isEmpty()) {
-            this.actualTransaction = new SaleTransactionClass(0);
+            this.sales.put(0, new SaleTransactionClass(0));
+            this.actualTransaction = 0; 
             return 0;
         } else {
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i - j);
-            this.actualTransaction = new SaleTransactionClass(id.get() + 1);
+            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
+            this.actualTransaction = id.get()+1;
             return id.get() + 1;
         }
     }
@@ -722,7 +714,10 @@ public class EZShop implements EZShopInterface {
         if (transactionId <= 0 || transactionId == null)
             throw new InvalidTransactionIdException("Transaction id is wrong");
 
-        return this.sales.get(transactionId);
+        if(this.actualTransaction == transactionId) //if the transaction is not closed it cannot be returned
+            return null;
+        else
+            return this.sales.get(transactionId);
     }
 
     @Override
