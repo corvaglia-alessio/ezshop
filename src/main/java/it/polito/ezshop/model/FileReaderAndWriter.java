@@ -277,7 +277,7 @@ public class FileReaderAndWriter {
         for(TicketEntryClass t : ticketEntries){
             x = x + t.getTransactionId() + ";" + t.getBarCode() + ";" + t.getProductDescription() + ";" + t.getAmount() + ";" + t.getPricePerUnit() + ";" + t.getDiscountRate() + "\n";
         }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/ticketentries.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);

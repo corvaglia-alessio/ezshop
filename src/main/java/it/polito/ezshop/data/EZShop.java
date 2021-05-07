@@ -18,15 +18,22 @@ public class EZShop implements EZShopInterface {
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer , SaleTransaction> sales;
-    List<TicketEntryClass> entries;
     User loggedInUser;
     double currentBalance;
+
+    //store the transaction that is being handled in this moment, null if no transaction is being handled
+    //when the transaction will be closed, it will be inserted in the sales map and actualTransaction = null
+    //the same for actualEntries
+    SaleTransaction actualTransaction; 
+    List<TicketEntry> actualEntries;
 
     public EZShop() {
 
         
         loggedInUser = null;
         currentBalance = 0;
+        actualTransaction = null;  
+        actualEntries = null;
         
          //user init
         this.users = FileReaderAndWriter.UsersReader();
@@ -43,9 +50,14 @@ public class EZShop implements EZShopInterface {
 
         //sales init
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); //load all transactions
-        this.entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
+        List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
         
         //for each transaction, create a new list of ticketentries with transaction id = transaction considered and set it
+        //the list with ALL entries is local to the constructor, after that each entry has been assigned to the right transaction, will be deleted
+
+        //NOTE FOR ALESSIO 
+        //WHEN IS NECESSARY TO MAKE TRANSACTIONS AND ENTRIES PERSISTENT, REMBEMBER TO RE-GROUP IN A UNIQUE LIST ALL ENTRIES FROM TRANSACTIONS
+        //AND TO CREATE OBJECT OF TICKETENTRYCLASS (AND NOT TICKETENTRY) OTHERWISE IT IS NOT POSSIBLE TO RETRIVE THE TRANSACTION ID
         for (SaleTransaction t : sales.values()){ 
             List<TicketEntry> e = entries.stream().filter((e1) -> {return e1.getTransactionId()==t.getTicketNumber();}).collect(Collectors.toList());
             t.setEntries(e);
@@ -55,7 +67,6 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public void reset() {
-
     }
 
     @Override
@@ -460,16 +471,18 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-    	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+    	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier")))
             throw new UnauthorizedException("Function not available for the current user");
-        }
+
+        this.actualEntries = new ArrayList<TicketEntry>();
+
         if(this.sales.isEmpty()){
-            this.sales.put(0, new SaleTransactionClass(0));
+            this.actualTransaction = new SaleTransactionClass(0);
             return 0;
         }
         else{
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i-j);
-            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
+            this.actualTransaction = new SaleTransactionClass(id.get()+1);
             return id.get()+1;
         }
     }
@@ -535,7 +548,10 @@ public class EZShop implements EZShopInterface {
         if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return null;
+        if(transactionId<=0 || transactionId==null)
+            throw new InvalidTransactionIdException("Transaction id is wrong");
+
+        return this.sales.get(transactionId);
     }
 
     @Override
