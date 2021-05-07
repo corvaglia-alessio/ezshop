@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.swing.tree.TreeNode;
+
 import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
@@ -633,29 +636,52 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean addProductToSale(Integer transactionId, String productCode, int amount)
-            throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
-            UnauthorizedException {
-        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+    public boolean addProductToSale(Integer transactionId, String productCode, int amount)throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,UnauthorizedException {
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(amount < 0)
+            throw new InvalidQuantityException("Quantity less than 0");
+        
+        if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+            throw new InvalidProductCodeException("Not a valid product");
+        
+        if(transactionId != actualTransaction)
+            return false;
+        
+        if(getProductTypeByBarCode(productCode) == null)
+            return false;
+        
+        if(getProductTypeByBarCode(productCode).getQuantity() < amount)
+            return false;
+        
+        TicketEntry t = new TicketEntryClass(transactionId, productCode, getProductTypeByBarCode(productCode).getProductDescription(), amount, getProductTypeByBarCode(productCode).getPricePerUnit(), 0D);
+        List<TicketEntry> x = sales.get(transactionId).getEntries();
+        x.add(t);
+        sales.get(transactionId).setEntries(x);
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
+
+        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()-amount);
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+
         return false;
     }
 
     @Override
-    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
-            throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
-            UnauthorizedException {
-        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
-            throw new UnauthorizedException("Function not available for the current user");
-        }
-        return false;
-    }
-
-    @Override
-    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate)
+    public boolean applyDiscountRateToProduct (Integer transactionId, String productCode, double discountRate)
             throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException,
             UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
