@@ -1,0 +1,2 @@
+5;testcustomer2;1234567890;262
+6;testcustomer4;4713065536;60
