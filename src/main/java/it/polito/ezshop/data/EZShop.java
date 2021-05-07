@@ -17,6 +17,8 @@ public class EZShop implements EZShopInterface {
 	HashMap<Integer,it.polito.ezshop.model.Customer> customers;
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
+    Map<Integer , SaleTransaction> sales;
+    List<TicketEntryClass> entries;
     User loggedInUser;
     double currentBalance;
 
@@ -38,6 +40,16 @@ public class EZShop implements EZShopInterface {
         
         //customers init
         this.customers = FileReaderAndWriter.CustomersReader();
+
+        //sales init
+        this.sales = FileReaderAndWriter.SaleTransactionsReader(); //load all transactions
+        this.entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
+        
+        //for each transaction, create a new list of ticketentries with transaction id = transaction considered and set it
+        for (SaleTransaction t : sales.values()){ 
+            List<TicketEntry> e = entries.stream().filter((e1) -> {return e1.getTransactionId()==t.getTicketNumber();}).collect(Collectors.toList());
+            t.setEntries(e);
+        }
 
     }
 
@@ -448,87 +460,145 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-    	
-        return null;
+    	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+        if(this.sales.isEmpty()){
+            this.sales.put(0, new SaleTransactionClass(0));
+            return 0;
+        }
+        else{
+            Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i-j);
+            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
+            return id.get()+1;
+        }
     }
 
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return 0;
     }
 
     @Override
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean deleteSaleTransaction(Integer saleNumber) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return null;
     }
 
     @Override
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return null;
     }
 
     @Override
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return 0;
     }
 
     @Override
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return false;
     }
 
     @Override
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return 0;
     }
 
     @Override
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+        if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
         return 0;
     }
 
