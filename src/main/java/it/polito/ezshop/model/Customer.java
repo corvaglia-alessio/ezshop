@@ -56,7 +56,6 @@ public class Customer implements it.polito.ezshop.data.Customer {
 
 	@Override
 	public void setPoints(Integer points) {
-		// TODO Auto-generated method stub
 		this.points = points;
 	}
 

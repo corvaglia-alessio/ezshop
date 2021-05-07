@@ -4,17 +4,15 @@ import it.polito.ezshop.data.TicketEntry;
 
 public class TicketEntryClass implements TicketEntry {
 
-    //carefully check how to implement connections between transactions and entries
-    //specially for persistence!
-    private Integer id; 
+    private Integer transactionId; //the transaction id the entry is associated to
     private String barCode;
     private String productDescription;
     private Integer amount;
     private Double pricePerUnit;
     private Double discountRate;
 
-    public TicketEntryClass(Integer id, String barCode, String productDescription, Integer amount, Double pricePerUnit, Double discountRate){
-        this.id = id;
+    public TicketEntryClass(Integer transactionId, String barCode, String productDescription, Integer amount, Double pricePerUnit, Double discountRate){
+        this.transactionId = transactionId;
         this.barCode = barCode;
         this.productDescription = productDescription;
         this.amount = amount;
@@ -22,12 +20,12 @@ public class TicketEntryClass implements TicketEntry {
         this.pricePerUnit = pricePerUnit;
     }
 
-    public Integer getId(){
-        return this.id;
+    public Integer getTrsansactionId(){
+        return this.transactionId;
     }
 
-    public void setId(Integer id){
-        this.id = id;
+    public void setTransactionId(Integer transactionId){
+        this.transactionId = transactionId;
     }
 
     @Override
