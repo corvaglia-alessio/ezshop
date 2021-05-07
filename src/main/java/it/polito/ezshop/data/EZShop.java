@@ -633,7 +633,6 @@ public class EZShop implements EZShopInterface {
         }
     }
 
-    //CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount)throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,UnauthorizedException {
 
@@ -673,7 +672,7 @@ public class EZShop implements EZShopInterface {
             sales.get(transactionId).setEntries(x);
         }
         else{ //product already present
-            t.setAmount(amount);
+            t.setAmount(t.getAmount()+amount);
         }
         
         sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
@@ -689,8 +688,44 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
 
-        return false;
+        if(amount < 0)
+            throw new InvalidQuantityException("Quantity less than 0");
+        
+        if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+            throw new InvalidProductCodeException("Not a valid product");
+        
+        if(transactionId != actualTransaction)
+            return false;
+        
+        if(getProductTypeByBarCode(productCode) == null)
+            return false;
+        
+        List<TicketEntry> x = sales.get(transactionId).getEntries();
+
+        if(x == null) //if there are no entries, it is impossible to delete a product
+            return false;
+
+        TicketEntry t = null;
+
+        for(TicketEntry e : x)
+            if(e.getBarCode() == productCode)
+                t = e;
+            
+        if(t == null) //if the product is note present in the entries, it is impossible to delete a product
+            return false;
+
+         if(t.getAmount() < amount) //if the amount already added are less the the desidered quantity to delete, it is not possible to delete
+            return false;
+        
+        t.setAmount(t.getAmount()-amount);
+        
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() - (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
+        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()+amount);
+
+        return true;
     }
 
     @Override
