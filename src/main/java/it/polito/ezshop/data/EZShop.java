@@ -22,11 +22,19 @@ public class EZShop implements EZShopInterface {
     User loggedInUser;
     double currentBalance;
 
+    //store the transaction that is being handled in this moment, null if no transaction is being handled
+    //when the transaction will be closed, it will be inserted in the sales map and actualTransaction = null
+    //the same for actualEntries
+    SaleTransaction actualTransaction; 
+    List<TicketEntry> actualEntries;
+
     public EZShop() {
 
         
         loggedInUser = null;
         currentBalance = 0;
+        actualTransaction = null;  
+        actualEntries = null;
         
          //user init
         this.users = FileReaderAndWriter.UsersReader();
@@ -462,14 +470,16 @@ public class EZShop implements EZShopInterface {
     public Integer startSaleTransaction() throws UnauthorizedException {
     	if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
-        }
+
+        this.actualEntries = new ArrayList<TicketEntry>();
+
         if(this.sales.isEmpty()){
-            this.sales.put(0, new SaleTransactionClass(0));
+            this.actualTransaction = new SaleTransactionClass(0);
             return 0;
         }
         else{
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i-j);
-            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
+            this.actualTransaction = new SaleTransactionClass(id.get()+1);
             return id.get()+1;
         }
     }
@@ -535,7 +545,10 @@ public class EZShop implements EZShopInterface {
         if(loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return null;
+        if(transactionId<=0 || transactionId==null)
+            throw new InvalidTransactionIdException("Transaction id is wrong");
+
+        return this.sales.get(transactionId);
     }
 
     @Override
