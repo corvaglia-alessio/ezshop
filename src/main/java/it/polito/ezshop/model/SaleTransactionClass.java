@@ -13,6 +13,15 @@ public class SaleTransactionClass implements SaleTransaction {
     private Double discountRate;
     private List<TicketEntry> entries;
 
+    //constructor for loading transactions from file
+    public SaleTransactionClass(Integer ticketNumber, Double price, Double discountRate){
+        this.ticketNumber = ticketNumber;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.entries = new ArrayList<TicketEntry>();
+    }
+
+    //constructor for new transactions
     public SaleTransactionClass(Integer ticketNumber){
         this.ticketNumber = ticketNumber;
         this.price = 0D;

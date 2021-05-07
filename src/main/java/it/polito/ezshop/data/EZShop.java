@@ -18,6 +18,7 @@ public class EZShop implements EZShopInterface {
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer , SaleTransaction> sales;
+    List<TicketEntryClass> entries;
     User loggedInUser;
     double currentBalance;
 
@@ -40,8 +41,15 @@ public class EZShop implements EZShopInterface {
         //customers init
         this.customers = FileReaderAndWriter.CustomersReader();
 
-        //sales init - then load from file
-        this.sales = new HashMap<Integer, SaleTransaction>();
+        //sales init
+        this.sales = FileReaderAndWriter.SaleTransactionsReader(); //load all transactions
+        this.entries = FileReaderAndWriter.ticketEntriesReader(); //load all entries
+        
+        //for each transaction, create a new list of ticketentries with transaction id = transaction considered and set it
+        for (SaleTransaction t : sales.values()){ 
+            List<TicketEntry> e = entries.stream().filter((e1) -> {return e1.getTransactionId()==t.getTicketNumber();}).collect(Collectors.toList());
+            t.setEntries(e);
+        }
 
     }
 

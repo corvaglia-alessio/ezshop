@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import it.polito.ezshop.data.BalanceOperation;
+import it.polito.ezshop.data.SaleTransaction;
 import it.polito.ezshop.data.User;
 
 
@@ -165,6 +168,116 @@ public class FileReaderAndWriter {
             x = x + bo.getBalanceId() + ";" + bo.getDate().toString() + ";" + bo.getMoney() + ";" + bo.getType() + "\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/balanceoperations.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
+        return true;
+    }
+
+    //reads the saletransactions actually registered in the system and return them in a Map
+    //one saletransaction per-line
+    //saletransaction fields are the following, in the specified order <ticketNumber>;<price>;<discountrate>
+    //field separator is ;
+    static public Map<Integer, SaleTransaction> SaleTransactionsReader(){
+        Map<Integer, SaleTransaction> st = new HashMap<Integer, SaleTransaction>();
+        
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                SaleTransaction t = new SaleTransactionClass(Integer.parseInt(res[0]), Double.parseDouble(res[1]), Double.parseDouble(res[2]));
+                st.put(Integer.parseInt(res[0]), t);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally{
+            if(s!=null){
+                s.close();
+            }
+        }
+        return st;
+    }
+
+    //writes the salestransaction Map received as parameter in the salestransactions.txt file
+    //one saletransaction per-line
+    //sale transaction fields are the following, in the specified order: <ticketNumber>;<price>;<discountrate>
+    //field separator is ;
+    static public Boolean saletransactionsWriter(Map<Integer, SaleTransaction> salesTransactions){
+        String x = "";
+        for(SaleTransaction s : salesTransactions.values()){
+            x = x + s.getTicketNumber() + ";" + s.getPrice() + ";" + s.getDiscountRate() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
+        return true;
+    }
+
+    //reads the ticketentries actually registered in the system and return them in a List
+    //one ticketentry per-line
+    //ticketentry fields are the following, in the specified order <transactionid>;<barcode>;<productdescription>;<amount>;<priceperunit>;<discountrate>
+    //field separator is ;
+    static public List<TicketEntryClass> ticketEntriesReader(){
+        List<TicketEntryClass> te = new ArrayList<TicketEntryClass>();
+        
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/ticketentries.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                TicketEntryClass t = new TicketEntryClass(Integer.parseInt(res[0]), res[1], res[2], Integer.parseInt(res[3]), Double.parseDouble(res[4]), Double.parseDouble(res[5]));
+                te.add(t);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally{
+            if(s!=null){
+                s.close();
+            }
+        }
+        return te;
+    }
+
+    //writes the ticketentries list received as parameter in the tciketentries.txt file
+    //one ticketentry per-line
+    // ticket entries fields are the following, in the specified order: <transactionid>;<barcode>;<productdescription>;<amount>;<priceperunit>;<discountrate>
+    //field separator is ;
+    static public Boolean ticketEntriesWriter(List<TicketEntryClass> ticketEntries){
+        String x = "";
+        for(TicketEntryClass t : ticketEntries){
+            x = x + t.getTransactionId() + ";" + t.getBarCode() + ";" + t.getProductDescription() + ";" + t.getAmount() + ";" + t.getPricePerUnit() + ";" + t.getDiscountRate() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);

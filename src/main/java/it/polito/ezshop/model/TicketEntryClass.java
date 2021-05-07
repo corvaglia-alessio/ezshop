@@ -20,7 +20,7 @@ public class TicketEntryClass implements TicketEntry {
         this.pricePerUnit = pricePerUnit;
     }
 
-    public Integer getTrsansactionId(){
+    public Integer getTransactionId(){
         return this.transactionId;
     }
 
