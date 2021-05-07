@@ -21,7 +21,7 @@ public class FileReaderAndWriter {
     static public Map<Integer, User>  UsersReader(){
         Map<Integer, User> users = new HashMap<Integer, User>();
         
-        File inputFile = new File("./src/main/java/it/polito/ezshop/model/users.txt");
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/users.txt");
         System.out.println(inputFile.getAbsolutePath());
         Scanner s = null;
         try {
@@ -53,7 +53,7 @@ public class FileReaderAndWriter {
         for(User u : users.values()){
             x = x + u.getId() + ";" + u.getUsername() + ";" + u.getPassword() + ";" + u.getRole() + "\n";
         }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/users.txt");
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/users.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);
@@ -78,7 +78,7 @@ public class FileReaderAndWriter {
     	HashMap<Integer, it.polito.ezshop.model.Customer> customers = new HashMap<Integer, it.polito.ezshop.model.Customer>();
         
         
-        File inputFile = new File("./src/main/java/it/polito/ezshop/model/customers.txt");
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/customers.txt");
         Scanner s = null;
         try {
             s = new Scanner(inputFile);
@@ -107,7 +107,7 @@ public class FileReaderAndWriter {
         for(it.polito.ezshop.model.Customer c : customers.values()){
             x = x + c.getId() + ";" + c.getCustomerName() + ";" + c.getCustomerCard()+";"+c.getPoints()+"\n";
         }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/customers.txt");
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/customers.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);
@@ -133,7 +133,7 @@ public class FileReaderAndWriter {
     static public Map<Integer, BalanceOperation> BalanceOperationsReader(){
         Map<Integer, BalanceOperation> bos = new HashMap<Integer, BalanceOperation>();
         
-        File inputFile = new File("./src/main/java/it/polito/ezshop/model/balanceoperations.txt");
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/balanceoperations.txt");
         Scanner s = null;
         try {
             s = new Scanner(inputFile);
@@ -164,7 +164,7 @@ public class FileReaderAndWriter {
         for(BalanceOperation bo : balanceOperations.values()){
             x = x + bo.getBalanceId() + ";" + bo.getDate().toString() + ";" + bo.getMoney() + ";" + bo.getType() + "\n";
         }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/balanceoperations.txt");
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/balanceoperations.txt");
         PrintWriter out = null;
         try{
             out = new PrintWriter(outputFile);
