@@ -552,24 +552,23 @@ public class EZShop implements EZShopInterface {
 	            return false;
 	        
 	        this.orders.get(orderId).setStatus("COMPLETED");
-	        try {
-				this.updateQuantity(product.getId(), order.getQuantity());
-			} catch (InvalidProductIdException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	        
+	        this.updateQuantity(product.getId(), order.getQuantity());
+			
 	        FileReaderAndWriter.OrdersWriter(this.orders);
 	        
-	        
 	        return true;
+	        
 		} catch (InvalidProductCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnauthorizedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InvalidProductIdException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-        
         return true;
     }
 
