@@ -19,6 +19,7 @@ public class EZShop implements EZShopInterface {
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer, SaleTransaction> sales;
     Map<Integer, ProductType> inventory;
+    Map<Integer, Order> orders;
     User loggedInUser;
     double currentBalance;
 
@@ -51,6 +52,9 @@ public class EZShop implements EZShopInterface {
         // sales init
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); // load all transactions
         List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); // load all entries
+
+        // orders init
+        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
 
         // for each transaction, create a new list of ticketentries with transaction id
         // = transaction considered and set it
@@ -375,44 +379,183 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean updateQuantity(Integer productId, int toBeAdded)
-            throws InvalidProductIdException, UnauthorizedException {
-        return false;
+    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException, UnauthorizedException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+        
+        if (productId <= 0 || productId == null)
+            throw new InvalidProductIdException("Invalid Product ID.");
+        
+        ProductType productToUpdate = inventory.get(productId);
+        if (productToUpdate == null || toBeAdded + productToUpdate.getQuantity() < 0 || productToUpdate.getLocation() == null || productToUpdate.getLocation().isEmpty())
+            return false;
+
+        inventory.get(productId).setQuantity(productToUpdate.getQuantity() + toBeAdded);
+        
+        return true;
     }
 
     @Override
-    public boolean updatePosition(Integer productId, String newPos)
-            throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
-        return false;
+    public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+        
+        if (productId <= 0 || productId == null)
+            throw new InvalidProductIdException("Invalid Product ID.");
+        
+        if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]"))
+            throw new InvalidLocationException("The location is in an invalid format.");
+        
+                    
+        for (ProductType product : inventory.values()){
+            if (product.getLocation().equals(newPos))
+                return false;
+        }
+
+        ProductType productToUpdate = inventory.get(productId);
+        if (productToUpdate == null)
+            return false;
+        
+        inventory.get(productId).setLocation(newPos);
+        
+        return true;
     }
 
     @Override
-    public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException,
-            InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
+    public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        if (quantity <= 0)
+            throw new InvalidQuantityException("Quantity must be a positive integer.");
+
+        if (pricePerUnit <= 0)
+            throw new InvalidPricePerUnitException("Price per unit must be a positive integer.");
+        
+        if (!ProductTypeClass.VerifyBarCode(productCode))
+            throw new InvalidProductCodeException("Invalid product code.");
+
+        ProductType productToOrder = inventory.get(productId);
+        if (productToOrder == null)
+            return -1;
+        
+        try {
+            int maxID = 0;
+            orders.forEach((k, v) -> {
+                if (k > maxID)
+                    maxID = k;
+            });
+            Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "ISSUED");
+            orders.put(newOrder.getOrderId(), newOrder);
+            return newOrder.getId();
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Override
-    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit)
-            throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException,
-            UnauthorizedException {
-        return null;
+    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        if (quantity <= 0)
+            throw new InvalidQuantityException("Quantity must be a positive integer.");
+
+        if (pricePerUnit <= 0)
+            throw new InvalidPricePerUnitException("Price per unit must be a positive integer.");
+        
+        if (!ProductTypeClass.VerifyBarCode(productCode))
+            throw new InvalidProductCodeException("Invalid product code.");
+
+        if (this.currentBalance < pricePerUnit * quantity)
+            return -1;
+
+        ProductType productToOrder = inventory.get(productId);
+        if (productToOrder == null)
+            return -1;
+
+        try {
+            int maxID = 0;
+            orders.forEach((k, v) -> {
+                if (k > maxID)
+                    maxID = k;
+            });
+            Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "PAYED");
+            orders.put(newOrder.getOrderId(), newOrder);
+            this.recordBalanceUpdate(pricePerUnit * quantity * -1);
+            return newOrder.getId();
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Override
     public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
-        return false;
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        if (orderId <= 0 || orderId == null)
+            throw new InvalidOrderIdException("Id must be a positive integer.");
+
+        Order order = orders.get(orderId);
+        if (order == null || !order.getStatus().equals("ISSUED"))
+            return false;
+        
+        orders.get(orderId).setStatus("PAYED");
+        this.recordBalanceUpdate(order.getPricePerUnit() * order.getQuantity() * -1);
+        
+        return true;
     }
 
     @Override
-    public boolean recordOrderArrival(Integer orderId)
-            throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
-        return false;
+    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        if (orderId <= 0 || orderId == null)
+            throw new InvalidOrderIdException("Id must be a positive integer.");
+        
+        Order order = orders.get(orderId);
+        ProductTypeClass product = this.getProductTypeByBarCode(order.getProductCode());
+        if (product.getLocation() == null || product.getLocation().isBlank())
+            throw new InvalidLocationException("The product must have a location.");
+
+        if (order == null || !order.getStatus().equals("PAYED"))
+            return false;
+        
+        orders.get(orderId).setStatus("COMPLETED");
+        this.updateQuantity(product.getId(), order.getQuantity());
+
+        return true;
     }
 
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
-        return new ArrayList<Order>(); // just for testing
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        return orders.values();
     }
 
     @Override
