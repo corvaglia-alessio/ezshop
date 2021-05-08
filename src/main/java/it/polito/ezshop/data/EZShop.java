@@ -427,7 +427,7 @@ public class EZShop implements EZShopInterface {
         return true;
     }
 
-    @Override
+   @Override
     public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
@@ -450,12 +450,13 @@ public class EZShop implements EZShopInterface {
         
         try {
             int maxID = 0;
-            orders.forEach((k, v) -> {
+            this.orders.forEach((k, v) -> {
                 if (k > maxID)
                     maxID = k;
             });
             Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "ISSUED");
-            orders.put(newOrder.getOrderId(), newOrder);
+            this.orders.put(newOrder.getOrderId(), newOrder);
+            FileReaderAndWriter.OrdersWriter(this.orders);
             return newOrder.getId();
         } catch (Exception e) {
             return -1;
@@ -488,12 +489,13 @@ public class EZShop implements EZShopInterface {
 
         try {
             int maxID = 0;
-            orders.forEach((k, v) -> {
+            this.orders.forEach((k, v) -> {
                 if (k > maxID)
                     maxID = k;
             });
             Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "PAYED");
-            orders.put(newOrder.getOrderId(), newOrder);
+            this.orders.put(newOrder.getOrderId(), newOrder);
+            FileReaderAndWriter.OrdersWriter(this.orders);
             this.recordBalanceUpdate(pricePerUnit * quantity * -1);
             return newOrder.getId();
         } catch (Exception e) {
@@ -516,8 +518,9 @@ public class EZShop implements EZShopInterface {
         if (order == null || !order.getStatus().equals("ISSUED"))
             return false;
         
-        orders.get(orderId).setStatus("PAYED");
+        this.orders.get(orderId).setStatus("PAYED");
         this.recordBalanceUpdate(order.getPricePerUnit() * order.getQuantity() * -1);
+        FileReaderAndWriter.OrdersWriter(this.orders);
         
         return true;
     }
@@ -541,8 +544,9 @@ public class EZShop implements EZShopInterface {
         if (order == null || !order.getStatus().equals("PAYED"))
             return false;
         
-        orders.get(orderId).setStatus("COMPLETED");
+        this.orders.get(orderId).setStatus("COMPLETED");
         this.updateQuantity(product.getId(), order.getQuantity());
+        FileReaderAndWriter.OrdersWriter(this.orders);
 
         return true;
     }
