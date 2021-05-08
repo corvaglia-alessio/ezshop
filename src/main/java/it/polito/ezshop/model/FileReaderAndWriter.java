@@ -293,4 +293,57 @@ public class FileReaderAndWriter {
         }
         return true;
     }
+
+    //reads the orders actually registered in the systems and return them in a Map
+    //one order per-line
+    //Order fields are the following, in the specified order <orderId>;<balanceId>;<ProductCode>;<pricePerUnit>;<quantity>;<status>
+    //field separator is ;
+    static public HashMap<Integer, OrderClass> OrdersReader(){
+    	HashMap<Integer, OrderClass> orders = new HashMap<Integer, OrderClass>();
+        
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/orders.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                OrderClass order = new OrderClass(Integer.parseInt(res[0]), Integer.parseInt(res[1]), res[2], Double.parseDouble(res[3]), Integer.parseInt(res[4]), res[5]);
+                orders.put(Integer.parseInt(res[0]), order);
+            }
+        } 	
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally{
+            if(s!=null){
+                s.close();
+            }
+        }
+        return orders;        
+    }
+    
+    /*writing orders to file*/
+    static public Boolean OrdersWriter(Map<Integer, Order> orders){
+        String x = "";
+        for(OrderClass o : orders.values()){
+            x = x + o.getOrderId() + ";" + o.getBalanceId() + ";" + o.getProductCode +";"+ o.getPricePerUnit() + o.getQuantity() + o.getStatus() +"\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/orders.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
+
+        return true;
+    }
 }
