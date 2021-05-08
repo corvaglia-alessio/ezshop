@@ -444,7 +444,7 @@ public class EZShop implements EZShopInterface {
         if (!ProductTypeClass.VerifyBarCode(productCode))
             throw new InvalidProductCodeException("Invalid product code.");
 
-        ProductType productToOrder = inventory.get(productCode);
+        ProductType productToOrder = getProductTypeByBarCode(productCode);
         if (productToOrder == null)
             return -1;
         
@@ -484,7 +484,7 @@ public class EZShop implements EZShopInterface {
         if (this.currentBalance < pricePerUnit * quantity)
             return -1;
 
-        ProductType productToOrder = inventory.get(productCode);
+        ProductType productToOrder = getProductTypeByBarCode(productCode);
         if (productToOrder == null)
             return -1;
         
