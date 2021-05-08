@@ -324,10 +324,10 @@ public class FileReaderAndWriter {
     }
     
     /*writing orders to file*/
-    static public Boolean OrdersWriter(Map<Integer, Order> orders){
+    static public Boolean OrdersWriter(Map<Integer, OrderClass> orders){
         String x = "";
         for(OrderClass o : orders.values()){
-            x = x + o.getOrderId() + ";" + o.getBalanceId() + ";" + o.getProductCode +";"+ o.getPricePerUnit() + o.getQuantity() + o.getStatus() +"\n";
+            x = x + o.getOrderId() + ";" + o.getBalanceId() + ";" + o.getProductCode() +";"+ o.getPricePerUnit() + o.getQuantity() + o.getStatus() +"\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/orders.txt");
         PrintWriter out = null;

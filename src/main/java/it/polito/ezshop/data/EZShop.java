@@ -19,7 +19,7 @@ public class EZShop implements EZShopInterface {
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer, SaleTransaction> sales;
     Map<Integer, ProductType> inventory;
-    Map<Integer, Order> orders;
+    Map<Integer, OrderClass> orders;
     User loggedInUser;
     double currentBalance;
 
@@ -444,20 +444,21 @@ public class EZShop implements EZShopInterface {
         if (!ProductTypeClass.VerifyBarCode(productCode))
             throw new InvalidProductCodeException("Invalid product code.");
 
-        ProductType productToOrder = inventory.get(productId);
+        ProductType productToOrder = inventory.get(productCode);
         if (productToOrder == null)
             return -1;
         
+       
         try {
-            int maxID = 0;
+        	int[] maxID = { 0 };
             this.orders.forEach((k, v) -> {
-                if (k > maxID)
-                    maxID = k;
+                if (k > maxID[0])
+                    maxID[0] = k;
             });
-            Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "ISSUED");
+            OrderClass newOrder = new OrderClass(maxID[0] + 1, null, productCode, pricePerUnit, quantity, "ISSUED");
             this.orders.put(newOrder.getOrderId(), newOrder);
             FileReaderAndWriter.OrdersWriter(this.orders);
-            return newOrder.getId();
+            return newOrder.getOrderId();
         } catch (Exception e) {
             return -1;
         }
@@ -483,21 +484,24 @@ public class EZShop implements EZShopInterface {
         if (this.currentBalance < pricePerUnit * quantity)
             return -1;
 
-        ProductType productToOrder = inventory.get(productId);
+        ProductType productToOrder = inventory.get(productCode);
         if (productToOrder == null)
             return -1;
-
+        
+        
+        
         try {
-            int maxID = 0;
+        	int[] maxID = { 0 };
             this.orders.forEach((k, v) -> {
-                if (k > maxID)
-                    maxID = k;
+                if (k > maxID[0])
+                    maxID[0] = k;
             });
-            Order newOrder = OrderClass(maxID + 1, null, productCode, pricePerUnit, quantity, "PAYED");
+            
+            OrderClass newOrder = new OrderClass(maxID[0] + 1, null, productCode, pricePerUnit, quantity, "PAYED");
             this.orders.put(newOrder.getOrderId(), newOrder);
             FileReaderAndWriter.OrdersWriter(this.orders);
             this.recordBalanceUpdate(pricePerUnit * quantity * -1);
-            return newOrder.getId();
+            return newOrder.getOrderId();
         } catch (Exception e) {
             return -1;
         }
@@ -536,18 +540,36 @@ public class EZShop implements EZShopInterface {
         if (orderId <= 0 || orderId == null)
             throw new InvalidOrderIdException("Id must be a positive integer.");
         
-        Order order = orders.get(orderId);
-        ProductTypeClass product = this.getProductTypeByBarCode(order.getProductCode());
-        if (product.getLocation() == null || product.getLocation().isBlank())
-            throw new InvalidLocationException("The product must have a location.");
-
-        if (order == null || !order.getStatus().equals("PAYED"))
-            return false;
+        OrderClass order = orders.get(orderId);
         
-        this.orders.get(orderId).setStatus("COMPLETED");
-        this.updateQuantity(product.getId(), order.getQuantity());
-        FileReaderAndWriter.OrdersWriter(this.orders);
+        ProductType product;
+		try {
+			product = this.getProductTypeByBarCode(order.getProductCode());
+			if (product.getLocation() == null || product.getLocation().isBlank())
+	            throw new InvalidLocationException("The product must have a location.");
 
+	        if (order == null || !order.getStatus().equals("PAYED"))
+	            return false;
+	        
+	        this.orders.get(orderId).setStatus("COMPLETED");
+	        try {
+				this.updateQuantity(product.getId(), order.getQuantity());
+			} catch (InvalidProductIdException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        FileReaderAndWriter.OrdersWriter(this.orders);
+	        
+	        
+	        return true;
+		} catch (InvalidProductCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnauthorizedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         return true;
     }
 
@@ -559,7 +581,7 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        return orders.values();
+        return orders.values().stream().collect(Collectors.toList());
     }
 
     @Override
