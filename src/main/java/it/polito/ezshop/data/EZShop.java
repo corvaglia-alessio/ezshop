@@ -560,16 +560,12 @@ public class EZShop implements EZShopInterface {
 	        return true;
 	        
 		} catch (InvalidProductCodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnauthorizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidProductIdException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
+		} 
+		catch (InvalidProductIdException e) {
+			return false;
 		}
-        return true;
+		
     }
 
     @Override
