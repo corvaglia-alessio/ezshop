@@ -779,7 +779,7 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier")))
             throw new UnauthorizedException("Function not available for the current user");
 
-        //by deafault transaction, when is built (not loaded from file) is open
+        //by default transaction, when is built (not loaded from file) is open
         if (this.sales.isEmpty()) {
             this.sales.put(0, new SaleTransactionClass(0));
             return 0;
@@ -989,7 +989,10 @@ public class EZShop implements EZShopInterface {
         if(s.getState().equals("Closed"))
             return false;
 
+        //persistence need to store the transaction inside the db and to make the new inventory pesistent too
         if(!FileReaderAndWriter.saletransactionsWriter(sales))
+            return false;
+        if(!FileReaderAndWriter.ProductsWriter(inventory)) 
             return false;
             
         return true;
@@ -1014,8 +1017,26 @@ public class EZShop implements EZShopInterface {
         if(s.getState().equals("Paid"))
             return false;
         
+        //for each ticket entry of the transaction that is going to be deleted, re-add the quantity in the inventory
+        for(TicketEntry t : s.getEntries()){
+            ProductType pt = null;
+            try {
+                pt = getProductTypeByBarCode(t.getBarCode());
+            } 
+            catch (InvalidProductCodeException e) {
+                e.printStackTrace();
+            }
+            if(pt != null)
+                pt.setQuantity(pt.getQuantity()+t.getAmount());
+        }
+        
+        //cancel the sale from the main memory
         this.sales.remove(saleNumber);
+
+        //update the persistent components after this operation
         if(!FileReaderAndWriter.saletransactionsWriter(sales))
+            return false;
+        if(!FileReaderAndWriter.ProductsWriter(inventory))
             return false;
         
         return true;
