@@ -26,9 +26,6 @@ public class EZShop implements EZShopInterface {
 
     public EZShop() {
 
-        loggedInUser = null;
-        currentBalance = 0;
-
         // user init
         this.users = FileReaderAndWriter.UsersReader();
         this.loggedInUser = null;
@@ -47,25 +44,20 @@ public class EZShop implements EZShopInterface {
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); // load all transactions
         List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); // load all entries
 
-        // orders init
-        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
-
         // for each transaction, create a new list of ticketentries with transaction id
         // = transaction considered and set it
         // the list with ALL entries is local to the constructor, after that each entry
         // has been assigned to the right transaction, will be deleted
 
-        // NOTE FOR ALESSIO
-        // WHEN IS NECESSARY TO MAKE TRANSACTIONS AND ENTRIES PERSISTENT, REMBEMBER TO
-        // RE-GROUP IN A UNIQUE LIST ALL ENTRIES FROM TRANSACTIONS
-        // AND TO CREATE OBJECT OF TICKETENTRYCLASS (AND NOT TICKETENTRY) OTHERWISE IT
-        // IS NOT POSSIBLE TO RETRIVE THE TRANSACTION ID
         for (SaleTransaction t : sales.values()) {
             List<TicketEntry> e = entries.stream().filter((e1) -> {
                 return e1.getTransactionId() == t.getTicketNumber();
             }).collect(Collectors.toList());
             t.setEntries(e);
         }
+
+        // orders init
+        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
 
         this.inventory = new HashMap<Integer, ProductType>(); //to change when persistence will be implemented
 
@@ -989,8 +981,19 @@ public class EZShop implements EZShopInterface {
         if(s.getState().equals("Closed"))
             return false;
 
-        //persistence need to store the transaction inside the db and to make the new inventory pesistent too
+        //update the persistent components after this operation
         if(!FileReaderAndWriter.saletransactionsWriter(sales))
+            return false;
+
+        List<TicketEntryClass> allentries = new ArrayList<TicketEntryClass>();
+
+        for(SaleTransaction sa : this.sales.values())
+            for(TicketEntry en : sa.getEntries()){
+                TicketEntryClass ec = new TicketEntryClass(sa.getTicketNumber(), en.getBarCode(), en.getProductDescription(), en.getAmount(), en.getPricePerUnit(), en.getDiscountRate());
+                allentries.add(ec);
+            }
+
+        if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
             return false;
         if(!FileReaderAndWriter.ProductsWriter(inventory)) 
             return false;
@@ -1036,6 +1039,18 @@ public class EZShop implements EZShopInterface {
         //update the persistent components after this operation
         if(!FileReaderAndWriter.saletransactionsWriter(sales))
             return false;
+
+        List<TicketEntryClass> allentries = new ArrayList<TicketEntryClass>();
+
+        for(SaleTransaction sa : this.sales.values())
+            for(TicketEntry en : sa.getEntries()){
+                TicketEntryClass ec = new TicketEntryClass(sa.getTicketNumber(), en.getBarCode(), en.getProductDescription(), en.getAmount(), en.getPricePerUnit(), en.getDiscountRate());
+                allentries.add(ec);
+            }
+
+        if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
+            return false;
+        
         if(!FileReaderAndWriter.ProductsWriter(inventory))
             return false;
         
