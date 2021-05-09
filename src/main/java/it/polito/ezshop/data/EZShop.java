@@ -44,8 +44,7 @@ public class EZShop implements EZShopInterface {
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); // load all transactions
         List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); // load all entries
 
-        // for each transaction, create a new list of ticketentries with transaction id
-        // = transaction considered and set it
+        // for each transaction, create a new list of ticketentries with transaction id = transaction considered and set it
         // the list with ALL entries is local to the constructor, after that each entry
         // has been assigned to the right transaction, will be deleted
 
@@ -59,6 +58,7 @@ public class EZShop implements EZShopInterface {
         // orders init
         this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
 
+        //inventory init
         this.inventory = new HashMap<Integer, ProductType>(); //to change when persistence will be implemented
 
     }
