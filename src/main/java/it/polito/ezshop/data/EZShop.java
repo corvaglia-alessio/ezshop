@@ -1004,22 +1004,42 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public double receiveCashPayment(Integer ticketNumber, double cash)
+    public double receiveCashPayment(Integer transactionId, double cash)
             throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return 0;
+        if (transactionId == null || transactionId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        if (cash <= 0) {
+        	throw new InvalidPaymentException("money provided are not enough");
+        }
+        if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice()) {
+        	if(recordBalanceUpdate(sales.get(transactionId).getPrice()))
+        		return cash-sales.get(transactionId).getPrice();
+        	else 
+        		return -1;
+        }
+        else
+        	return -1;
     }
 
     @Override
-    public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard)
+    public boolean receiveCreditCardPayment(Integer transactionId, String creditCard)
             throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (transactionId == null || transactionId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        if (creditCard == null || creditCard.isEmpty() || GFG.checkLuhn(creditCard)) {
+        	throw new InvalidCreditCardException("credit card number is not valid");
+        }
+        /*TODO handle credit card payment. Missing additional instructions about card registered/not registered*/
         return false;
     }
 
@@ -1029,6 +1049,12 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (returnId == null || returnId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        
+        
+       
         return 0;
     }
 
@@ -1039,6 +1065,13 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (returnId == null || returnId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        if (creditCard == null || creditCard.isEmpty() || GFG.checkLuhn(creditCard)) {
+        	throw new InvalidCreditCardException("credit card number is not valid");
+        }
+        
         return 0;
     }
 
