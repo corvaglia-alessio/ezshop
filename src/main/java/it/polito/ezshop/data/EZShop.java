@@ -21,6 +21,7 @@ public class EZShop implements EZShopInterface {
     Map<Integer, SaleTransactionClass> sales;
     Map<Integer, ProductType> inventory;
     Map<Integer, OrderClass> orders;
+    Map<String,CreditCardClass> creditCards;
     User loggedInUser;
     double currentBalance;
 
@@ -61,6 +62,8 @@ public class EZShop implements EZShopInterface {
         //inventory init
         this.inventory = new HashMap<Integer, ProductType>(); //to change when persistence will be implemented
 
+        //creditCards init
+        this.creditCards = FileReaderAndWriter.CreditCardsReader();
     }
 
     @Override
@@ -1151,10 +1154,19 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0) {
         	throw new InvalidTransactionIdException("Transaction id is wrong");
         }
-        if (creditCard == null || creditCard.isEmpty() || GFG.checkLuhn(creditCard)) {
+        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
-        /*TODO handle credit card payment. Missing additional instructions about card registered/not registered*/
+        
+        if(creditCards.containsKey(creditCard) && sales.containsKey(transactionId) && creditCards.get(creditCard).getBalance() >= sales.get(transactionId).getPrice()) {
+        	if(recordBalanceUpdate(sales.get(transactionId).getPrice())) {
+        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()-sales.get(transactionId).getPrice());
+        		FileReaderAndWriter.CreditCardsWriter(creditCards);
+        		return true;
+        	}
+        	else
+        		return false;
+        }
         return false;
     }
 
@@ -1167,9 +1179,17 @@ public class EZShop implements EZShopInterface {
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Transaction id is wrong");
         }
+        //TODO: replace sales with returns. returns will be the data structure containing return transactions
+        /*if(sales.containsKey(returnId)) {
+        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1)
+        		return sales.get(returnId).getPrice();
+        	else 
+        		return -1;
+        }
+        else
+        	return -1;
         
-        
-       
+       */
         return 0;
     }
 
@@ -1183,10 +1203,21 @@ public class EZShop implements EZShopInterface {
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Transaction id is wrong");
         }
-        if (creditCard == null || creditCard.isEmpty() || GFG.checkLuhn(creditCard)) {
+        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
-        
+        /*TODO: replace sales with returns. returns will be the data structure containing return transactions*/
+        /*
+        if(creditCards.containsKey(creditCard) && sales.containsKey(returnId)) {
+        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1) {
+        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()+sales.get(returnId).getPrice());
+        		return true;
+        	}
+        	else
+        		return false;
+        }
+        return false;
+        */
         return 0;
     }
 

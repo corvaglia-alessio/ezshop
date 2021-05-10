@@ -358,5 +358,58 @@ public class FileReaderAndWriter {
     static public HashMap<Integer, ProductType> ProductsReader(){
         return null;
     }
+    
+    static public HashMap<String,CreditCardClass> CreditCardsReader(){
+    	HashMap<String, CreditCardClass> creditCards = new HashMap<String, CreditCardClass>();
+        
+        
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/creditcards.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                CreditCardClass cc = new CreditCardClass(res[0], Double.parseDouble(res[1]));
+                creditCards.put(cc.getCreditCardId(), cc);
+            }
+        } 	
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally{
+            if(s!=null){
+                s.close();
+            }
+        }
+        return creditCards;
+        
+    }
+    
+    /*writing customers to file*/
+    static public Boolean CreditCardsWriter(Map<String, CreditCardClass> creditCards){
+        String x = "";
+        for(CreditCardClass c : creditCards.values()){
+            x = x + c.getCreditCardId() + ";" + c.getBalance()+"\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/creditcards.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
+
+        return true;
+    }
+
+ 
 
 }
