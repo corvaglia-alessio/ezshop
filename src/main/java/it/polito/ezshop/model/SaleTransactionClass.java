@@ -12,13 +12,15 @@ public class SaleTransactionClass implements SaleTransaction {
     private Double price;
     private Double discountRate;
     private List<TicketEntry> entries;
+    private String state;
 
     //constructor for loading transactions from file
-    public SaleTransactionClass(Integer ticketNumber, Double price, Double discountRate){
+    public SaleTransactionClass(Integer ticketNumber, Double price, Double discountRate, String state){
         this.ticketNumber = ticketNumber;
         this.price = price;
         this.discountRate = discountRate;
         this.entries = new ArrayList<TicketEntry>();
+        this.state = state;
     }
 
     //constructor for new transactions
@@ -27,6 +29,15 @@ public class SaleTransactionClass implements SaleTransaction {
         this.price = 0D;
         this.discountRate = 0D;
         this.entries = new ArrayList<TicketEntry>();
+        this.state = "Open";
+    }
+
+    public String getState(){
+        return this.state;
+    }
+
+    public void setState(String state){
+        this.state = state;
     }
 
     @Override

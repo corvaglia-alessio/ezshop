@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import it.polito.ezshop.data.BalanceOperation;
-import it.polito.ezshop.data.SaleTransaction;
+import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.data.User;
 
 
@@ -188,8 +188,8 @@ public class FileReaderAndWriter {
     //one saletransaction per-line
     //saletransaction fields are the following, in the specified order <ticketNumber>;<price>;<discountrate>
     //field separator is ;
-    static public Map<Integer, SaleTransaction> SaleTransactionsReader(){
-        Map<Integer, SaleTransaction> st = new HashMap<Integer, SaleTransaction>();
+    static public Map<Integer, SaleTransactionClass> SaleTransactionsReader(){
+        Map<Integer, SaleTransactionClass> st = new HashMap<Integer, SaleTransactionClass>();
         
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
         Scanner s = null;
@@ -198,7 +198,7 @@ public class FileReaderAndWriter {
             while(s.hasNextLine()){
                 String line = s.nextLine();
                 String[] res = line.split(";");
-                SaleTransaction t = new SaleTransactionClass(Integer.parseInt(res[0]), Double.parseDouble(res[1]), Double.parseDouble(res[2]));
+                SaleTransactionClass t = new SaleTransactionClass(Integer.parseInt(res[0]), Double.parseDouble(res[1]), Double.parseDouble(res[2]), res[3]);
                 st.put(Integer.parseInt(res[0]), t);
             }
         }
@@ -217,10 +217,12 @@ public class FileReaderAndWriter {
     //one saletransaction per-line
     //sale transaction fields are the following, in the specified order: <ticketNumber>;<price>;<discountrate>
     //field separator is ;
-    static public Boolean saletransactionsWriter(Map<Integer, SaleTransaction> salesTransactions){
+    //writes ONLY CLOSED AND PAID transactions
+    static public Boolean saletransactionsWriter(Map<Integer, SaleTransactionClass> salesTransactions){
         String x = "";
-        for(SaleTransaction s : salesTransactions.values()){
-            x = x + s.getTicketNumber() + ";" + s.getPrice() + ";" + s.getDiscountRate() + "\n";
+        for(SaleTransactionClass s : salesTransactions.values()){
+            if(!s.getState().equals("Open"))
+                x = x + s.getTicketNumber() + ";" + s.getPrice() + ";" + s.getDiscountRate() + ";" + s.getState()+ "\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/saletransactions.txt");
         PrintWriter out = null;
@@ -327,7 +329,7 @@ public class FileReaderAndWriter {
     static public Boolean OrdersWriter(Map<Integer, OrderClass> orders){
         String x = "";
         for(OrderClass o : orders.values()){
-            x = x + o.getOrderId() + ";" + o.getBalanceId() + ";" + o.getProductCode() +";"+ o.getPricePerUnit() + o.getQuantity() + o.getStatus() +"\n";
+            x = x + o.getOrderId() + ";" + o.getBalanceId() + ";" + o.getProductCode() +";"+ o.getPricePerUnit() + ";" + o.getQuantity() + ";" + o.getStatus() +"\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/orders.txt");
         PrintWriter out = null;
@@ -346,4 +348,15 @@ public class FileReaderAndWriter {
 
         return true;
     }
+
+
+    //TODO: TO MARTIN: I added this two methods because I need them in sale transaction management, you just need to complete them  
+    static public Boolean ProductsWriter(Map<Integer, ProductType> inventory){
+        return false;
+    }
+
+    static public HashMap<Integer, ProductType> ProductsReader(){
+        return null;
+    }
+
 }
