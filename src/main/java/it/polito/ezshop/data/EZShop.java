@@ -1132,7 +1132,7 @@ public class EZShop implements EZShopInterface {
         	throw new InvalidTransactionIdException("Transaction id is wrong");
         }
         if (cash <= 0) {
-        	throw new InvalidPaymentException("money provided are not enough");
+        	throw new InvalidPaymentException("money not provided");
         }
         if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice()) {
         	if(recordBalanceUpdate(sales.get(transactionId).getPrice()))
@@ -1177,7 +1177,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
-        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
         //TODO: replace sales with returns. returns will be the data structure containing return transactions
         /*if(sales.containsKey(returnId)) {
@@ -1201,7 +1201,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
-        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
         if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
