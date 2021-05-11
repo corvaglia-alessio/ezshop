@@ -68,6 +68,32 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public void reset() {
+
+        this.users.clear();
+        FileReaderAndWriter.UsersWriter(users);
+        this.loggedInUser = null;
+
+        this.balanceOperations.clear();
+        FileReaderAndWriter.balanceOperationsWriter(balanceOperations);
+        this.currentBalance = 0;
+
+        this.customers.clear();
+        FileReaderAndWriter.CustomersWriter(customers);
+
+        this.sales.clear();
+        FileReaderAndWriter.saletransactionsWriter(sales);
+        FileReaderAndWriter.ticketEntriesWriter(new ArrayList<TicketEntryClass>());
+
+        this.orders.clear();
+        FileReaderAndWriter.OrdersWriter(orders);
+
+        this.inventory.clear();
+        FileReaderAndWriter.ProductsWriter(inventory);
+
+        this.creditCards.clear();
+        FileReaderAndWriter.CreditCardsWriter(creditCards);
+
+        //TODO: check if everything have been removed correctly, in particular returns
     }
 
     @Override
