@@ -1008,7 +1008,9 @@ public class EZShop implements EZShopInterface {
             return false;
 
         if(s.getState().equals("Closed"))
-            return false;
+             return false;
+        
+        s.setState("Closed");
 
         //update the persistent components after this operation
         if(!FileReaderAndWriter.saletransactionsWriter(sales))
@@ -1080,8 +1082,9 @@ public class EZShop implements EZShopInterface {
         if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
             return false;
         
-        if(!FileReaderAndWriter.ProductsWriter(inventory))
-            return false;
+        //TODO: de-comment this row when inventory persistence will be implemented
+        //if(!FileReaderAndWriter.ProductsWriter(inventory))
+            //return false;
         
         return true;
     }
@@ -1161,8 +1164,12 @@ public class EZShop implements EZShopInterface {
         	throw new InvalidPaymentException("money not provided");
         }
         if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice()) {
-        	if(recordBalanceUpdate(sales.get(transactionId).getPrice()))
-        		return cash-sales.get(transactionId).getPrice();
+        	if(recordBalanceUpdate(sales.get(transactionId).getPrice())){
+                sales.get(transactionId).setState("Paid");
+                if(!FileReaderAndWriter.saletransactionsWriter(sales))
+                    return -1;
+                return cash-sales.get(transactionId).getPrice();
+            }
         	else 
         		return -1;
         }
@@ -1188,6 +1195,9 @@ public class EZShop implements EZShopInterface {
         	if(recordBalanceUpdate(sales.get(transactionId).getPrice())) {
         		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()-sales.get(transactionId).getPrice());
         		FileReaderAndWriter.CreditCardsWriter(creditCards);
+                sales.get(transactionId).setState("Paid");
+                if(!FileReaderAndWriter.saletransactionsWriter(sales))
+                    return false;
         		return true;
         	}
         	else
