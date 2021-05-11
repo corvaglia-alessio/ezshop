@@ -359,6 +359,7 @@ public class FileReaderAndWriter {
         return null;
     }
     
+    /*reading credit cards from file. Credit cards are stored with the following format: <creditCardNumber>;<creditCardBalance>*/
     static public HashMap<String,CreditCardClass> CreditCardsReader(){
     	HashMap<String, CreditCardClass> creditCards = new HashMap<String, CreditCardClass>();
         
@@ -386,7 +387,7 @@ public class FileReaderAndWriter {
         
     }
     
-    /*writing customers to file*/
+    /*writing creditcards to file*/
     static public Boolean CreditCardsWriter(Map<String, CreditCardClass> creditCards){
         String x = "";
         for(CreditCardClass c : creditCards.values()){
