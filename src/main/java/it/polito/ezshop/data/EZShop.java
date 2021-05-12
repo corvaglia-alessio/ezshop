@@ -124,7 +124,7 @@ public class EZShop implements EZShopInterface {
             }
         }
 
-        if (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")) {
+        if (role!=null && (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager"))) {
             User u = new UserClass(maxid + 1, username, password, role);
             users.put(maxid + 1, u);
             if (!FileReaderAndWriter.UsersWriter(users))
@@ -197,10 +197,10 @@ public class EZShop implements EZShopInterface {
         if (loggedInUser.getRole().compareTo("Administrator") != 0)
             throw new UnauthorizedException("Function not available for the current user");
 
-        if (id <= 0 || id == null)
+        if (id == null ||id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
-        if (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")) {
+        if (role!=null && (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager"))) {
             if (users.get(id) == null)
                 return false;
             else {
@@ -216,10 +216,10 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-        if (password.equals("") || password == null)
+        if (password == null ||password.equals(""))
             throw new InvalidPasswordException("Password should not be empty");
 
-        if (username.equals("") || username == null)
+        if (username == null ||username.equals(""))
             throw new InvalidUsernameException("Username should not be empty");
 
         for (User us : users.values()) {

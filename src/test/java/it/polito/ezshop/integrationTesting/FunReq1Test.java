@@ -2,6 +2,8 @@ package it.polito.ezshop.integrationTesting;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -25,21 +27,15 @@ public class FunReq1Test {
 		EZShop e = new EZShop();
 		e.reset();
 
-		assertThrows(InvalidUsernameException.class, () -> {
-			e.createUser(null, "password", "Cashier");
-		});
+		assertThrows(InvalidUsernameException.class, () -> { e.createUser(null, "password", "Cashier");});
 		
-		assertThrows(InvalidUsernameException.class, () -> {
-			e.createUser("", "password", "Cashier");
-		});
+		assertThrows(InvalidUsernameException.class, () -> {e.createUser("", "password", "Cashier");});
 
-		assertThrows(InvalidPasswordException.class, () -> {
-			e.createUser("user", "", "Cashier");
-		});
+		assertThrows(InvalidPasswordException.class, () -> {e.createUser("user", "", "Cashier");});
 
-		assertThrows(InvalidRoleException.class, () -> {
-			e.createUser("user", "password", "StrangeRole");
-		});
+		assertThrows(InvalidRoleException.class, () -> {e.createUser("user", "password", "StrangeRole");});
+
+		assertThrows(InvalidRoleException.class, () -> {e.createUser("user", "password", null);});
 
 		int userid = e.createUser("username", "password", "Cashier");
 		assertEquals(1, userid);
@@ -130,5 +126,75 @@ public class FunReq1Test {
 
 		u = e.getUser(3);
 		assertEquals(null, u);
+	}
+
+	@Test
+	public void testUpdateUserRights() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidUserIdException{
+
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("adminuser", "password", "Administrator");
+		e.createUser("cashieruser", "pwd", "Cashier");
+
+		assertThrows(UnauthorizedException.class, () -> {e.updateUserRights(2, "ShopManager");});
+
+		e.login("cashieruser", "pwd");
+
+		assertThrows(UnauthorizedException.class, () -> {e.updateUserRights(2, "ShopManager");});
+
+		e.logout();
+		e.login("adminuser", "password");
+
+		assertThrows(InvalidUserIdException.class, () -> {e.updateUserRights(-4, "ShopManager");});
+		assertThrows(InvalidUserIdException.class, () -> {e.updateUserRights(null, "ShopManager");});
+
+		assertThrows(InvalidRoleException.class, () -> {e.updateUserRights(2, "WrongCashier");});
+		assertThrows(InvalidRoleException.class, () -> {e.updateUserRights(2, null);});
+
+		boolean res = e.updateUserRights(3, "ShopManager");
+		assertFalse(res);
+
+		res = e.updateUserRights(2, "ShopManager");
+		assertTrue(res);
+		assertEquals("ShopManager", e.getUser(2).getRole());
+	}
+
+	@Test
+	public void testLogin() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidUserIdException{
+
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("adminuser", "password", "Administrator");
+
+
+		assertThrows(InvalidUsernameException.class, () -> { e.login(null, "password");});
+		assertThrows(InvalidUsernameException.class, () -> { e.login("", "password");});
+		assertThrows(InvalidPasswordException.class, () -> { e.login("adminuser", "");});
+		assertThrows(InvalidPasswordException.class, () -> { e.login("adminuser", null);});
+
+		User u = e.login("adminuser", "wrongpassword");
+		assertNull(u);
+
+		u = e.login("wronguser", "password");
+		assertNull(u);
+
+		u = e.login("adminuser", "password");
+		assertNotNull(u);
+		assertEquals("adminuser", u.getUsername());
+	}
+
+	@Test
+	public void testLogout() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidUserIdException{
+
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("adminuser", "password", "Administrator");
+
+		boolean res = e.logout();
+		assertFalse(res);
+		
+		e.login("adminuser", "password");
+		res = e.logout();
+		assertTrue(res);
 	}
 }
