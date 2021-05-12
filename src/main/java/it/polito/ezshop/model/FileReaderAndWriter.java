@@ -13,7 +13,6 @@ import java.util.Scanner;
 import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.data.User;
-import it.polito.ezshop.data.ProductType;
 
 public class FileReaderAndWriter {
 
@@ -370,16 +369,6 @@ public class FileReaderAndWriter {
             }
         }
         return inventory;
-    }
-
-    // TODO: TO MARTIN: I added this two methods because I need them in sale
-    // transaction management, you just need to complete them
-    static public Boolean ProductsWriter(Map<Integer, ProductType> inventory) {
-        return false;
-    }
-
-    static public HashMap<Integer, ProductType> ProductsReader() {
-        return null;
     }
 
     /*
