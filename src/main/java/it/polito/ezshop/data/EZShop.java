@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
@@ -18,24 +19,15 @@ public class EZShop implements EZShopInterface {
     HashMap<Integer, it.polito.ezshop.model.Customer> customers;
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
-    Map<Integer, SaleTransaction> sales;
     Map<Integer, ReturnTransaction> returns;
+    Map<Integer, SaleTransactionClass> sales;
     Map<Integer, ProductType> inventory;
     Map<Integer, OrderClass> orders;
+    Map<String,CreditCardClass> creditCards;
     User loggedInUser;
     double currentBalance;
 
-    // store the transaction that is being handled in this moment, null if no
-    // transaction is being handled
-    // when the transaction will be closed, it will be inserted in the sales map and
-    // actualTransaction = null
-    Integer actualTransaction;
-
     public EZShop() {
-
-        loggedInUser = null;
-        currentBalance = 0;
-        actualTransaction = null;
 
         // user init
         this.users = FileReaderAndWriter.UsersReader();
@@ -63,11 +55,6 @@ public class EZShop implements EZShopInterface {
         // the list with ALL entries is local to the constructor, after that each entry
         // has been assigned to the right transaction, will be deleted
 
-        // NOTE FOR ALESSIO
-        // WHEN IS NECESSARY TO MAKE TRANSACTIONS AND ENTRIES PERSISTENT, REMBEMBER TO
-        // RE-GROUP IN A UNIQUE LIST ALL ENTRIES FROM TRANSACTIONS
-        // AND TO CREATE OBJECT OF TICKETENTRYCLASS (AND NOT TICKETENTRY) OTHERWISE IT
-        // IS NOT POSSIBLE TO RETRIVE THE TRANSACTION ID
         for (SaleTransaction t : sales.values()) {
             List<TicketEntry> e = entries.stream().filter((e1) -> {
                 return e1.getTransactionId() == t.getTicketNumber();
@@ -80,11 +67,41 @@ public class EZShop implements EZShopInterface {
 
         // returns init
         this.returns = FileReaderAndWriter.ReturnsReader();
+        // orders init
+        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
 
+        //creditCards init
+        this.creditCards = FileReaderAndWriter.CreditCardsReader();
     }
 
     @Override
     public void reset() {
+
+        this.users.clear();
+        FileReaderAndWriter.UsersWriter(users);
+        this.loggedInUser = null;
+
+        this.balanceOperations.clear();
+        FileReaderAndWriter.balanceOperationsWriter(balanceOperations);
+        this.currentBalance = 0;
+
+        this.customers.clear();
+        FileReaderAndWriter.CustomersWriter(customers);
+
+        this.sales.clear();
+        FileReaderAndWriter.saletransactionsWriter(sales);
+        FileReaderAndWriter.ticketEntriesWriter(new ArrayList<TicketEntryClass>());
+
+        this.orders.clear();
+        FileReaderAndWriter.OrdersWriter(orders);
+
+        this.inventory.clear();
+        FileReaderAndWriter.ProductsWriter(inventory);
+
+        this.creditCards.clear();
+        FileReaderAndWriter.CreditCardsWriter(creditCards);
+
+        //TODO: check if everything have been removed correctly, in particular returns
     }
 
     @Override
@@ -432,10 +449,11 @@ public class EZShop implements EZShopInterface {
 
         if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]"))
             throw new InvalidLocationException("The location is in an invalid format.");
-
-        for (ProductType product : inventory.values()) {
-            if (product.getLocation().equals(newPos))
-                return false;
+        
+        for (ProductType product : inventory.values()){
+            if(product.getLocation()!=null)
+                if (product.getLocation().equals(newPos))
+                    return false;
         }
 
         ProductType productToUpdate = inventory.get(productId);
@@ -567,33 +585,29 @@ public class EZShop implements EZShopInterface {
         OrderClass order = orders.get(orderId);
 
         ProductType product;
-        try {
-            product = this.getProductTypeByBarCode(order.getProductCode());
-            if (product.getLocation() == null || product.getLocation().isBlank())
-                throw new InvalidLocationException("The product must have a location.");
+		try {
+			product = this.getProductTypeByBarCode(order.getProductCode());
+			if (product.getLocation() == null || product.getLocation().isBlank())
+	            throw new InvalidLocationException("The product must have a location.");
 
-            if (order == null || !order.getStatus().equals("PAYED"))
-                return false;
-
-            this.orders.get(orderId).setStatus("COMPLETED");
-            try {
-                this.updateQuantity(product.getId(), order.getQuantity());
-            } catch (InvalidProductIdException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            FileReaderAndWriter.OrdersWriter(this.orders);
-
-            return true;
-        } catch (InvalidProductCodeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnauthorizedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return true;
+	        if (order == null || !order.getStatus().equals("PAYED"))
+	            return false;
+	        
+	        this.orders.get(orderId).setStatus("COMPLETED");
+	        
+	        this.updateQuantity(product.getId(), order.getQuantity());
+			
+	        FileReaderAndWriter.OrdersWriter(this.orders);
+	        
+	        return true;
+	        
+		} catch (InvalidProductCodeException e) {
+			return false;
+		} 
+		catch (InvalidProductIdException e) {
+			return false;
+		}
+		
     }
 
     @Override
@@ -813,14 +827,13 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier")))
             throw new UnauthorizedException("Function not available for the current user");
 
+        //by default transaction, when is built (not loaded from file) is open
         if (this.sales.isEmpty()) {
-            this.sales.put(0, new SaleTransactionClass(0));
-            this.actualTransaction = 0;
-            return 0;
+            this.sales.put(1, new SaleTransactionClass(1));
+            return 1;
         } else {
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i - j);
-            this.sales.put(id.get() + 1, new SaleTransactionClass(id.get() + 1));
-            this.actualTransaction = id.get() + 1;
+            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
             return id.get() + 1;
         }
     }
@@ -840,11 +853,11 @@ public class EZShop implements EZShopInterface {
 
         if (amount < 0)
             throw new InvalidQuantityException("Quantity less than 0");
-
-        if (productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+        
+        if(productCode == null || productCode.equals("") || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
-
-        if (transactionId != actualTransaction)
+        
+        if(sales.get(transactionId).getState().compareTo("Open") != 0)
             return false;
 
         if (getProductTypeByBarCode(productCode) == null)
@@ -856,8 +869,8 @@ public class EZShop implements EZShopInterface {
         List<TicketEntry> x = sales.get(transactionId).getEntries();
         TicketEntry t = null;
 
-        for (TicketEntry e : x)
-            if (e.getBarCode() == productCode) {
+        for(TicketEntry e : x)
+            if(e.getBarCode().equals(productCode)){
                 t = e;
             }
 
@@ -878,7 +891,6 @@ public class EZShop implements EZShopInterface {
         return true;
     }
 
-    // CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
             throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
@@ -893,11 +905,11 @@ public class EZShop implements EZShopInterface {
 
         if (amount < 0)
             throw new InvalidQuantityException("Quantity less than 0");
-
-        if (productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+        
+        if(productCode == null || productCode.equals("") || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
-
-        if (transactionId != actualTransaction)
+        
+        if(sales.get(transactionId).getState().compareTo("Open") != 0)
             return false;
 
         if (getProductTypeByBarCode(productCode) == null)
@@ -910,8 +922,8 @@ public class EZShop implements EZShopInterface {
 
         TicketEntry t = null;
 
-        for (TicketEntry e : x)
-            if (e.getBarCode() == productCode)
+        for(TicketEntry e : x)
+            if(e.getBarCode().equals(productCode))
                 t = e;
 
         if (t == null) // if the product is note present in the entries, it is impossible to delete a
@@ -943,6 +955,31 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+
+        if(discountRate < 0 || discountRate >= 1)
+            throw new InvalidDiscountRateException("Discount not valid");
+
+        if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+            throw new InvalidProductCodeException("Not a valid product");
+
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(sales.get(transactionId).getState().compareTo("Open") != 0)
+            return false;
+
+        List<TicketEntry> te = sales.get(transactionId).getEntries();
+
+        for(TicketEntry t : te){
+            if(t.getBarCode().equals(productCode)){
+                t.setDiscountRate(discountRate);
+                /*TODO: Check if it is good to update the price here, in particular if it is possible to change the discount after having applied one. If yes I need to change return to the original price and apply the new discount*/
+                Double entryprice = t.getAmount() * t.getPricePerUnit();
+                Double reduction = entryprice * discountRate;
+                sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() - reduction);
+                return true;
+            }
+        }  
         return false;
     }
 
@@ -953,7 +990,22 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return false;
+
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(discountRate < 0 || discountRate >= 1)
+            throw new InvalidDiscountRateException("Discount not valid");
+        
+        SaleTransactionClass t = sales.get(transactionId);
+
+        if(t.getState().compareTo("Paid") == 0)
+            return false;
+        else{
+            t.setDiscountRate(discountRate);
+            t.setPrice(t.getPrice() - (t.getPrice()*discountRate)); //TODO: check if replicated discount application like previous method
+            return true;
+        }
     }
 
     @Override
@@ -962,7 +1014,18 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return 0;
+
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        SaleTransaction t = sales.get(transactionId);
+
+        if(t==null){
+            return -1;
+        }
+        else{
+            return (int) t.getPrice() / 10;
+        }
     }
 
     @Override
@@ -972,7 +1035,38 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return false;
+
+        if(transactionId <= 0 || transactionId == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        SaleTransactionClass s = this.sales.get(transactionId);
+
+        if(s == null)
+            return false;
+
+        if(s.getState().equals("Closed"))
+             return false;
+        
+        s.setState("Closed");
+
+        //update the persistent components after this operation
+        if(!FileReaderAndWriter.saletransactionsWriter(sales))
+            return false;
+
+        List<TicketEntryClass> allentries = new ArrayList<TicketEntryClass>();
+
+        for(SaleTransaction sa : this.sales.values())
+            for(TicketEntry en : sa.getEntries()){
+                TicketEntryClass ec = new TicketEntryClass(sa.getTicketNumber(), en.getBarCode(), en.getProductDescription(), en.getAmount(), en.getPricePerUnit(), en.getDiscountRate());
+                allentries.add(ec);
+            }
+
+        if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
+            return false;
+        if(!FileReaderAndWriter.ProductsWriter(inventory)) 
+            return false;
+            
+        return true;
     }
 
     @Override
@@ -982,7 +1076,54 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return false;
+
+        if(saleNumber <= 0 || saleNumber == null)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        SaleTransactionClass s = this.sales.get(saleNumber);
+
+        if(s == null)
+            return false;
+
+        if(s.getState().equals("Paid"))
+            return false;
+        
+        //for each ticket entry of the transaction that is going to be deleted, re-add the quantity in the inventory
+        for(TicketEntry t : s.getEntries()){
+            ProductType pt = null;
+            try {
+                pt = getProductTypeByBarCode(t.getBarCode());
+            } 
+            catch (InvalidProductCodeException e) {
+                e.printStackTrace();
+            }
+            if(pt != null)
+                pt.setQuantity(pt.getQuantity()+t.getAmount());
+        }
+        
+        //cancel the sale from the main memory
+        this.sales.remove(saleNumber);
+
+        //update the persistent components after this operation
+        if(!FileReaderAndWriter.saletransactionsWriter(sales))
+            return false;
+
+        List<TicketEntryClass> allentries = new ArrayList<TicketEntryClass>();
+
+        for(SaleTransaction sa : this.sales.values())
+            for(TicketEntry en : sa.getEntries()){
+                TicketEntryClass ec = new TicketEntryClass(sa.getTicketNumber(), en.getBarCode(), en.getProductDescription(), en.getAmount(), en.getPricePerUnit(), en.getDiscountRate());
+                allentries.add(ec);
+            }
+
+        if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
+            return false;
+        
+        //TODO: de-comment this row when inventory persistence will be implemented
+        //if(!FileReaderAndWriter.ProductsWriter(inventory))
+            //return false;
+        
+        return true;
     }
 
     @Override
@@ -994,14 +1135,18 @@ public class EZShop implements EZShopInterface {
         }
         if (transactionId <= 0 || transactionId == null)
             throw new InvalidTransactionIdException("Transaction id is wrong");
+        
+        SaleTransactionClass s = sales.get(transactionId);
 
-        if (this.actualTransaction == transactionId) // if the transaction is not closed it cannot be returned
+        if(s == null)
             return null;
         else
-            return this.sales.get(transactionId);
+            if(s.getState().equals("Closed"))
+                return s;
+            else
+                return null;
     }
 
-    // TODO : Martin Part
     @Override
     public Integer startReturnTransaction(Integer transactionID)
             throws InvalidTransactionIdException, UnauthorizedException {
@@ -1158,21 +1303,57 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public double receiveCashPayment(Integer ticketNumber, double cash)
+    public double receiveCashPayment(Integer transactionId, double cash)
             throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return 0;
+        if (transactionId == null || transactionId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        if (cash <= 0) {
+        	throw new InvalidPaymentException("money not provided");
+        }
+        if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice()) {
+        	if(recordBalanceUpdate(sales.get(transactionId).getPrice())){
+                sales.get(transactionId).setState("Paid");
+                if(!FileReaderAndWriter.saletransactionsWriter(sales))
+                    return -1;
+                return cash-sales.get(transactionId).getPrice();
+            }
+        	else 
+        		return -1;
+        }
+        else
+        	return -1;
     }
 
     @Override
-    public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard)
+    public boolean receiveCreditCardPayment(Integer transactionId, String creditCard)
             throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
+        }
+        if (transactionId == null || transactionId <= 0) {
+        	throw new InvalidTransactionIdException("Transaction id is wrong");
+        }
+        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
+        	throw new InvalidCreditCardException("credit card number is not valid");
+        }
+        
+        if(creditCards.containsKey(creditCard) && sales.containsKey(transactionId) && creditCards.get(creditCard).getBalance() >= sales.get(transactionId).getPrice()) {
+        	if(recordBalanceUpdate(sales.get(transactionId).getPrice())) {
+        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()-sales.get(transactionId).getPrice());
+        		FileReaderAndWriter.CreditCardsWriter(creditCards);
+                sales.get(transactionId).setState("Paid");
+                if(!FileReaderAndWriter.saletransactionsWriter(sales))
+                    return false;
+        		return true;
+        	}
+        	else
+        		return false;
         }
         return false;
     }
@@ -1183,6 +1364,20 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (returnId == null || returnId <= 0) {
+        	throw new InvalidTransactionIdException("Return transaction id is wrong");
+        }
+        //TODO: replace sales with returns. returns will be the data structure containing return transactions
+        /*if(sales.containsKey(returnId)) {
+        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1)
+        		return sales.get(returnId).getPrice();
+        	else 
+        		return -1;
+        }
+        else
+        	return -1;
+        
+       */
         return 0;
     }
 
@@ -1193,6 +1388,24 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (returnId == null || returnId <= 0) {
+        	throw new InvalidTransactionIdException("Return transaction id is wrong");
+        }
+        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
+        	throw new InvalidCreditCardException("credit card number is not valid");
+        }
+        /*TODO: replace sales with returns. returns will be the data structure containing return transactions*/
+        /*
+        if(creditCards.containsKey(creditCard) && sales.containsKey(returnId)) {
+        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1) {
+        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()+sales.get(returnId).getPrice());
+        		return true;
+        	}
+        	else
+        		return false;
+        }
+        return false;
+        */
         return 0;
     }
 
