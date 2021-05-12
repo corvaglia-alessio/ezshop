@@ -10,7 +10,7 @@ import it.polito.ezshop.model.GFG;
 public class checkLuhnTest {
 
 	@Test 
-	public void testNullString() {
+	public void testNull() {
 		
 		assertFalse(GFG.checkLuhn(null));
 	}
@@ -21,6 +21,7 @@ public class checkLuhnTest {
 		assertFalse(GFG.checkLuhn("qwerty"));
 		assertFalse(GFG.checkLuhn("4716258050958642"));
 		assertFalse(GFG.checkLuhn("448537008651089"));	
+		assertFalse(GFG.checkLuhn("1234qwerty56789a"));
 		
 	}
 		

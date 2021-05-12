@@ -5,7 +5,7 @@ import org.junit.Test;
 public class FunReq5Test {
 
 	@Test 
-	public void example() {
+	public void DefineCustomerTest() {
 		
 	}
 }
