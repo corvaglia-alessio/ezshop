@@ -1,11 +1,11 @@
 package it.polito.ezshop.unitTesting.blackBox;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class VerifyBarCodeTest {
-
-	@Test
-	public void testExample() {
+	
+	@Test 
+	public void example() {
 		
 	}
 }
