@@ -19,6 +19,17 @@ public class ProductTypeClass implements it.polito.ezshop.data.ProductType {
         this.id = _id;
     }
 
+    public ProductTypeClass(int _id, int _quantity, String _location, String _productDescription, String _barCode, Double _pricePerUnit, String _note) {
+        super();
+        this.productDescription = _productDescription;
+        this.barCode = _barCode;
+        this.pricePerUnit = _pricePerUnit;
+        this.note = _note;
+        this.quantity = _quantity;
+        this.location = _location;
+        this.id = _id;
+    }
+
     public static boolean VerifyBarCode(String barCode) {
 
         if(barCode == null)

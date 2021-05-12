@@ -3,6 +3,7 @@ package it.polito.ezshop.data;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ public class EZShop implements EZShopInterface {
     Map<Integer, User> users;
     Map<Integer, BalanceOperation> balanceOperations;
     Map<Integer, SaleTransaction> sales;
+    Map<Integer, ReturnTransaction> returns;
     Map<Integer, ProductType> inventory;
     Map<Integer, OrderClass> orders;
     User loggedInUser;
@@ -54,7 +56,7 @@ public class EZShop implements EZShopInterface {
         List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); // load all entries
 
         // orders init
-        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
+        this.orders = FileReaderAndWriter.OrdersReader(); // load all orders
 
         // for each transaction, create a new list of ticketentries with transaction id
         // = transaction considered and set it
@@ -73,7 +75,11 @@ public class EZShop implements EZShopInterface {
             t.setEntries(e);
         }
 
-        this.inventory = new HashMap<Integer, ProductType>(); //to change when persistence will be implemented
+        // inventory init
+        this.inventory = FileReaderAndWriter.InventoryReader(); // to change when persistence will be implemented
+
+        // returns init
+        this.returns = FileReaderAndWriter.ReturnsReader();
 
     }
 
@@ -217,7 +223,6 @@ public class EZShop implements EZShopInterface {
         return true;
     }
 
-    //TODO : Persistence of data !
     @Override
     public Integer createProductType(String description, String productCode, double pricePerUnit, String note)
             throws InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException,
@@ -253,13 +258,17 @@ public class EZShop implements EZShopInterface {
             });
             ProductTypeClass newItem = new ProductTypeClass(maxID[0] + 1, description, productCode, pricePerUnit, note);
             inventory.put(newItem.getId(), newItem);
-            return newItem.getId();
+            if (FileReaderAndWriter.InventoryWriter(inventory)) {
+                return newItem.getId();
+            }
+            return -1;
         } catch (Exception e) {
             return -1;
         }
     }
 
-    // TODO : Test the VerifyBarCode() method --> Seems like it work --> Need further investigation
+    // TODO : Test the VerifyBarCode() method --> Seems like it work --> Need
+    // further investigation
 
     @Override
     public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote)
@@ -297,7 +306,10 @@ public class EZShop implements EZShopInterface {
         productToUpdate.setPricePerUnit(newPrice);
         productToUpdate.setNote(newNote);
 
-        return true;
+        if (FileReaderAndWriter.InventoryWriter(inventory)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -313,7 +325,10 @@ public class EZShop implements EZShopInterface {
 
         try {
             inventory.remove(id);
-            return true;
+            if (FileReaderAndWriter.InventoryWriter(inventory)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
@@ -348,12 +363,12 @@ public class EZShop implements EZShopInterface {
         if (!ProductTypeClass.VerifyBarCode(barCode))
             throw new InvalidProductCodeException("The barCode provided is not valid.");
 
-        for(ProductType p : getAllProductTypes())
-                if(p.getBarCode().equals(barCode))
-                    return p;
+        for (ProductType p : getAllProductTypes())
+            if (p.getBarCode().equals(barCode))
+                return p;
 
         return null;
-        
+
     }
 
     @Override
@@ -379,41 +394,46 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException, UnauthorizedException {
+    public boolean updateQuantity(Integer productId, int toBeAdded)
+            throws InvalidProductIdException, UnauthorizedException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
-        
+
         if (productId <= 0 || productId == null)
             throw new InvalidProductIdException("Invalid Product ID.");
-        
+
         ProductType productToUpdate = inventory.get(productId);
-        if (productToUpdate == null || toBeAdded + productToUpdate.getQuantity() < 0 || productToUpdate.getLocation() == null || productToUpdate.getLocation().isEmpty())
+        if (productToUpdate == null || toBeAdded + productToUpdate.getQuantity() < 0
+                || productToUpdate.getLocation() == null || productToUpdate.getLocation().isEmpty())
             return false;
 
         inventory.get(productId).setQuantity(productToUpdate.getQuantity() + toBeAdded);
-        
-        return true;
+
+        if (FileReaderAndWriter.InventoryWriter(inventory)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
+    public boolean updatePosition(Integer productId, String newPos)
+            throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
-        
+
         if (productId <= 0 || productId == null)
             throw new InvalidProductIdException("Invalid Product ID.");
-        
+
         if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]"))
             throw new InvalidLocationException("The location is in an invalid format.");
-        
-                    
-        for (ProductType product : inventory.values()){
+
+        for (ProductType product : inventory.values()) {
             if (product.getLocation().equals(newPos))
                 return false;
         }
@@ -421,14 +441,18 @@ public class EZShop implements EZShopInterface {
         ProductType productToUpdate = inventory.get(productId);
         if (productToUpdate == null)
             return false;
-        
+
         inventory.get(productId).setLocation(newPos);
-        
-        return true;
+
+        if (FileReaderAndWriter.InventoryWriter(inventory)) {
+            return true;
+        }
+        return false;
     }
 
-   @Override
-    public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+    @Override
+    public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException,
+            InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
@@ -440,17 +464,16 @@ public class EZShop implements EZShopInterface {
 
         if (pricePerUnit <= 0)
             throw new InvalidPricePerUnitException("Price per unit must be a positive integer.");
-        
+
         if (!ProductTypeClass.VerifyBarCode(productCode))
             throw new InvalidProductCodeException("Invalid product code.");
 
         ProductType productToOrder = getProductTypeByBarCode(productCode);
         if (productToOrder == null)
             return -1;
-        
-       
+
         try {
-        	int[] maxID = { 0 };
+            int[] maxID = { 0 };
             this.orders.forEach((k, v) -> {
                 if (k > maxID[0])
                     maxID[0] = k;
@@ -465,7 +488,9 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit)
+            throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException,
+            UnauthorizedException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
@@ -477,7 +502,7 @@ public class EZShop implements EZShopInterface {
 
         if (pricePerUnit <= 0)
             throw new InvalidPricePerUnitException("Price per unit must be a positive integer.");
-        
+
         if (!ProductTypeClass.VerifyBarCode(productCode))
             throw new InvalidProductCodeException("Invalid product code.");
 
@@ -487,16 +512,14 @@ public class EZShop implements EZShopInterface {
         ProductType productToOrder = getProductTypeByBarCode(productCode);
         if (productToOrder == null)
             return -1;
-        
-        
-        
+
         try {
-        	int[] maxID = { 0 };
+            int[] maxID = { 0 };
             this.orders.forEach((k, v) -> {
                 if (k > maxID[0])
                     maxID[0] = k;
             });
-            
+
             OrderClass newOrder = new OrderClass(maxID[0] + 1, null, productCode, pricePerUnit, quantity, "PAYED");
             this.orders.put(newOrder.getOrderId(), newOrder);
             FileReaderAndWriter.OrdersWriter(this.orders);
@@ -521,16 +544,17 @@ public class EZShop implements EZShopInterface {
         Order order = orders.get(orderId);
         if (order == null || !order.getStatus().equals("ISSUED"))
             return false;
-        
+
         this.orders.get(orderId).setStatus("PAYED");
         this.recordBalanceUpdate(order.getPricePerUnit() * order.getQuantity() * -1);
         FileReaderAndWriter.OrdersWriter(this.orders);
-        
+
         return true;
     }
 
     @Override
-    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
+    public boolean recordOrderArrival(Integer orderId)
+            throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
         if (this.loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
@@ -539,37 +563,36 @@ public class EZShop implements EZShopInterface {
 
         if (orderId <= 0 || orderId == null)
             throw new InvalidOrderIdException("Id must be a positive integer.");
-        
-        OrderClass order = orders.get(orderId);
-        
-        ProductType product;
-		try {
-			product = this.getProductTypeByBarCode(order.getProductCode());
-			if (product.getLocation() == null || product.getLocation().isBlank())
-	            throw new InvalidLocationException("The product must have a location.");
 
-	        if (order == null || !order.getStatus().equals("PAYED"))
-	            return false;
-	        
-	        this.orders.get(orderId).setStatus("COMPLETED");
-	        try {
-				this.updateQuantity(product.getId(), order.getQuantity());
-			} catch (InvalidProductIdException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        FileReaderAndWriter.OrdersWriter(this.orders);
-	        
-	        
-	        return true;
-		} catch (InvalidProductCodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnauthorizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+        OrderClass order = orders.get(orderId);
+
+        ProductType product;
+        try {
+            product = this.getProductTypeByBarCode(order.getProductCode());
+            if (product.getLocation() == null || product.getLocation().isBlank())
+                throw new InvalidLocationException("The product must have a location.");
+
+            if (order == null || !order.getStatus().equals("PAYED"))
+                return false;
+
+            this.orders.get(orderId).setStatus("COMPLETED");
+            try {
+                this.updateQuantity(product.getId(), order.getQuantity());
+            } catch (InvalidProductIdException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            FileReaderAndWriter.OrdersWriter(this.orders);
+
+            return true;
+        } catch (InvalidProductCodeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UnauthorizedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         return true;
     }
 
@@ -792,118 +815,128 @@ public class EZShop implements EZShopInterface {
 
         if (this.sales.isEmpty()) {
             this.sales.put(0, new SaleTransactionClass(0));
-            this.actualTransaction = 0; 
+            this.actualTransaction = 0;
             return 0;
         } else {
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i - j);
-            this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
-            this.actualTransaction = id.get()+1;
+            this.sales.put(id.get() + 1, new SaleTransactionClass(id.get() + 1));
+            this.actualTransaction = id.get() + 1;
             return id.get() + 1;
         }
     }
 
     @Override
-    public boolean addProductToSale(Integer transactionId, String productCode, int amount)throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,UnauthorizedException {
+    public boolean addProductToSale(Integer transactionId, String productCode, int amount)
+            throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
+            UnauthorizedException {
 
-        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if (transactionId <= 0 || transactionId == null)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if(amount < 0)
+        if (amount < 0)
             throw new InvalidQuantityException("Quantity less than 0");
-        
-        if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+
+        if (productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
-        
-        if(transactionId != actualTransaction)
+
+        if (transactionId != actualTransaction)
             return false;
-        
-        if(getProductTypeByBarCode(productCode) == null)
+
+        if (getProductTypeByBarCode(productCode) == null)
             return false;
-        
-        if(getProductTypeByBarCode(productCode).getQuantity() < amount)
+
+        if (getProductTypeByBarCode(productCode).getQuantity() < amount)
             return false;
-        
+
         List<TicketEntry> x = sales.get(transactionId).getEntries();
         TicketEntry t = null;
 
-        for(TicketEntry e : x)
-            if(e.getBarCode() == productCode){
+        for (TicketEntry e : x)
+            if (e.getBarCode() == productCode) {
                 t = e;
             }
 
-        if(t == null){ //product not present
-            t = new TicketEntryClass(transactionId, productCode, getProductTypeByBarCode(productCode).getProductDescription(), amount, getProductTypeByBarCode(productCode).getPricePerUnit(), 0D);
+        if (t == null) { // product not present
+            t = new TicketEntryClass(transactionId, productCode,
+                    getProductTypeByBarCode(productCode).getProductDescription(), amount,
+                    getProductTypeByBarCode(productCode).getPricePerUnit(), 0D);
             x.add(t);
             sales.get(transactionId).setEntries(x);
+        } else { // product already present
+            t.setAmount(t.getAmount() + amount);
         }
-        else{ //product already present
-            t.setAmount(t.getAmount()+amount);
-        }
-        
-        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
-        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()-amount);
+
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice()
+                + (amount * getProductTypeByBarCode(productCode).getPricePerUnit()));
+        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity() - amount);
 
         return true;
     }
 
-    //CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
+    // CHECK THE WANTED BEHAVIOUR IF THE METHOD IS CALLED TWICE ON THE SAME PRODUCT
     @Override
-    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator") && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
+            throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
+            UnauthorizedException {
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if (transactionId <= 0 || transactionId == null)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if(amount < 0)
+        if (amount < 0)
             throw new InvalidQuantityException("Quantity less than 0");
-        
-        if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
+
+        if (productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
-        
-        if(transactionId != actualTransaction)
+
+        if (transactionId != actualTransaction)
             return false;
-        
-        if(getProductTypeByBarCode(productCode) == null)
+
+        if (getProductTypeByBarCode(productCode) == null)
             return false;
-        
+
         List<TicketEntry> x = sales.get(transactionId).getEntries();
 
-        if(x == null) //if there are no entries, it is impossible to delete a product
+        if (x == null) // if there are no entries, it is impossible to delete a product
             return false;
 
         TicketEntry t = null;
 
-        for(TicketEntry e : x)
-            if(e.getBarCode() == productCode)
+        for (TicketEntry e : x)
+            if (e.getBarCode() == productCode)
                 t = e;
-            
-        if(t == null) //if the product is note present in the entries, it is impossible to delete a product
+
+        if (t == null) // if the product is note present in the entries, it is impossible to delete a
+                       // product
             return false;
 
-         if(t.getAmount() < amount) //if the amount already added are less the the desidered quantity to delete, it is not possible to delete
+        if (t.getAmount() < amount) // if the amount already added are less the the desidered quantity to delete, it
+                                    // is not possible to delete
             return false;
-        
-        if(t.getAmount() == amount){
+
+        if (t.getAmount() == amount) {
             x.remove(t);
+        } else {
+            t.setAmount(t.getAmount() - amount);
         }
-        else{
-            t.setAmount(t.getAmount()-amount);
-        }
-        
-        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() - (amount*getProductTypeByBarCode(productCode).getPricePerUnit()));
-        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity()+amount);
+
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice()
+                - (amount * getProductTypeByBarCode(productCode).getPricePerUnit()));
+        getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity() + amount);
 
         return true;
     }
 
     @Override
-    public boolean applyDiscountRateToProduct (Integer transactionId, String productCode, double discountRate)
+    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate)
             throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException,
             UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
@@ -962,20 +995,38 @@ public class EZShop implements EZShopInterface {
         if (transactionId <= 0 || transactionId == null)
             throw new InvalidTransactionIdException("Transaction id is wrong");
 
-        if(this.actualTransaction == transactionId) //if the transaction is not closed it cannot be returned
+        if (this.actualTransaction == transactionId) // if the transaction is not closed it cannot be returned
             return null;
         else
             return this.sales.get(transactionId);
     }
 
+    // TODO : Martin Part
     @Override
-    public Integer startReturnTransaction(Integer saleNumber)
-            throws /* InvalidTicketNumberException, */InvalidTransactionIdException, UnauthorizedException {
+    public Integer startReturnTransaction(Integer transactionID)
+            throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return null;
+
+        if (transactionID == null || transactionID <= 0) {
+            throw new InvalidTransactionIdException("The transaction ID provided is not valid.");
+        }
+
+        int[] maxID = { 0 };
+        this.returns.forEach((k, v) -> {
+            if (k > maxID[0])
+                maxID[0] = k;
+        });
+
+        if (sales.containsKey(transactionID)) {
+            ReturnTransaction rt = new ReturnTransaction(maxID[0] + 1, transactionID);
+            returns.put(maxID[0] + 1, rt);
+            return maxID[0] + 1;
+        }
+
+        return -1;
     }
 
     @Override
@@ -985,6 +1036,37 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (!ProductTypeClass.VerifyBarCode(productCode)) {
+            throw new InvalidProductCodeException("The product code is invalid.");
+        }
+        if (amount <= 0) {
+            throw new InvalidQuantityException("The quantity is less than or equal to 0.");
+        }
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
+        }
+
+        ProductType rp = getProductTypeByBarCode(productCode);
+        ReturnTransaction rt = this.returns.get(returnId);
+        SaleTransaction st = getSaleTransaction(rt.getSaleTransactionID());
+
+        if (rp != null && rt != null && st != null) {
+            List<TicketEntry> listTE = st.getEntries();
+            listTE.removeIf((ticket) -> {
+                if (ticket.getBarCode() != productCode) {
+                    return true;
+                }
+                return false;
+            });
+            if (listTE.size() > 0) {
+                TicketEntry te = listTE.get(0);
+                if (te.getAmount() < amount) {
+                    rt.getReturnedProduct().put(rp.getId(), amount);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -995,7 +1077,41 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        return false;
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The transaction ID is not valid.");
+        }
+
+        ReturnTransaction rt = returns.get(returnId);
+
+        if(rt == null){
+            return false;
+        }
+
+        SaleTransaction st = sales.get(rt.getSaleTransactionID());
+        List<TicketEntry> ListTE = st.getEntries();
+        Double returnedPrice = 0.0;
+
+        for (Integer ptID : rt.getReturnedProduct().keySet()) {
+            for(TicketEntry te : ListTE){
+                if(te.getBarCode().equals(inventory.get(ptID).getBarCode())){
+                    te.setAmount(te.getAmount() - rt.getReturnedProduct().get(ptID));
+                    returnedPrice = returnedPrice + (rt.getReturnedProduct().get(ptID) * te.getPricePerUnit());
+                    inventory.get(ptID).setQuantity(inventory.get(ptID).getQuantity() + rt.getReturnedProduct().get(ptID));
+                }
+            }
+        }
+
+        st.setPrice(st.getPrice() - returnedPrice);
+
+        if(commit){
+            try {
+                FileReaderAndWriter.ReturnsWriter(this.returns);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -1005,6 +1121,39 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The ID provided is not valid");
+        }
+
+        ReturnTransaction rt = returns.get(returnId);
+
+        if(rt != null) {
+            SaleTransaction st = sales.get(rt.getSaleTransactionID());
+            List<TicketEntry> ListTE = st.getEntries();
+            Double returnedPrice = 0.0;
+    
+            for (Integer ptID : rt.getReturnedProduct().keySet()) {
+                for(TicketEntry te : ListTE){
+                    if(te.getBarCode().equals(inventory.get(ptID).getBarCode())){
+                        te.setAmount(te.getAmount() + rt.getReturnedProduct().get(ptID));
+                        returnedPrice = returnedPrice + (rt.getReturnedProduct().get(ptID) * te.getPricePerUnit());
+                        inventory.get(ptID).setQuantity(inventory.get(ptID).getQuantity() - rt.getReturnedProduct().get(ptID));
+                    }
+                }
+            }
+
+            st.setPrice(st.getPrice() + returnedPrice);
+            returns.remove(returnId);
+
+            try {
+                FileReaderAndWriter.ReturnsWriter(returns);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+            
+        }
+
         return false;
     }
 

@@ -13,6 +13,7 @@ import java.util.Scanner;
 import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.data.SaleTransaction;
 import it.polito.ezshop.data.User;
+import it.polito.ezshop.data.ProductType;
 
 
 public class FileReaderAndWriter {
@@ -340,6 +341,119 @@ public class FileReaderAndWriter {
             return false;
         }
         finally{
+            if(out!=null)
+                out.close();
+        }
+
+        return true;
+    }
+
+    static public Map<Integer, ProductType> InventoryReader(){
+        Map<Integer, ProductType> inventory = new HashMap<Integer, ProductType>();
+
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/producttypes.txt");
+        Scanner s = null;
+
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                ProductTypeClass product = new ProductTypeClass(Integer.parseInt(res[0]), Integer.parseInt(res[1]), res[2], res[3],
+                res[4], Double.parseDouble(res[5]), res[6]);
+                inventory.put(Integer.parseInt(res[0]), product);
+            }
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if(s!=null){
+                s.close();
+            }
+        }
+
+        return inventory;
+    }
+
+    static public Boolean InventoryWriter(Map<Integer, ProductType> inventory){
+        String x = "";
+        for(ProductType p : inventory.values()){
+            x = x + p.getId() + ";" + p.getQuantity() + ";" + p.getLocation() + ";"
+            + p.getProductDescription() + ";" + p.getBarCode() + ";"
+            + p.getPricePerUnit() + ";" + p.getNote() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/producttypes.txt");
+        PrintWriter out = null;
+        try{
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            if(out!=null)
+                out.close();
+        }
+
+        return true;
+    }
+
+    static public Map<Integer, ReturnTransaction> ReturnsReader() {
+        Map<Integer, ReturnTransaction> returns = new HashMap<Integer, ReturnTransaction>();
+
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/returns.txt");
+        Scanner s = null;
+
+        try {
+            s = new Scanner(inputFile);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                String[] map = res[2].split("{|=|,|}");
+                Map<Integer, Integer> returnedProducts = new HashMap<Integer, Integer>();
+                for(int i = 0; i < map.length; i = i+2){
+                    returnedProducts.put(Integer.parseInt(map[i]), Integer.parseInt(map[i+1]));
+                }
+                ReturnTransaction rt = new ReturnTransaction(Integer.parseInt(res[0]), Integer.parseInt(res[1]), returnedProducts);
+                returns.put(Integer.parseInt(res[0]), rt);
+            } 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(s!=null){
+                s.close();
+            }
+        }
+
+        return returns;
+    }
+
+    public static boolean ReturnsWriter(Map<Integer, ReturnTransaction> returns){
+        
+        String x = "";
+        for(ReturnTransaction rt : returns.values()){
+            String y = "{";
+            for(Integer key : rt.getReturnedProduct().keySet()){
+                y = y + key + "=" + rt.getReturnedProduct().get(key) + ",";
+            }
+            y = y.substring(0, y.length()-1); //Remove the ',' at the end of y
+            y = y + "}";
+
+            x = x + rt.getID() + ";" + rt.getSaleTransactionID() + ";" + y + "\n";
+        }
+
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/returns.txt");
+        PrintWriter out = null;
+
+        try {
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
             if(out!=null)
                 out.close();
         }

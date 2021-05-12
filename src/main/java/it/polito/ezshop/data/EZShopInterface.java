@@ -643,7 +643,7 @@ public interface EZShopInterface {
      * @throws InvalidTransactionIdException if the transactionId  is less than or equal to 0 or if it is null
      * @throws UnauthorizedException if there is no logged user or if it has not the rights to perform the operation
      */
-    public Integer startReturnTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException;
+    public Integer startReturnTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException;   
 
     /**
      * This method adds a product to the return transaction
