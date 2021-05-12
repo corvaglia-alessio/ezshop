@@ -1470,13 +1470,17 @@ public class EZShop implements EZShopInterface {
                 }
             }
             if (from != null && to != null) {
+                if(from.isAfter(to)){
+                    LocalDate x = from;
+                    from = to;
+                    to = x;
+                }
                 for (BalanceOperation bo : balanceOperations.values()) {
                     if ((bo.getDate().isBefore(to) || bo.getDate().isEqual(to))
                             && (bo.getDate().isAfter(from) || bo.getDate().isEqual(from)))
                         l.add(bo);
                 }
             }
-
             return l;
         } else {
             throw new UnauthorizedException("Function not available for the current user");
