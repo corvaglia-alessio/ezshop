@@ -1015,7 +1015,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if(transactionId == null ||transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         SaleTransaction t = sales.get(transactionId);
@@ -1132,7 +1132,7 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        if (transactionId <= 0 || transactionId == null)
+        if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Transaction id is wrong");
         
         SaleTransactionClass s = sales.get(transactionId);
@@ -1140,7 +1140,7 @@ public class EZShop implements EZShopInterface {
         if(s == null)
             return null;
         else
-            if(s.getState().equals("Closed") || s.getState().equals("Paid")) //i added pay since there was written in a slack answer
+            if(s.getState().equals("Closed") || s.getState().equals("Paid")) //i added pay since it was written in a slack answer
                 return s;
             else
                 return null;
