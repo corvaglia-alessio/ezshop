@@ -96,8 +96,8 @@ public class EZShop implements EZShopInterface {
         FileReaderAndWriter.InventoryWriter(inventory);
 
         //TODO: check if credit card have to be removed
-        this.creditCards.clear();
-        FileReaderAndWriter.CreditCardsWriter(creditCards);
+        //this.creditCards.clear();
+        //FileReaderAndWriter.CreditCardsWriter(creditCards);
 
         this.returns.clear();
         FileReaderAndWriter.ReturnsWriter(returns);
@@ -666,7 +666,7 @@ public class EZShop implements EZShopInterface {
 
         if (newCustomerCard == null) {
             customers.get(id).setCustomerName(newCustomerName);
-            FileReaderAndWriter.CustomersWriter(customers); // TO CHECK WHAT MORISIO SAYS
+            FileReaderAndWriter.CustomersWriter(customers);
             return true;
         }
 
@@ -1140,7 +1140,7 @@ public class EZShop implements EZShopInterface {
         if(s == null)
             return null;
         else
-            if(s.getState().equals("Closed"))
+            if(s.getState().equals("Closed") || s.getState().equals("Paid")) //i added pay since there was written in a slack answer
                 return s;
             else
                 return null;
