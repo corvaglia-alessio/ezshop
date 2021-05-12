@@ -3,7 +3,6 @@ package it.polito.ezshop.data;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -47,9 +46,6 @@ public class EZShop implements EZShopInterface {
         this.sales = FileReaderAndWriter.SaleTransactionsReader(); // load all transactions
         List<TicketEntryClass> entries = FileReaderAndWriter.ticketEntriesReader(); // load all entries
 
-        // orders init
-        this.orders = FileReaderAndWriter.OrdersReader(); // load all orders
-
         // for each transaction, create a new list of ticketentries with transaction id
         // = transaction considered and set it
         // the list with ALL entries is local to the constructor, after that each entry
@@ -63,12 +59,13 @@ public class EZShop implements EZShopInterface {
         }
 
         // inventory init
-        this.inventory = FileReaderAndWriter.InventoryReader(); // to change when persistence will be implemented
+        this.inventory = FileReaderAndWriter.InventoryReader();
+
+        // orders init
+        this.orders = FileReaderAndWriter.OrdersReader(); // load all orders
 
         // returns init
         this.returns = FileReaderAndWriter.ReturnsReader();
-        // orders init
-        this.orders = FileReaderAndWriter.OrdersReader(); //load all orders
 
         //creditCards init
         this.creditCards = FileReaderAndWriter.CreditCardsReader();
@@ -96,12 +93,15 @@ public class EZShop implements EZShopInterface {
         FileReaderAndWriter.OrdersWriter(orders);
 
         this.inventory.clear();
-        FileReaderAndWriter.ProductsWriter(inventory);
+        FileReaderAndWriter.InventoryWriter(inventory);
 
+        //TODO: check if credit card have to be removed
         this.creditCards.clear();
         FileReaderAndWriter.CreditCardsWriter(creditCards);
 
-        //TODO: check if everything have been removed correctly, in particular returns
+        this.returns.clear();
+        FileReaderAndWriter.ReturnsWriter(returns);
+
     }
 
     @Override
@@ -1063,7 +1063,7 @@ public class EZShop implements EZShopInterface {
 
         if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
             return false;
-        if(!FileReaderAndWriter.ProductsWriter(inventory)) 
+        if(!FileReaderAndWriter.InventoryWriter(inventory)) 
             return false;
             
         return true;
@@ -1119,9 +1119,8 @@ public class EZShop implements EZShopInterface {
         if(!FileReaderAndWriter.ticketEntriesWriter(allentries))
             return false;
         
-        //TODO: de-comment this row when inventory persistence will be implemented
-        //if(!FileReaderAndWriter.ProductsWriter(inventory))
-            //return false;
+        if(!FileReaderAndWriter.InventoryWriter(inventory))
+            return false;
         
         return true;
     }
