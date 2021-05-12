@@ -4,7 +4,6 @@ import org.junit.Test;
 
 public class checkLuhnTest {
 
-	
 	@Test 
 	public void example() {
 		
