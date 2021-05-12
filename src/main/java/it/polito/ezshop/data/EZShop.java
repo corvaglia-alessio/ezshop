@@ -802,8 +802,8 @@ public class EZShop implements EZShopInterface {
 
         //by default transaction, when is built (not loaded from file) is open
         if (this.sales.isEmpty()) {
-            this.sales.put(0, new SaleTransactionClass(0));
-            return 0;
+            this.sales.put(1, new SaleTransactionClass(1));
+            return 1;
         } else {
             Optional<Integer> id = this.sales.keySet().stream().max((i, j) -> i - j);
             this.sales.put(id.get()+1, new SaleTransactionClass(id.get()+1));
