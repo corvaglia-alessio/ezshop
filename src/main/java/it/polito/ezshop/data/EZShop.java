@@ -95,7 +95,7 @@ public class EZShop implements EZShopInterface {
         this.inventory.clear();
         FileReaderAndWriter.InventoryWriter(inventory);
 
-        //TODO: check if credit card have to be removed
+        //TODO: check if credit card have to be removed update the method for persistance!
         //this.creditCards.clear();
         //FileReaderAndWriter.CreditCardsWriter(creditCards);
 
@@ -109,10 +109,10 @@ public class EZShop implements EZShopInterface {
             throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
         Integer maxid = 0;
 
-        if (password.equals("") || password == null)
+        if (password == null ||password.equals(""))
             throw new InvalidPasswordException("Password should not be empty");
 
-        if (username.equals("") || username == null)
+        if (username == null ||username.equals(""))
             throw new InvalidUsernameException("Username should not be empty");
 
         for (User u : users.values()) {
@@ -138,7 +138,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        if (id <= 0 || id == null)
+        if (id == null || id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
         if (loggedInUser == null)
@@ -178,7 +178,7 @@ public class EZShop implements EZShopInterface {
         if (loggedInUser == null)
             throw new UnauthorizedException("No one is logged in");
 
-        if (id <= 0 || id == null)
+        if (id == null ||id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
         if (loggedInUser.getRole().equals("Administrator")) {
