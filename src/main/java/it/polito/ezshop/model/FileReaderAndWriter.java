@@ -370,9 +370,11 @@ public class FileReaderAndWriter {
             s = new Scanner(inputFile);
             while(s.hasNextLine()){
                 String line = s.nextLine();
-                String[] res = line.split(";");
-                CreditCardClass cc = new CreditCardClass(res[0], Double.parseDouble(res[1]));
-                creditCards.put(cc.getCreditCardId(), cc);
+                if(!line.contains("#")) {
+	                String[] res = line.split(";");
+	                CreditCardClass cc = new CreditCardClass(res[0], Double.parseDouble(res[1]));
+	                creditCards.put(cc.getCreditCardId(), cc);
+                }
             }
         } 	
         catch (FileNotFoundException e) {
@@ -389,7 +391,7 @@ public class FileReaderAndWriter {
     
     /*writing creditcards to file*/
     static public Boolean CreditCardsWriter(Map<String, CreditCardClass> creditCards){
-        String x = "";
+        String x = "#<creditCardNumber>;<balance>\n";
         for(CreditCardClass c : creditCards.values()){
             x = x + c.getCreditCardId() + ";" + c.getBalance()+"\n";
         }
