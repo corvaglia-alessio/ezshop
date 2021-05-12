@@ -1367,18 +1367,22 @@ public class EZShop implements EZShopInterface {
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
-        //TODO: replace sales with returns. returns will be the data structure containing return transactions
-        /*if(sales.containsKey(returnId)) {
-        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1)
-        		return sales.get(returnId).getPrice();
-        	else 
-        		return -1;
-        }
-        else
-        	return -1;
         
-       */
-        return 0;
+        if(returns.containsKey(returnId)) {
+        	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
+        	.mapToDouble((entry) -> {
+        		Integer pId = entry.getKey();
+        		Integer amount = entry.getValue();
+        		
+        		return inventory.get(pId).getPricePerUnit()*amount;
+        	}).sum();
+        	if(recordBalanceUpdate(sum*-1)) {
+        		if(!FileReaderAndWriter.saletransactionsWriter(sales)) 
+                    return -1;
+                return sum;
+        	}
+        }
+        return -1;
     }
 
     @Override
@@ -1394,20 +1398,25 @@ public class EZShop implements EZShopInterface {
         if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
-        /*TODO: replace sales with returns. returns will be the data structure containing return transactions*/
-        /*
+        
         if(creditCards.containsKey(creditCard) && sales.containsKey(returnId)) {
-        	if(recordBalanceUpdate(sales.get(returnId).getPrice())*-1) {
-        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()+sales.get(returnId).getPrice());
-        		return true;
+        	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
+                	.mapToDouble((entry) -> {
+                		Integer pId = entry.getKey();
+                		Integer amount = entry.getValue();
+                		
+                		return inventory.get(pId).getPricePerUnit()*amount;
+                	}).sum();
+        	if(recordBalanceUpdate(sum*-1)) {
+        		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()+sum);
+        		FileReaderAndWriter.CreditCardsWriter(creditCards);
+                return sum;
         	}
-        	else
-        		return false;
         }
-        return false;
-        */
-        return 0;
-    }
+        
+        return -1;
+
+     }
 
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
