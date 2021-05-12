@@ -1,10 +1,10 @@
 # Unit Testing Documentation
 
-Authors:
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date:
+Date: 12 May 2021
 
-Version:
+Version: 1.0
 
 # Contents
 
