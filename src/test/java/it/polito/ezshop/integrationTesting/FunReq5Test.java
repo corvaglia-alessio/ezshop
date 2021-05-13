@@ -3,12 +3,13 @@ package it.polito.ezshop.integrationTesting;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /*import org.junit.Test;*/
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
@@ -26,13 +27,9 @@ public class FunReq5Test {
 	@BeforeAll
 	public static void init() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException{
 		e = new EZShop();
-		e.reset();
-		e.createUser("validUser", "pass", "Cashier");
-		e.createUser("validAdministrator", "pass", "Administrator");
-		e.createUser("validManager", "pass", "ShopManager");
 	}
 	
-	@AfterEach
+	@BeforeEach
 	public void createCustomers() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, UnauthorizedException {
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
@@ -147,28 +144,169 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void deleteCustomerTest() {
+	public void deleteCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException {
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.modifyCustomer(null, null, null);});
+		
+		e.login("validUser", "pass");
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(null);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(0);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(-1);});
+		
+		assertFalse(e.deleteCustomer(5));
+		assertTrue(e.deleteCustomer(1));
+		assertTrue(e.deleteCustomer(2));
+		assertTrue(e.deleteCustomer(3));
+
+		e.logout();
+		
+		e.login("validUser", "pass");
+		assertDoesNotThrow(() -> {e.deleteCustomer(5);});
+		e.logout();
+		
+		e.login("validAdministrator", "pass");
+		assertDoesNotThrow(() -> {e.deleteCustomer(6);});
+		e.logout();
+		
+		e.login("validManager", "pass");
+		assertDoesNotThrow(() -> {e.deleteCustomer(6);});
+		e.logout();
+	}
+	
+	@Test 
+	public void getCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException {
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.getCustomer(5);});
+		
+		e.login("validUser", "pass");
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(null);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(0);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(-1);});
+		
+		assertNull(e.getCustomer(5));
+		assertTrue(e.getCustomer(1).getId()==1);
+		assertTrue(e.getCustomer(2).getId()==2);
+		
+		e.login("validUser", "pass");
+		assertDoesNotThrow(() -> {e.getCustomer(5);});
+		e.logout();
+		
+		e.login("validAdministrator", "pass");
+		assertDoesNotThrow(() -> {e.getCustomer(6);});
+		e.logout();
+		
+		e.login("validManager", "pass");
+		assertDoesNotThrow(() -> {e.getCustomer(6);});
+		e.logout();
+	}
+	
+	@Test 
+	public void getAllCustomersTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
+		
+		e.login("validUser", "pass");
+		assertTrue(e.getAllCustomers().size()==3);
+		e.logout();
+		
+		e.login("validUser", "pass");
+		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.logout();
+		
+		e.login("validAdministrator", "pass");
+		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.logout();
+		
+		e.login("validManager", "pass");
+		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.logout();
+	}
+	
+	@Test 
+	public void attachCardToCustomerTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
+		
+		e.login("validUser", "pass");
+		
+		String card = e.createCard();
+		assertThrows(InvalidCustomerIdException.class,() -> {e.attachCardToCustomer(card,null);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.attachCardToCustomer(card,0);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.attachCardToCustomer(card,-1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("12345678",1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("qwerty7890",1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer(null,1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("",1);});
+		
+		assertFalse(e.attachCardToCustomer(card, 5));
+		
+		String card2 = e.createCard();
+
+		assertTrue(e.attachCardToCustomer(card, 1));
+		assertTrue(e.attachCardToCustomer(card2, 2));
+		assertFalse(e.attachCardToCustomer(card, 2));
+		assertTrue(e.attachCardToCustomer(card, 1));
+				
+		e.logout();
+		
+		e.login("validUser", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card, 1);});
+		e.logout();
+		
+		e.login("validAdministrator", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,1);});
+		e.logout();
+		
+		e.login("validManager", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,3);});
+		e.logout();
 		
 	}
 	
 	@Test 
-	public void getCustomerTest() {
+	public void modifyPointsOnCardTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
 		
-	}
-	
-	@Test 
-	public void getAllCustomersTest() {
+		e.login("validUser", "pass");
+		String card = e.createCard();
+		String card2 = e.createCard();
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("12345678",1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("qwerty7890",1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer(null,1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("",1);});
 		
-	}
-	
-	@Test 
-	public void attachCardToCustomerTest() {
+		e.attachCardToCustomer(card, 1);
 		
-	}
-	
-	@Test 
-	public void modifyPointsOnCardTest() {
+		assertFalse(e.modifyPointsOnCard(card2, 50));
 		
+		assertFalse(e.modifyPointsOnCard(card, -1));
+		assertTrue(e.getAllCustomers().stream()
+				.filter((c) ->c.getCustomerCard().equals(card))
+				.findFirst().get().getPoints() == 0);
+		
+		assertTrue(e.modifyPointsOnCard(card, 50));
+		assertTrue(e.getAllCustomers().stream()
+				.filter((c) ->c.getCustomerCard().equals(card))
+				.findFirst().get().getPoints() == 50);
+		
+		assertFalse(e.modifyPointsOnCard(card, -100));
+		assertTrue(e.getAllCustomers().stream()
+				.filter((c) ->c.getCustomerCard().equals(card))
+				.findFirst().get().getPoints() == 50);
+		
+		
+		e.login("validUser", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card, 1);});
+		e.logout();
+		
+		e.login("validAdministrator", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,1);});
+		e.logout();
+		
+		e.login("validManager", "pass");
+		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,3);});
+		e.logout();
 	}
 	
 }

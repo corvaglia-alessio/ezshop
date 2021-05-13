@@ -775,11 +775,11 @@ public class EZShop implements EZShopInterface {
             throw new InvalidCustomerCardException("Invalid customer Card");
         }
         try {
-            Integer.parseInt(customerCard);
+            Double.parseDouble(customerCard);
         } catch (NumberFormatException nfe) {
             throw new InvalidCustomerCardException("Invalid customer Card");
         }
-        if (customers.values().stream().anyMatch((c) -> c.getCustomerCard().equals(customerCard))
+        if (customers.values().stream().filter((c)-> c.getId()!= customerId).anyMatch((c) -> c.getCustomerCard().equals(customerCard))
                 || !customers.containsKey(customerId)) {
             return false;
         } else {
@@ -820,7 +820,6 @@ public class EZShop implements EZShopInterface {
                 return true;
             }
         }
-
         return false;
     }
 
