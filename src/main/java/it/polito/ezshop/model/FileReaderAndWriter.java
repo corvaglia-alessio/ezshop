@@ -407,7 +407,7 @@ public class FileReaderAndWriter {
         		+ "#since they will be used in the acceptance tests.\r\n"
         		+ "#The lines preceded by an \"#\" must be ignored.\r\n"
         		+ "#Here you can add all the credit card numbers you need with their balance. The format MUST be :\r\n"
-        		+ "#<creditCardNumber>;<balance>";
+        		+ "#<creditCardNumber>;<balance>\r\n";
         for (CreditCardClass c : creditCards.values()) {
             x = x + c.getCreditCardId() + ";" + c.getBalance() + "\n";
         }

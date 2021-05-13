@@ -2,9 +2,8 @@ package it.polito.ezshop.integrationTesting;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 /*
@@ -78,13 +77,13 @@ public class FunReq5Test {
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.defineCustomer("Name110");});
-		assertDoesNotThrow(() -> {e.defineCustomer("Name123");});
+		e.defineCustomer("Name110");
+		e.defineCustomer("Name123");
 		e.logout();
 		
 		e.login("validAdministrator","pass");
-		assertDoesNotThrow(() -> {e.defineCustomer("qwe");});
-		assertDoesNotThrow(() -> {e.defineCustomer("qwerty");});
+		e.defineCustomer("qwe");
+		e.defineCustomer("qwerty");
 		e.logout();
 		
 	}
@@ -107,15 +106,15 @@ public class FunReq5Test {
 		assertThrows(UnauthorizedException.class, () -> {e.createCard();});
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.createCard();});
+		e.createCard();
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.createCard();});
+		e.createCard();
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.createCard();});
+		e.createCard();
 		e.logout();
 		
 	}
@@ -169,15 +168,15 @@ public class FunReq5Test {
 		e.logout();
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.modifyCustomer(3,"cus12",customerCard);});
+		e.modifyCustomer(3,"cus12",customerCard);;
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.modifyCustomer(3,"cus12",customerCard);});
+		e.modifyCustomer(3,"cus12",customerCard);
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.modifyCustomer(3,"cus12",customerCard);});
+		e.modifyCustomer(3,"cus12",customerCard);
 		e.logout();
 	}
 	
@@ -211,15 +210,15 @@ public class FunReq5Test {
 		e.logout();
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.deleteCustomer(5);});
+		e.deleteCustomer(5);
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.deleteCustomer(6);});
+		e.deleteCustomer(6);
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.deleteCustomer(6);});
+		e.deleteCustomer(6);
 		e.logout();
 	}
 	
@@ -250,15 +249,15 @@ public class FunReq5Test {
 		assertTrue(e.getCustomer(2).getId()==2);
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.getCustomer(5);});
+		e.getCustomer(5);
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.getCustomer(6);});
+		e.getCustomer(6);
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.getCustomer(6);});
+		e.getCustomer(6);
 		e.logout();
 	}
 	
@@ -284,15 +283,15 @@ public class FunReq5Test {
 		e.logout();
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.getAllCustomers();
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.getAllCustomers();
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.getAllCustomers();});
+		e.getAllCustomers();
 		e.logout();
 	}
 	
@@ -336,15 +335,15 @@ public class FunReq5Test {
 		e.logout();
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card, 1);});
+		e.attachCardToCustomer(card, 1);
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,1);});
+		e.attachCardToCustomer(card,1);
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,3);});
+		e.attachCardToCustomer(card,3);
 		e.logout();
 		
 	}
@@ -395,15 +394,15 @@ public class FunReq5Test {
 		
 		
 		e.login("validUser", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card, 1);});
+		e.attachCardToCustomer(card, 1);
 		e.logout();
 		
 		e.login("validAdministrator", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,1);});
+		e.attachCardToCustomer(card,1);
 		e.logout();
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.attachCardToCustomer(card,3);});
+		e.attachCardToCustomer(card,3);
 		e.logout();
 	}
 	
