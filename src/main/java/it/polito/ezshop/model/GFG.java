@@ -12,7 +12,12 @@ public static boolean checkLuhn(String cardNo)
 
 	if(cardNo==null || cardNo.isEmpty())
 		return false;
-
+	
+	try {
+        Double.parseDouble(cardNo);
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
 	 int nDigits = cardNo.length();
 	
 	 int nSum = 0;
