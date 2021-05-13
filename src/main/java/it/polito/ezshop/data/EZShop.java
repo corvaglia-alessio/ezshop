@@ -15,16 +15,16 @@ import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
 	/*TODO: reset private attribute to properties after testing*/
-    public HashMap<Integer, it.polito.ezshop.model.Customer> customers;
-    public Map<Integer, User> users;
-    public Map<Integer, BalanceOperation> balanceOperations;
-    public Map<Integer, ReturnTransaction> returns;
-    public Map<Integer, SaleTransactionClass> sales;
-    public Map<Integer, ProductType> inventory;
-    public Map<Integer, OrderClass> orders;
-    public Map<String,CreditCardClass> creditCards;
-    public User loggedInUser;
-    public double currentBalance;
+    private HashMap<Integer, it.polito.ezshop.model.Customer> customers;
+    private Map<Integer, User> users;
+    private Map<Integer, BalanceOperation> balanceOperations;
+    private Map<Integer, ReturnTransaction> returns;
+    private Map<Integer, SaleTransactionClass> sales;
+    private Map<Integer, ProductType> inventory;
+    private Map<Integer, OrderClass> orders;
+    private Map<String,CreditCardClass> creditCards;
+    private User loggedInUser;
+    private double currentBalance;
 
     public EZShop() {
 
@@ -1316,7 +1316,7 @@ public class EZShop implements EZShopInterface {
         if (cash <= 0) {
         	throw new InvalidPaymentException("money not provided");
         }
-        if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice()) {
+        if(sales.containsKey(transactionId) && cash >= sales.get(transactionId).getPrice() && sales.get(transactionId).getState().equals("Closed")) {
         	if(recordBalanceUpdate(sales.get(transactionId).getPrice())){
                 sales.get(transactionId).setState("Paid");
                 if(!FileReaderAndWriter.saletransactionsWriter(sales))
