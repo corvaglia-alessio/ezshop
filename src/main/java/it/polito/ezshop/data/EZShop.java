@@ -850,7 +850,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if (transactionId <= 0 || transactionId == null)
+        if (transactionId == null ||transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         if (amount < 0)
@@ -975,7 +975,6 @@ public class EZShop implements EZShopInterface {
         for(TicketEntry t : te){
             if(t.getBarCode().equals(productCode)){
                 t.setDiscountRate(discountRate);
-                /*TODO: Check if it is good to update the price here, in particular if it is possible to change the discount after having applied one. If yes I need to change return to the original price and apply the new discount*/
                 Double entryprice = t.getAmount() * t.getPricePerUnit();
                 Double reduction = entryprice * discountRate;
                 sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() - reduction);
@@ -993,7 +992,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if(transactionId == null ||transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         if(discountRate < 0 || discountRate >= 1)
@@ -1005,7 +1004,7 @@ public class EZShop implements EZShopInterface {
             return false;
         else{
             t.setDiscountRate(discountRate);
-            t.setPrice(t.getPrice() - (t.getPrice()*discountRate)); //TODO: check if replicated discount application like previous method
+            t.setPrice(t.getPrice() - (t.getPrice()*discountRate));
             return true;
         }
     }
