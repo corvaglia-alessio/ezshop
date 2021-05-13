@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({checkLuhnTest.class/*, VerifyBarCodeTest.class*/})
+@Suite.SuiteClasses({checkLuhnTest.class, VerifyBarCodeTest.class})
 public class BlackBoxTestSuite {
 	
 	
