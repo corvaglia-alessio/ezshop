@@ -690,7 +690,7 @@ public class EZShop implements EZShopInterface {
             throw new InvalidCustomerCardException("Invalid customer Card");
         }
 
-        if (customers.values().stream().filter((c) -> c.getId()==id).anyMatch((c) -> c.getCustomerCard().equals(newCustomerCard))) {
+        if (customers.values().stream().filter((c) -> c.getId()!=id).anyMatch((c) -> c.getCustomerCard().equals(newCustomerCard))) {
             return false;
         }
         customers.get(id).setCustomerName(newCustomerName);

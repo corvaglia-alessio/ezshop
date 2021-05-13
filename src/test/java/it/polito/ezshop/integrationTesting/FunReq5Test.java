@@ -5,7 +5,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+/*import org.junit.Test;*/
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -25,6 +26,7 @@ public class FunReq5Test {
 	@BeforeAll
 	public static void init() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException{
 		e = new EZShop();
+		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
 		e.createUser("validAdministrator", "pass", "Administrator");
 		e.createUser("validManager", "pass", "ShopManager");
@@ -45,17 +47,18 @@ public class FunReq5Test {
 	
 	@Test 
 	public void defineCustomerTest() throws InvalidCustomerNameException, UnauthorizedException, InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-		e = new EZShop();
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
 		e.createUser("validAdministrator", "pass", "Administrator");
 		e.createUser("validManager", "pass", "ShopManager");
+
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.defineCustomer("customerName");});
 		
 		e.login("validUser", "pass");
 		assertThrows(InvalidCustomerNameException.class,() -> {e.defineCustomer(null);});
 		assertThrows(InvalidCustomerNameException.class,() -> {e.defineCustomer("");});
+		
 		
 		assertTrue(e.defineCustomer("Name1")==1);
 		assertTrue(e.defineCustomer("Name2")==2);
@@ -113,7 +116,7 @@ public class FunReq5Test {
 		assertTrue(e.getCustomer(1).getCustomerCard().equals(customerCard));
 		
 		/*try to assign card already assigned to another user*/
-		assertFalse(e.modifyCustomer((2),"cus5",customerCard));
+		assertFalse(e.modifyCustomer(2,"cus5",customerCard));
 		
 		/*modify only the name not the card*/
 		assertTrue(e.modifyCustomer(1, "cus8", null));
