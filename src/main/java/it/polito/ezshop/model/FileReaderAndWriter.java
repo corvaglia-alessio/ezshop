@@ -400,6 +400,32 @@ public class FileReaderAndWriter {
         return creditCards;
 
     }
+    
+    /* writing creditcards to file */
+    static public Boolean CreditCardsWriter(Map<String, CreditCardClass> creditCards) {
+        String x = "#Do not delete the lines preceded by an \"#\" and do not modify the first three credit cards\r\n"
+        		+ "#since they will be used in the acceptance tests.\r\n"
+        		+ "#The lines preceded by an \"#\" must be ignored.\r\n"
+        		+ "#Here you can add all the credit card numbers you need with their balance. The format MUST be :\r\n"
+        		+ "#<creditCardNumber>;<balance>";
+        for (CreditCardClass c : creditCards.values()) {
+            x = x + c.getCreditCardId() + ";" + c.getBalance() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/creditcards.txt");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (out != null)
+                out.close();
+        }
+
+        return true;
+    }
 
     static public Boolean InventoryWriter(Map<Integer, ProductType> inventory) {
         String x = "";
@@ -423,27 +449,6 @@ public class FileReaderAndWriter {
         return true;
     }
 
-    /* writing creditcards to file */
-    static public Boolean CreditCardsWriter(Map<String, CreditCardClass> creditCards) {
-        String x = "#<creditCardNumber>;<balance>\n";
-        for (CreditCardClass c : creditCards.values()) {
-            x = x + c.getCreditCardId() + ";" + c.getBalance() + "\n";
-        }
-        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/creditcards.txt");
-        PrintWriter out = null;
-        try {
-            out = new PrintWriter(outputFile);
-            out.print(x);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (out != null)
-                out.close();
-        }
-
-        return true;
-    }
 
     static public Map<Integer, ReturnTransaction> ReturnsReader() {
         Map<Integer, ReturnTransaction> returns = new HashMap<Integer, ReturnTransaction>();
