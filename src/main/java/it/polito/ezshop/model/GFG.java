@@ -10,7 +10,7 @@ public class GFG {
 public static boolean checkLuhn(String cardNo)
 {
 
-	if(cardNo==null)
+	if(cardNo==null || cardNo.isEmpty())
 		return false;
 
 	 int nDigits = cardNo.length();

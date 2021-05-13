@@ -18,7 +18,6 @@ public class checkLuhnTest {
 	@Test 
 	public void testInvalidStrings() {
 		
-		assertFalse(GFG.checkLuhn(null));
 		assertFalse(GFG.checkLuhn(""));
 		assertFalse(GFG.checkLuhn("1"));
 		assertFalse(GFG.checkLuhn("qwerty"));
