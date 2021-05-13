@@ -44,13 +44,20 @@ static EZShop e;
 		e.startSaleTransaction();
 		e.startSaleTransaction();
 		e.startSaleTransaction();
-		
-		e.sales.get(1).setPrice(30);
+
+		e.endSaleTransaction(1);
+		e.endSaleTransaction(2);
+		e.endSaleTransaction(3);
+
+		e.getSaleTransaction(1).setPrice(30);
+		e.getSaleTransaction(2).setPrice(25.34);
+		e.getSaleTransaction(3).setPrice(5);
+/*
 		e.sales.get(1).setState("Closed");
 		e.sales.get(2).setPrice(25.34);
 		e.sales.get(2).setState("Closed");
 		e.sales.get(3).setPrice(40.9);
-		e.sales.get(3).setState("Closed");
+		e.sales.get(3).setState("Closed");*/
 		e.startReturnTransaction(1);
 		e.startReturnTransaction(2);
 		e.startReturnTransaction(3);
@@ -91,10 +98,10 @@ static EZShop e;
 		
 		
 		e.login("validManager", "pass");
-		assertDoesNotThrow(() -> {e.receiveCashPayment(3,10);});
+		e.receiveCashPayment(3,10);
 		e.logout();
 		e.login("validCashier", "pass");
-		assertDoesNotThrow(() -> {e.receiveCashPayment(3,10);});
+		assertTrue(e.receiveCashPayment(3,10)==-1);
 		e.logout();
 
 
