@@ -95,9 +95,9 @@ public class EZShop implements EZShopInterface {
         this.inventory.clear();
         FileReaderAndWriter.InventoryWriter(inventory);
 
-        //TODO: check if credit card have to be removed
-        this.creditCards.clear();
-        FileReaderAndWriter.CreditCardsWriter(creditCards);
+        //TODO: check if credit card have to be removed update the method for persistance!
+        //this.creditCards.clear();
+        //FileReaderAndWriter.CreditCardsWriter(creditCards);
 
         this.returns.clear();
         FileReaderAndWriter.ReturnsWriter(returns);
@@ -109,10 +109,10 @@ public class EZShop implements EZShopInterface {
             throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
         Integer maxid = 0;
 
-        if (password.equals("") || password == null)
+        if (password == null ||password.equals(""))
             throw new InvalidPasswordException("Password should not be empty");
 
-        if (username.equals("") || username == null)
+        if (username == null ||username.equals(""))
             throw new InvalidUsernameException("Username should not be empty");
 
         for (User u : users.values()) {
@@ -124,7 +124,7 @@ public class EZShop implements EZShopInterface {
             }
         }
 
-        if (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")) {
+        if (role!=null && (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager"))) {
             User u = new UserClass(maxid + 1, username, password, role);
             users.put(maxid + 1, u);
             if (!FileReaderAndWriter.UsersWriter(users))
@@ -138,7 +138,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        if (id <= 0 || id == null)
+        if (id == null || id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
         if (loggedInUser == null)
@@ -178,7 +178,7 @@ public class EZShop implements EZShopInterface {
         if (loggedInUser == null)
             throw new UnauthorizedException("No one is logged in");
 
-        if (id <= 0 || id == null)
+        if (id == null ||id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
         if (loggedInUser.getRole().equals("Administrator")) {
@@ -197,10 +197,10 @@ public class EZShop implements EZShopInterface {
         if (loggedInUser.getRole().compareTo("Administrator") != 0)
             throw new UnauthorizedException("Function not available for the current user");
 
-        if (id <= 0 || id == null)
+        if (id == null ||id <= 0)
             throw new InvalidUserIdException("Invalid id");
 
-        if (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager")) {
+        if (role!=null && (role.equals("Administrator") || role.equals("Cashier") || role.equals("ShopManager"))) {
             if (users.get(id) == null)
                 return false;
             else {
@@ -216,10 +216,10 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-        if (password.equals("") || password == null)
+        if (password == null ||password.equals(""))
             throw new InvalidPasswordException("Password should not be empty");
 
-        if (username.equals("") || username == null)
+        if (username == null ||username.equals(""))
             throw new InvalidUsernameException("Username should not be empty");
 
         for (User us : users.values()) {
@@ -666,7 +666,7 @@ public class EZShop implements EZShopInterface {
 
         if (newCustomerCard == null) {
             customers.get(id).setCustomerName(newCustomerName);
-            FileReaderAndWriter.CustomersWriter(customers); // TO CHECK WHAT MORISIO SAYS
+            FileReaderAndWriter.CustomersWriter(customers);
             return true;
         }
 
@@ -1015,7 +1015,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if(transactionId == null ||transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         SaleTransaction t = sales.get(transactionId);
@@ -1132,7 +1132,7 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        if (transactionId <= 0 || transactionId == null)
+        if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Transaction id is wrong");
         
         SaleTransactionClass s = sales.get(transactionId);
@@ -1140,7 +1140,7 @@ public class EZShop implements EZShopInterface {
         if(s == null)
             return null;
         else
-            if(s.getState().equals("Closed"))
+            if(s.getState().equals("Closed") || s.getState().equals("Paid")) //i added pay since it was written in a slack answer
                 return s;
             else
                 return null;
@@ -1470,13 +1470,17 @@ public class EZShop implements EZShopInterface {
                 }
             }
             if (from != null && to != null) {
+                if(from.isAfter(to)){
+                    LocalDate x = from;
+                    from = to;
+                    to = x;
+                }
                 for (BalanceOperation bo : balanceOperations.values()) {
                     if ((bo.getDate().isBefore(to) || bo.getDate().isEqual(to))
                             && (bo.getDate().isAfter(from) || bo.getDate().isEqual(from)))
                         l.add(bo);
                 }
             }
-
             return l;
         } else {
             throw new UnauthorizedException("Function not available for the current user");
