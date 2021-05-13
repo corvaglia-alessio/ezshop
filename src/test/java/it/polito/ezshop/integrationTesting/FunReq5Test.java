@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/*import org.junit.Test;*/
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-
+*/
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
 import it.polito.ezshop.exceptions.InvalidCustomerIdException;
@@ -22,8 +22,9 @@ import it.polito.ezshop.exceptions.UnauthorizedException;
 
 public class FunReq5Test {
 	
-	static EZShop e;
 	
+	/*
+	 * static EZShop e;
 	@BeforeAll
 	public static void init() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException{
 		e = new EZShop();
@@ -31,6 +32,8 @@ public class FunReq5Test {
 	
 	@BeforeEach
 	public void createCustomers() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, UnauthorizedException {
+		
+		EZShop e = new EZShop();
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
 		e.createUser("validAdministrator", "pass", "Administrator");
@@ -39,11 +42,23 @@ public class FunReq5Test {
 		e.defineCustomer("cus1");
 		e.defineCustomer("cus2");
 		e.defineCustomer("cus3");
-
+		
 	}
-	
+	*/
 	@Test 
 	public void defineCustomerTest() throws InvalidCustomerNameException, UnauthorizedException, InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
 		e.createUser("validAdministrator", "pass", "Administrator");
@@ -75,7 +90,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void createCardTest() throws InvalidUsernameException, InvalidPasswordException {
+	public void createCardTest() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, UnauthorizedException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.createCard();});
 		
@@ -95,7 +122,18 @@ public class FunReq5Test {
 	
 	
 	@Test 
-	public void modifyCustomerTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException {
+	public void modifyCustomerTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, InvalidRoleException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
 		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.modifyCustomer(null, null, null);});
@@ -144,7 +182,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void deleteCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException {
+	public void deleteCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException, InvalidRoleException, InvalidCustomerNameException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.modifyCustomer(null, null, null);});
 		
@@ -174,7 +224,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void getCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException {
+	public void getCustomerTest() throws InvalidUsernameException, InvalidPasswordException, InvalidCustomerIdException, UnauthorizedException, InvalidRoleException, InvalidCustomerNameException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.getCustomer(5);});
 		
@@ -201,7 +263,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void getAllCustomersTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
+	public void getAllCustomersTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidRoleException, InvalidCustomerNameException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
 		
@@ -223,7 +297,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void attachCardToCustomerTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+	public void attachCardToCustomerTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException, InvalidRoleException, InvalidCustomerNameException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
 		
@@ -264,7 +350,19 @@ public class FunReq5Test {
 	}
 	
 	@Test 
-	public void modifyPointsOnCardTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+	public void modifyPointsOnCardTest() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException, InvalidRoleException, InvalidCustomerNameException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validUser", "pass");
+		e.defineCustomer("cus1");
+		e.defineCustomer("cus2");
+		e.defineCustomer("cus3");
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
 		
