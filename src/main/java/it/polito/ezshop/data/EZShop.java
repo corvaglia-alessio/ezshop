@@ -14,17 +14,17 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
-
-    HashMap<Integer, it.polito.ezshop.model.Customer> customers;
-    Map<Integer, User> users;
-    Map<Integer, BalanceOperation> balanceOperations;
-    Map<Integer, ReturnTransaction> returns;
-    Map<Integer, SaleTransactionClass> sales;
-    Map<Integer, ProductType> inventory;
-    Map<Integer, OrderClass> orders;
-    Map<String,CreditCardClass> creditCards;
-    User loggedInUser;
-    double currentBalance;
+	/*TODO: reset private attribute to properties after testing*/
+    public HashMap<Integer, it.polito.ezshop.model.Customer> customers;
+    public Map<Integer, User> users;
+    public Map<Integer, BalanceOperation> balanceOperations;
+    public Map<Integer, ReturnTransaction> returns;
+    public Map<Integer, SaleTransactionClass> sales;
+    public Map<Integer, ProductType> inventory;
+    public Map<Integer, OrderClass> orders;
+    public Map<String,CreditCardClass> creditCards;
+    public User loggedInUser;
+    public double currentBalance;
 
     public EZShop() {
 
@@ -1307,7 +1307,7 @@ public class EZShop implements EZShopInterface {
     public double receiveCashPayment(Integer transactionId, double cash)
             throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (transactionId == null || transactionId <= 0) {
@@ -1368,8 +1368,8 @@ public class EZShop implements EZShopInterface {
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
-        
-        if(returns.containsKey(returnId)) {
+        /*TODO: add return closed condition*/
+        if(returns.containsKey(returnId) ) {
         	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
         	.mapToDouble((entry) -> {
         		Integer pId = entry.getKey();
@@ -1399,8 +1399,8 @@ public class EZShop implements EZShopInterface {
         if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
-        
-        if(creditCards.containsKey(creditCard) && sales.containsKey(returnId)) {
+        /*TODO: add return closed condition*/
+        if(creditCards.containsKey(creditCard) && returns.containsKey(returnId)) {
         	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
                 	.mapToDouble((entry) -> {
                 		Integer pId = entry.getKey();
