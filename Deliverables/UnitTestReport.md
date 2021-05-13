@@ -26,7 +26,97 @@ Version: 1.0
     to start tests
     >
 
- ### **Class *class_name* - method *name***
+ ### **Class *GFG* - method *checkLuhn***
+
+
+**Criteria for method *checkLuhn*:**
+	
+ - validity of input string
+
+
+
+
+
+**Predicates for method *checkLuhn*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|     validity of input string     |     valid string      |
+|          |       invalid string     |
+|          |      NULL     |
+
+
+
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+|          |                 |
+|          |                 |
+
+
+
+**Combination of predicates**:
+
+
+| Criteria 1  | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|valid string | valid|T1("4485370086510891")->true|testValidStrings|
+|invalid string| valid|T2("448537invalid0891")->false|testInvalidStrings|
+|NULL| valid|T3(NULL)->false|testNull|
+
+
+
+ ### **Class *ProductTypeClass* - method *VerifyBarCode***
+
+
+
+**Criteria for method *VerifyBarCode*:**
+	
+
+ - 
+ - 
+
+
+
+
+
+**Predicates for method *VerifyBarCode*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|          |           |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+|          |                 |
+|          |                 |
+
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|
+|||||||
+|||||||
+|||||||
+|||||||
+|||||||
+
+### **Class *class_name* - method *name***
 
 
 
@@ -73,9 +163,6 @@ Version: 1.0
 |||||||
 |||||||
 
-
-
-
 # White Box Unit Tests
 
 ### Test cases definition
@@ -107,6 +194,3 @@ Version: 1.0
 |||||
 |||||
 ||||||
-
-
-
