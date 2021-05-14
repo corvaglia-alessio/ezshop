@@ -1248,6 +1248,8 @@ public class EZShop implements EZShopInterface {
 
         st.setPrice(st.getPrice() - returnedPrice);
 
+        rt.setStatus("Completed");
+
         if(commit){
             try {
                 FileReaderAndWriter.ReturnsWriter(this.returns);
@@ -1273,6 +1275,9 @@ public class EZShop implements EZShopInterface {
         ReturnTransaction rt = returns.get(returnId);
 
         if(rt != null) {
+            if(rt.getStatus().equals("Payed")) {
+                return false;
+            }
             SaleTransaction st = sales.get(rt.getSaleTransactionID());
             List<TicketEntry> ListTE = st.getEntries();
             Double returnedPrice = 0.0;
