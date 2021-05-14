@@ -1198,7 +1198,7 @@ public class EZShop implements EZShopInterface {
 
         if (rp != null && rt != null && st != null) {
             List<TicketEntry> listTE = st.getEntries().stream().filter((ticket) -> {
-                if (ticket.getBarCode() != productCode) {
+                if (ticket.getBarCode() == productCode) {
                     return true;
                 }
                 return false;
