@@ -118,10 +118,10 @@ static EZShop e;
 		
 		e.login("validAdministrator", "pass");
 		
-		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCashPayment(null,5.15);});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCashPayment(0,5.15);});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCashPayment(-1,5.15);});
-	
+		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCreditCardPayment(null,null);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCreditCardPayment(0,null);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.receiveCreditCardPayment(-1,null);});
+		
 		
 	}
 	
