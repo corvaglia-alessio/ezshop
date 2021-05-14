@@ -78,6 +78,41 @@ Version:
 |  1     |  ... |  
 |  2     |  ... |
 
+## Scenario UC2-4
+
+| Scenario |  List all users |
+| ------------- |:-------------:| 
+|  Precondition     | Admin A exists and is logged in |
+|  Post condition     |  List of users is returned |
+| Step#        | Description  |
+|  1     |  A asks the application to retrieve the user list |  
+
+## Scenario UC2-5
+
+| Scenario |  Get user's details |
+| ------------- |:-------------:| 
+|  Precondition     | Admin A exists and is logged in |
+|  Post condition     |  User's details are shown |
+| Step#        | Description  |
+|  1     |  A asks the application to retrieve user's details |  
+
+## Scenario UC2-6
+
+| Scenario |  Login |
+| ------------- |:-------------:| 
+|  Precondition     | User U is not logged in |
+|  Post condition     |  User U is logged in |
+| Step#        | Description  |
+|  1     |  User inserts his/her credentials |  
+
+## Scenario UC2-7
+
+| Scenario |  Logout |
+| ------------- |:-------------:| 
+|  Precondition     | User U is logged in |
+|  Post condition     |  User U is not logged in |
+| Step#        | Description  |
+|  1     |  User asks the system to be logged out |  
 
 
 # Coverage of Scenarios and FR
@@ -91,12 +126,13 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  ..         | FRx                             |             |             
-|  ..         | FRy                             |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+|  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
+|  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
+|  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
+| 2-4         |            FR1                     |         FunReq1Test.testGetAllUsers()    |             
+| 2-5         |                FR1                 |         FunReq1Test.testGetUser()    |             
+| 2-6         |                   FR1              |        FunReq1Test.testLogin()     |      
+| 2-7         |                   FR1              |        FunReq1Test.testLogout()     |           
 
 
 
