@@ -1,21 +1,26 @@
 package it.polito.ezshop.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ReturnTransaction {
     private Integer id;
     private Integer saleTransactionID;
     private Map<Integer, Integer> returnedProducts;
+    private String status;
 
     public ReturnTransaction(Integer _id, Integer _saleTransactionID) {
         this.id = _id;
         this.saleTransactionID = _saleTransactionID;
+        this.returnedProducts = new HashMap<Integer, Integer>();
+        this.status = "Ongoing";
     }
 
-    public ReturnTransaction(Integer _id, Integer _saleTransactionID, Map<Integer, Integer> _returnedProducts) {
+    public ReturnTransaction(Integer _id, Integer _saleTransactionID, Map<Integer, Integer> _returnedProducts, String _status) {
         this.id = _id;
         this.saleTransactionID = _saleTransactionID;
         this.returnedProducts = _returnedProducts;
+        this.status = _status;
     }
 
     public Integer getID() {
@@ -43,5 +48,13 @@ public class ReturnTransaction {
     public void setReturnProducts(Map<Integer, Integer> newRP) {
         this.returnedProducts = newRP;
         return;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String newStatus) {
+        this.status = newStatus;
     }
 }

@@ -461,13 +461,13 @@ public class FileReaderAndWriter {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
                 String[] res = line.split(";");
-                String[] map = res[2].split("{|=|,|}");
+                String[] map = res[3].split("{|=|,|}");
                 Map<Integer, Integer> returnedProducts = new HashMap<Integer, Integer>();
                 for (int i = 0; i < map.length; i = i + 2) {
                     returnedProducts.put(Integer.parseInt(map[i]), Integer.parseInt(map[i + 1]));
                 }
                 ReturnTransaction rt = new ReturnTransaction(Integer.parseInt(res[0]), Integer.parseInt(res[1]),
-                        returnedProducts);
+                        returnedProducts, res [2]);
                 returns.put(Integer.parseInt(res[0]), rt);
             }
         } catch (Exception e) {
@@ -492,7 +492,7 @@ public class FileReaderAndWriter {
             y = y.substring(0, y.length() - 1); // Remove the ',' at the end of y
             y = y + "}";
 
-            x = x + rt.getID() + ";" + rt.getSaleTransactionID() + ";" + y + "\n";
+            x = x + rt.getID() + ";" + rt.getSaleTransactionID() + ";" + rt.getStatus() + ";" + y + "\n";
         }
 
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/returns.txt");
