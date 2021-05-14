@@ -87,32 +87,16 @@ Version:
 | Step#        | Description  |
 |  1     |  A asks the application to retrieve the user list |  
 
-## Scenario UC2-5
+## Scenario UC9-2
 
-| Scenario |  Get user's details |
+| Scenario |  Record a balance operation |
 | ------------- |:-------------:| 
-|  Precondition     | Admin A exists and is logged in |
-|  Post condition     |  User's details are shown |
+|  Precondition     | User U exists and is logged in |
+|  Post condition     | Balance operation is recorded |
+|   | The system balance is modified |
 | Step#        | Description  |
-|  1     |  A asks the application to retrieve user's details |  
+|  1     | User U pays for an order, issue a sale or a return and the balance is updated  |  
 
-## Scenario UC2-6
-
-| Scenario |  Login |
-| ------------- |:-------------:| 
-|  Precondition     | User U is not logged in |
-|  Post condition     |  User U is logged in |
-| Step#        | Description  |
-|  1     |  User inserts his/her credentials |  
-
-## Scenario UC2-7
-
-| Scenario |  Logout |
-| ------------- |:-------------:| 
-|  Precondition     | User U is logged in |
-|  Post condition     |  User U is not logged in |
-| Step#        | Description  |
-|  1     |  User asks the system to be logged out |  
 
 
 # Coverage of Scenarios and FR
@@ -129,10 +113,11 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
 |  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
 |  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
-| 2-4         |            FR1                     |         FunReq1Test.testGetAllUsers()    |             
-| 2-5         |                FR1                 |         FunReq1Test.testGetUser()    |             
-| 2-6         |                   FR1              |        FunReq1Test.testLogin()     |      
-| 2-7         |                   FR1              |        FunReq1Test.testLogout()     |           
+| 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() |                             
+| 5-1         |                   FR1              |        FunReq1Test.testLogin()     |      
+| 5-2         |                   FR1              |        FunReq1Test.testLogout()     |           
+|  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
+|  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 
 
 
