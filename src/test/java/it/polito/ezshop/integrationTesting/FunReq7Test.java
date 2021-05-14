@@ -3,23 +3,22 @@ package it.polito.ezshop.integrationTesting;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.util.HashMap;
-
+import org.junit.Test;
+/*
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-
+*/
 import it.polito.ezshop.model.FileReaderAndWriter;
 import it.polito.ezshop.model.SaleTransactionClass;
-import it.polito.ezshop.model.CreditCardClass;
 
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.*;
 
 
 public class FunReq7Test {
+	/*
 static EZShop e;
 	
 	@BeforeAll
@@ -28,7 +27,56 @@ static EZShop e;
 	}
 	
 	@BeforeEach
-	public void createTransactionsandReturns() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, UnauthorizedException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, InvalidTransactionIdException, InvalidQuantityException {
+	public void createTransactionsandReturns() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, UnauthorizedException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, InvalidTransactionIdException, InvalidQuantityException, InvalidPaymentException {
+		
+		e = new EZShop();
+		e.reset();
+		e.createUser("validCashier", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validAdministrator", "pass");
+		//define products
+		e.createProductType("product1", "123456789012", 3.00, "p1");
+		e.createProductType("product2", "042100005264", 10, "p1");
+		e.createProductType("product3", "987654321098", 4.5, "p1");
+		e.getProductTypeByBarCode("123456789012").setQuantity(10);
+		e.getProductTypeByBarCode("042100005264").setQuantity(10);
+		e.getProductTypeByBarCode("987654321098").setQuantity(10);
+		
+		//sale transactions
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.endSaleTransaction(1);
+		e.endSaleTransaction(2);
+		e.endSaleTransaction(3);
+		e.getSaleTransaction(1).setPrice(30);
+		e.getSaleTransaction(2).setPrice(25.34);
+		e.getSaleTransaction(3).setPrice(5);
+
+		//return transaction
+		int id = e.startSaleTransaction();
+		e.addProductToSale(id, "123456789012", 5);
+		e.addProductToSale(id, "042100005264", 6);
+		e.endSaleTransaction(id);
+//		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");
+		e.receiveCashPayment(id, e.getSaleTransaction(id).getPrice());
+		e.startReturnTransaction(id);
+		e.returnProduct(1, "123456789012", 3);  // tot to return for this product: 3*3.00 
+		e.returnProduct(1, "042100005264", 2); // tot to return for this product: 2*10 
+		e.endReturnTransaction(1, true); // total sum to return for this return transaction: 3*3.00+2*10 = 29 
+		
+		e.startReturnTransaction(2);  // to test the close condition
+		//creditCards
+		e.creditCards = FileReaderAndWriter.CreditCardsReader();
+		//end BeforeEach
+	}
+	
+	*/
+	@Test 
+	public void receiveCashPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException, InvalidRoleException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, InvalidQuantityException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
 		e.reset();
 		e.createUser("validCashier", "pass", "Cashier");
 		e.createUser("validAdministrator", "pass", "Administrator");
@@ -58,7 +106,8 @@ static EZShop e;
 		e.addProductToSale(id, "123456789012", 5);
 		e.addProductToSale(id, "042100005264", 6);
 		e.endSaleTransaction(id);
-		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");;
+//		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");
+		e.receiveCashPayment(id, e.getSaleTransaction(id).getPrice());
 		e.startReturnTransaction(id);
 		e.returnProduct(1, "123456789012", 3);  /* tot to return for this product: 3*3.00 */
 		e.returnProduct(1, "042100005264", 2); /* tot to return for this product: 2*10 */
@@ -67,12 +116,8 @@ static EZShop e;
 		e.startReturnTransaction(2);  // to test the close condition
 		/*creditCards*/
 		e.creditCards = FileReaderAndWriter.CreditCardsReader();
-
-	}
-	
-	
-	@Test 
-	public void receiveCashPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.receiveCashPayment(1,5.15);});
 		
@@ -100,7 +145,6 @@ static EZShop e;
 		assertTrue(e.computeBalance()==prevBalance+e.getSaleTransaction(2).getPrice());
 		e.logout();
 		
-		
 		e.login("validManager", "pass");
 		e.receiveCashPayment(3,10);
 		e.logout();
@@ -112,7 +156,50 @@ static EZShop e;
 	}
 	
 	@Test 
-	public void receiveCreditCardPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+	public void receiveCreditCardPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidRoleException, InvalidPaymentException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validCashier", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validAdministrator", "pass");
+		/*define products*/
+		e.createProductType("product1", "123456789012", 3.00, "p1");
+		e.createProductType("product2", "042100005264", 10, "p1");
+		e.createProductType("product3", "987654321098", 4.5, "p1");
+		e.getProductTypeByBarCode("123456789012").setQuantity(10);
+		e.getProductTypeByBarCode("042100005264").setQuantity(10);
+		e.getProductTypeByBarCode("987654321098").setQuantity(10);
+		
+		/*sale transactions*/
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.endSaleTransaction(1);
+		e.endSaleTransaction(2);
+		e.endSaleTransaction(3);
+		e.getSaleTransaction(1).setPrice(30);
+		e.getSaleTransaction(2).setPrice(25.34);
+		e.getSaleTransaction(3).setPrice(5);
+
+		/*return transaction */
+		int id = e.startSaleTransaction();
+		e.addProductToSale(id, "123456789012", 5);
+		e.addProductToSale(id, "042100005264", 6);
+		e.endSaleTransaction(id);
+//		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");
+		e.receiveCashPayment(id, e.getSaleTransaction(id).getPrice());
+		e.startReturnTransaction(id);
+		e.returnProduct(1, "123456789012", 3);  /* tot to return for this product: 3*3.00 */
+		e.returnProduct(1, "042100005264", 2); /* tot to return for this product: 2*10 */
+		e.endReturnTransaction(1, true); /* total sum to return for this return transaction: 3*3.00+2*10 = 29 */
+		
+		e.startReturnTransaction(2);  // to test the close condition
+		/*creditCards*/
+		e.creditCards = FileReaderAndWriter.CreditCardsReader();
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.receiveCreditCardPayment(1,null);});
 		
@@ -148,13 +235,53 @@ static EZShop e;
 	}
 	
 	@Test 
-	public void returnCashPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, UnauthorizedException {
-		e.logout();
-		assertThrows(UnauthorizedException.class, () -> {e.returnCashPayment(null);});
+	public void returnCashPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, UnauthorizedException, InvalidProductCodeException, InvalidQuantityException, InvalidRoleException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidPaymentException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validCashier", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validAdministrator", "pass");
+		/*define products*/
+		e.createProductType("product1", "123456789012", 3.00, "p1");
+		e.createProductType("product2", "042100005264", 10, "p1");
+		e.createProductType("product3", "987654321098", 4.5, "p1");
+		e.getProductTypeByBarCode("123456789012").setQuantity(10);
+		e.getProductTypeByBarCode("042100005264").setQuantity(10);
+		e.getProductTypeByBarCode("987654321098").setQuantity(10);
 		
-		e.login("validCashier", "pass");
-		assertThrows(UnauthorizedException.class, () -> {e.returnCashPayment(null);});
+		/*sale transactions*/
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.endSaleTransaction(1);
+		e.endSaleTransaction(2);
+		e.endSaleTransaction(3);
+		e.getSaleTransaction(1).setPrice(30);
+		e.getSaleTransaction(2).setPrice(25.34);
+		e.getSaleTransaction(3).setPrice(5);
+
+		/*return transaction */
+		int id = e.startSaleTransaction();
+		e.addProductToSale(id, "123456789012", 5);
+		e.addProductToSale(id, "042100005264", 6);
+		e.endSaleTransaction(id);
+//		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");
+		e.receiveCashPayment(id, e.getSaleTransaction(id).getPrice());
+		e.startReturnTransaction(id);
+		e.returnProduct(1, "123456789012", 3);  /* tot to return for this product: 3*3.00 */
+		e.returnProduct(1, "042100005264", 2); /* tot to return for this product: 2*10 */
+		e.endReturnTransaction(1, true); /* total sum to return for this return transaction: 3*3.00+2*10 = 29 */
+		
+		e.startReturnTransaction(2);  // to test the close condition
+		/*creditCards*/
+		e.creditCards = FileReaderAndWriter.CreditCardsReader();
+		/*end BeforeEach*/
+		
+		
 		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.returnCashPayment(null);});
 		
 		e.login("validAdministrator", "pass");
 		
@@ -180,7 +307,50 @@ static EZShop e;
 	}
 	
 	@Test 
-	public void returnCreditCardPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+	public void returnCreditCardPaymentTest() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException, InvalidProductCodeException, InvalidQuantityException, InvalidRoleException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidPaymentException {
+		/*start BeforeEach*/
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validCashier", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		e.login("validAdministrator", "pass");
+		/*define products*/
+		e.createProductType("product1", "123456789012", 3.00, "p1");
+		e.createProductType("product2", "042100005264", 10, "p1");
+		e.createProductType("product3", "987654321098", 4.5, "p1");
+		e.getProductTypeByBarCode("123456789012").setQuantity(10);
+		e.getProductTypeByBarCode("042100005264").setQuantity(10);
+		e.getProductTypeByBarCode("987654321098").setQuantity(10);
+		
+		/*sale transactions*/
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.startSaleTransaction();
+		e.endSaleTransaction(1);
+		e.endSaleTransaction(2);
+		e.endSaleTransaction(3);
+		e.getSaleTransaction(1).setPrice(30);
+		e.getSaleTransaction(2).setPrice(25.34);
+		e.getSaleTransaction(3).setPrice(5);
+
+		/*return transaction */
+		int id = e.startSaleTransaction();
+		e.addProductToSale(id, "123456789012", 5);
+		e.addProductToSale(id, "042100005264", 6);
+		e.endSaleTransaction(id);
+//		((SaleTransactionClass) e.getSaleTransaction(id)).setState("Paid");
+		e.receiveCashPayment(id, e.getSaleTransaction(id).getPrice());
+		e.startReturnTransaction(id);
+		e.returnProduct(1, "123456789012", 3);  /* tot to return for this product: 3*3.00 */
+		e.returnProduct(1, "042100005264", 2); /* tot to return for this product: 2*10 */
+		e.endReturnTransaction(1, true); /* total sum to return for this return transaction: 3*3.00+2*10 = 29 */
+		
+		e.startReturnTransaction(2);  // to test the close condition
+		/*creditCards*/
+		e.creditCards = FileReaderAndWriter.CreditCardsReader();
+		/*end BeforeEach*/
+		
 		e.logout();
 		assertThrows(UnauthorizedException.class, () -> {e.returnCreditCardPayment(null,null);});
 		

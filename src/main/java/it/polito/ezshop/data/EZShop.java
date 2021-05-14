@@ -825,7 +825,7 @@ public class EZShop implements EZShopInterface {
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier")))
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier")))
             throw new UnauthorizedException("Function not available for the current user");
 
         //by default transaction, when is built (not loaded from file) is open
@@ -845,7 +845,7 @@ public class EZShop implements EZShopInterface {
             UnauthorizedException {
 
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -897,7 +897,7 @@ public class EZShop implements EZShopInterface {
             throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
             UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -953,7 +953,7 @@ public class EZShop implements EZShopInterface {
             throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException,
             UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -987,7 +987,7 @@ public class EZShop implements EZShopInterface {
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate)
             throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -1013,7 +1013,7 @@ public class EZShop implements EZShopInterface {
     @Override
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -1034,7 +1034,7 @@ public class EZShop implements EZShopInterface {
     public boolean endSaleTransaction(Integer transactionId)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -1075,7 +1075,7 @@ public class EZShop implements EZShopInterface {
     public boolean deleteSaleTransaction(Integer saleNumber)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -1131,7 +1131,7 @@ public class EZShop implements EZShopInterface {
     public SaleTransaction getSaleTransaction(Integer transactionId)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (transactionId == null || transactionId <= 0)
@@ -1152,7 +1152,7 @@ public class EZShop implements EZShopInterface {
     public Integer startReturnTransaction(Integer transactionID)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
@@ -1179,7 +1179,7 @@ public class EZShop implements EZShopInterface {
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException,
             InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (!ProductTypeClass.VerifyBarCode(productCode)) {
@@ -1197,16 +1197,22 @@ public class EZShop implements EZShopInterface {
         SaleTransaction st = getSaleTransaction(rt.getSaleTransactionID());
 
         if (rp != null && rt != null && st != null) {
-            List<TicketEntry> listTE = st.getEntries();
-            listTE.removeIf((ticket) -> {
+            List<TicketEntry> listTE = st.getEntries().stream().filter((ticket) -> {
                 if (ticket.getBarCode() != productCode) {
                     return true;
                 }
                 return false;
-            });
+            }).collect(Collectors.toList());
+            /* List<TicketEntry> listTE = st.getEntries();
+            listTE.removeIf((ticket) -> {
+                if (ticket.getBarCode() != productCode) {	
+                    return true;
+                }
+                return false;
+            });*/
             if (listTE.size() > 0) {
                 TicketEntry te = listTE.get(0);
-                if (te.getAmount() < amount) {
+                if (te.getAmount() >= amount) {
                     rt.getReturnedProduct().put(rp.getId(), amount);
                     return true;
                 }
@@ -1220,7 +1226,7 @@ public class EZShop implements EZShopInterface {
     public boolean endReturnTransaction(Integer returnId, boolean commit)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
@@ -1266,7 +1272,7 @@ public class EZShop implements EZShopInterface {
     public boolean deleteReturnTransaction(Integer returnId)
             throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
