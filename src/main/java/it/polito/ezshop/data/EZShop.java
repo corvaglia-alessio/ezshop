@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 public class EZShop implements EZShopInterface {
-	/*TODO: reset private attribute to properties after testing*/
     private HashMap<Integer, it.polito.ezshop.model.Customer> customers;
     private Map<Integer, User> users;
     private Map<Integer, BalanceOperation> balanceOperations;
@@ -95,9 +94,9 @@ public class EZShop implements EZShopInterface {
         this.inventory.clear();
         FileReaderAndWriter.InventoryWriter(inventory);
 
-        //TODO: check if credit card have to be removed update the method for persistance!
-        //this.creditCards.clear();
-        //FileReaderAndWriter.CreditCardsWriter(creditCards);
+        //this report the files in the original form given by the professor
+        this.creditCards.clear();
+        FileReaderAndWriter.CreditCardsWriter(creditCards);
 
         this.returns.clear();
         FileReaderAndWriter.ReturnsWriter(returns);
@@ -902,7 +901,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if (transactionId <= 0 || transactionId == null)
+        if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         if (amount < 0)
@@ -938,12 +937,12 @@ public class EZShop implements EZShopInterface {
 
         if (t.getAmount() == amount) {
             x.remove(t);
+            System.out.println(x.size());
         } else {
             t.setAmount(t.getAmount() - amount);
         }
 
-        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice()
-                - (amount * getProductTypeByBarCode(productCode).getPricePerUnit()));
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice()- (amount * getProductTypeByBarCode(productCode).getPricePerUnit()));
         getProductTypeByBarCode(productCode).setQuantity(getProductTypeByBarCode(productCode).getQuantity() + amount);
 
         return true;
@@ -964,7 +963,7 @@ public class EZShop implements EZShopInterface {
         if(productCode == null || productCode == "" || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
 
-        if(transactionId <= 0 || transactionId == null)
+        if(transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         if(sales.get(transactionId).getState().compareTo("Open") != 0)
@@ -1005,6 +1004,8 @@ public class EZShop implements EZShopInterface {
         else{
             t.setDiscountRate(discountRate);
             t.setPrice(t.getPrice() - (t.getPrice()*discountRate));
+            if(!FileReaderAndWriter.saletransactionsWriter(sales))
+                return false;
             return true;
         }
     }
@@ -1037,7 +1038,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(transactionId <= 0 || transactionId == null)
+        if(transactionId == null ||transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         SaleTransactionClass s = this.sales.get(transactionId);
@@ -1045,7 +1046,7 @@ public class EZShop implements EZShopInterface {
         if(s == null)
             return false;
 
-        if(s.getState().equals("Closed"))
+        if(!s.getState().equals("Open"))
              return false;
         
         s.setState("Closed");
@@ -1078,7 +1079,7 @@ public class EZShop implements EZShopInterface {
             throw new UnauthorizedException("Function not available for the current user");
         }
 
-        if(saleNumber <= 0 || saleNumber == null)
+        if(saleNumber == null || saleNumber <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
         SaleTransactionClass s = this.sales.get(saleNumber);
