@@ -116,6 +116,12 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() |                             
 | 5-1         |                   FR1              |        FunReq1Test.testLogin()     |      
 | 5-2         |                   FR1              |        FunReq1Test.testLogout()     |           
+| 6-1         |                   FR6              |        FunReq6Test.testStartSaleTransaction(),  FunReq6Test.testAddProductToSale(), FunReq6Test.testDeleteProductFromSale(), FunReq6Test.testEndSaleTransaction(), FunReq6Test.testGetSaleTransaction()     |  
+| 6-2         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToProduct()     |  
+| 6-3         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToSale()     |  
+| 6-4         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testComputePointsForSale()    |  
+| 6-5         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testDeleteSaleTransaction()    |  
+| 6-6         |                   FR6              |        Same as scenario 6.1   |  
 |  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
 |  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 
