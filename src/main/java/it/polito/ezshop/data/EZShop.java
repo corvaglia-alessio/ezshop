@@ -22,7 +22,7 @@ public class EZShop implements EZShopInterface {
     private Map<Integer, SaleTransactionClass> sales;
     private Map<Integer, ProductType> inventory;
     private Map<Integer, OrderClass> orders;
-    private Map<String,CreditCardClass> creditCards;
+    public Map<String,CreditCardClass> creditCards;
     private User loggedInUser;
     private double currentBalance;
 
@@ -1338,7 +1338,7 @@ public class EZShop implements EZShopInterface {
     public boolean receiveCreditCardPayment(Integer transactionId, String creditCard)
             throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (transactionId == null || transactionId <= 0) {
@@ -1348,7 +1348,7 @@ public class EZShop implements EZShopInterface {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
         
-        if(creditCards.containsKey(creditCard) && sales.containsKey(transactionId) && creditCards.get(creditCard).getBalance() >= sales.get(transactionId).getPrice()) {
+        if(creditCards.containsKey(creditCard) && sales.containsKey(transactionId) && sales.get(transactionId).getState().equals("Closed") && creditCards.get(creditCard).getBalance() >= sales.get(transactionId).getPrice()) {
         	if(recordBalanceUpdate(sales.get(transactionId).getPrice())) {
         		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()-sales.get(transactionId).getPrice());
         		FileReaderAndWriter.CreditCardsWriter(creditCards);
@@ -1366,24 +1366,24 @@ public class EZShop implements EZShopInterface {
     @Override
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
-        /*TODO: add return closed condition*/
-        if(returns.containsKey(returnId) ) {
+        if(returns.containsKey(returnId) && returns.get(returnId).getStatus().equals("Completed")) {
+        	
         	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
         	.mapToDouble((entry) -> {
         		Integer pId = entry.getKey();
         		Integer amount = entry.getValue();
-        		
         		return inventory.get(pId).getPricePerUnit()*amount;
         	}).sum();
+        	
         	if(recordBalanceUpdate(sum*-1)) {
-        		if(!FileReaderAndWriter.saletransactionsWriter(sales)) 
-                    return -1;
+        		returns.get(returnId).setStatus("Payed");
+        		FileReaderAndWriter.ReturnsWriter(returns);
                 return sum;
         	}
         }
@@ -1394,7 +1394,7 @@ public class EZShop implements EZShopInterface {
     public double returnCreditCardPayment(Integer returnId, String creditCard)
             throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
-                && !loggedInUser.getRole().equals("Manager") && !loggedInUser.getRole().equals("Cashier"))) {
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
         if (returnId == null || returnId <= 0) {
@@ -1403,8 +1403,7 @@ public class EZShop implements EZShopInterface {
         if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
-        /*TODO: add return closed condition*/
-        if(creditCards.containsKey(creditCard) && returns.containsKey(returnId)) {
+        if(creditCards.containsKey(creditCard) && returns.containsKey(returnId)  && returns.get(returnId).getStatus().equals("Completed")) {
         	double sum = returns.get(returnId).getReturnedProduct().entrySet().stream()
                 	.mapToDouble((entry) -> {
                 		Integer pId = entry.getKey();
@@ -1415,6 +1414,8 @@ public class EZShop implements EZShopInterface {
         	if(recordBalanceUpdate(sum*-1)) {
         		creditCards.get(creditCard).setBalance(creditCards.get(creditCard).getBalance()+sum);
         		FileReaderAndWriter.CreditCardsWriter(creditCards);
+        		returns.get(returnId).setStatus("Payed");
+        		FileReaderAndWriter.ReturnsWriter(returns);
                 return sum;
         	}
         }
