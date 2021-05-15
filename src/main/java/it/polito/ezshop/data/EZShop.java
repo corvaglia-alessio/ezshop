@@ -1205,10 +1205,10 @@ public class EZShop implements EZShopInterface {
             }).collect(Collectors.toList());
             /* List<TicketEntry> listTE = st.getEntries();
             listTE.removeIf((ticket) -> {
-                if (ticket.getBarCode() != productCode) {	
-                    return true;
-                }
-                return false;
+                if (ticket.getBarCode() != productCode) {			//I had to modify this part
+                    return true;									//since the original version was going 
+                }													//to remove entries, with removeIf(), from the original list
+                return false;										//instead of creating a new one
             });*/
             if (listTE.size() > 0) {
                 TicketEntry te = listTE.get(0);
