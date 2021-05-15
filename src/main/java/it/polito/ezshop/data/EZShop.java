@@ -356,9 +356,6 @@ public class EZShop implements EZShopInterface {
         if (loggedInUser == null)
             throw new UnauthorizedException("No one is logged in.");
 
-        if (loggedInUser.getRole().equals("Cashier"))
-            throw new UnauthorizedException("Function not available for the current user.");
-
         List<ProductType> allProductTypes = new ArrayList<ProductType>();
 
         inventory.forEach((k, v) -> {
@@ -1198,7 +1195,7 @@ public class EZShop implements EZShopInterface {
 
         if (rp != null && rt != null && st != null) {
             List<TicketEntry> listTE = st.getEntries().stream().filter((ticket) -> {
-                if (ticket.getBarCode() != productCode) {
+                if (ticket.getBarCode() == productCode) {
                     return true;
                 }
                 return false;
