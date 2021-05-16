@@ -54,7 +54,7 @@ Version: 1.0
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|EZShop.java (in data package)| All tests included in IntegrationTestSuite.java|
+|EZShop.java (in data package)| All tests included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
 
 
 # Scenarios
