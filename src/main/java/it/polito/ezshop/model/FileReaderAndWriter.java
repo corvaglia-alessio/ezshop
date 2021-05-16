@@ -407,7 +407,10 @@ public class FileReaderAndWriter {
         		+ "#since they will be used in the acceptance tests.\r\n"
         		+ "#The lines preceded by an \"#\" must be ignored.\r\n"
         		+ "#Here you can add all the credit card numbers you need with their balance. The format MUST be :\r\n"
-        		+ "#<creditCardNumber>;<balance>\r\n";
+        		+ "#<creditCardNumber>;<balance>\r\n"
+                + "4485370086510891;150.00\r\n"
+                + "5100293991053009;10.00\r\n"
+                + "4716258050958645;0.00";
         for (CreditCardClass c : creditCards.values()) {
             x = x + c.getCreditCardId() + ";" + c.getBalance() + "\n";
         }

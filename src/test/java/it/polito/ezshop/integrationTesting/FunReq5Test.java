@@ -11,13 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 */
 import it.polito.ezshop.data.EZShop;
-import it.polito.ezshop.exceptions.InvalidCustomerCardException;
-import it.polito.ezshop.exceptions.InvalidCustomerIdException;
-import it.polito.ezshop.exceptions.InvalidCustomerNameException;
-import it.polito.ezshop.exceptions.InvalidPasswordException;
-import it.polito.ezshop.exceptions.InvalidRoleException;
-import it.polito.ezshop.exceptions.InvalidUsernameException;
-import it.polito.ezshop.exceptions.UnauthorizedException;
+import it.polito.ezshop.exceptions.*;
+
 
 public class FunReq5Test {
 	
