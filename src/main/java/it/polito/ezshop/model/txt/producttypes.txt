@@ -1,1 +1,1 @@
-1;30;1-F-3;apple;123456789012;12.0;red apples
+1;0;null;apple;628176957012;2.0;red apples
