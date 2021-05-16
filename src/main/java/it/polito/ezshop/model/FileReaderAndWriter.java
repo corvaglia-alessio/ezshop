@@ -464,10 +464,11 @@ public class FileReaderAndWriter {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
                 String[] res = line.split(";");
-                String[] map = res[3].split("{|=|,|}");
+                String[] map = res[3].replace("{", "").replace("}", "").replace("=", ",").split(",");
                 Map<Integer, Integer> returnedProducts = new HashMap<Integer, Integer>();
                 for (int i = 0; i < map.length; i = i + 2) {
-                    returnedProducts.put(Integer.parseInt(map[i]), Integer.parseInt(map[i + 1]));
+                    if(!map[i].equals("") && !map[i+1].equals(""))
+                        returnedProducts.put(Integer.parseInt(map[i]), Integer.parseInt(map[i + 1]));
                 }
                 ReturnTransaction rt = new ReturnTransaction(Integer.parseInt(res[0]), Integer.parseInt(res[1]),
                         returnedProducts, res [2]);
