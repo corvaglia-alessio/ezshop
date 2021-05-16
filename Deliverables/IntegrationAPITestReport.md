@@ -1,10 +1,10 @@
 # Integration and API Test Documentation
 
-Authors:
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date:
+Date: 14 May 2021
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -25,7 +25,7 @@ Version:
 
      <report the here the dependency graph of the classes in EzShop, using plantuml>
 
-[Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKla3ia3Od9fWcnGw71b47wf2BIo8n62z--K2WOEbb-tfDuiwrAeYqdLv-HPnBAdIzvBWpMGPU4Jk2L-97WtFtmENoN-Qk_dQPki-d-zkvocjnw_C8tIiGUvnb26WjFtNzdBmXHzoJ1fArgoH2BdINOu28bDA_ZCiE8kaARy2Z4bVohge4IregxZz4_eGTMMMp5-6NrniAtQlVtO0Wftbk6H3-eH7wOuh4t3Zp6X2ieG7OSFYGgP79RS6Wv_G00)
+![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKla3ia3Od9fWcnGw71b47wf2BIo8n62z--K2WOEbb-tfDuiwrAeYqdLv-HPnBAdIzvBWpMGPU4Jk2L-97WtFtmENoN-Qk_dQPki-d-zkvocjnw_C8tIiGUvnb26WjFtNzdBmXHzoJ1fArgoH2BdINOu28bDA_ZCiE8kaARy2Z4bVohge4IregxZz4_eGTMMMp5-6NrniAtQlVtO0Wftbk6H3-eH7wOuh4t3Zp6X2ieG7OSFYGgP79RS6Wv_G00)
      
 # Integration approach
 
