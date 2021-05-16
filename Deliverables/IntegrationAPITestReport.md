@@ -34,10 +34,10 @@ Version: 1.0
     <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
     <One step will  correspond to API testing>
     
-     <b>Approach used: Bottom-Up</b>
+<b>Approach used: Bottom-Up</b>
      
-     <b>Step 1:</b> Unit testing
-     <b>Step 2:</b> API testing
+<b>Step 1:</b> Unit testing
+<b>Step 2:</b> API testing
 
 #  Tests
 
@@ -47,13 +47,14 @@ Version: 1.0
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
+|GFG.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|EZShop.java (in data package)| All tests included in IntegrationTestSuite.java|
 
 
 # Scenarios
