@@ -25,7 +25,6 @@ public class FileReaderAndWriter {
         Map<Integer, User> users = new HashMap<Integer, User>();
 
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/users.txt");
-        System.out.println(inputFile.getAbsolutePath());
         Scanner s = null;
         try {
             s = new Scanner(inputFile);
