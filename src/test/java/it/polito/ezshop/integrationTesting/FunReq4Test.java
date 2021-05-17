@@ -173,7 +173,7 @@ public class FunReq4Test {
 	}
 
 	@Test 
-	public void testRecordOrderArrival() throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, InvalidProductDescriptionException, InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
+	public void testRecordOrderArrival() throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, InvalidProductDescriptionException, InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidProductIdException {
 		EZShop e = new EZShop();
 		e.reset();
 
@@ -191,7 +191,9 @@ public class FunReq4Test {
 
 		e.createProductType("apple", "628176957012", 2.0, "green apples");
 		e.createProductType("banana", "628176957074", 2.0, "yellow bananas");
+		e.updatePosition(1, "1-a-0");
 		int issued_order = e.issueOrder("628176957012", 100, 2.0);
+		
 		e.recordBalanceUpdate(500.0);
 		int payed_order_id = e.payOrderFor("628176957012", 100, 2.0);
 		int order_no_location_id = e.payOrderFor("628176957074", 1, 2.0);
