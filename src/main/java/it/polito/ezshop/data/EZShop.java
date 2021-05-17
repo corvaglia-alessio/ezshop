@@ -283,9 +283,6 @@ public class EZShop implements EZShopInterface {
         }
     }
 
-    // TODO : Test the VerifyBarCode() method --> Seems like it work --> Need
-    // further investigation
-
     @Override
     public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote)
             throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException,
@@ -934,8 +931,8 @@ public class EZShop implements EZShopInterface {
 
         if (t.getAmount() == amount) {
             x.remove(t);
-            System.out.println(x.size());
-        } else {
+        } 
+        else {
             t.setAmount(t.getAmount() - amount);
         }
 

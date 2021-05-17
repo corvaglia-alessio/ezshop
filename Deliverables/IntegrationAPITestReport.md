@@ -1,10 +1,10 @@
 # Integration and API Test Documentation
 
-Authors:
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date:
+Date: 14 May 2021
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -24,6 +24,8 @@ Version:
 # Dependency graph 
 
      <report the here the dependency graph of the classes in EzShop, using plantuml>
+
+![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKla3ia3Od9fWcnGw71b47wf2BIo8n62z--K2WOEbb-tfDuiwrAeYqdLv-HPnBAdIzvBWpMGPU4Jk2L-97WtFtmENoN-Qk_dQPki-d-zkvocjnw_C8tIiGUvnb26WjFtNzdBmXHzoJ1fArgoH2BdINOu28bDA_ZCiE8kaARy2Z4bVohge4IregxZz4_eGTMMMp5-6NrniAtQlVtO0Wftbk6H3-eH7wOuh4t3Zp6X2ieG7OSFYGgP79RS6Wv_G00)
      
 # Integration approach
 
@@ -32,7 +34,10 @@ Version:
     <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
     <One step will  correspond to API testing>
     
-
+<b>Approach used: Bottom-Up</b>
+     
+<b>Step 1:</b> Unit testing
+<b>Step 2:</b> API testing
 
 #  Tests
 
@@ -42,24 +47,14 @@ Version:
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
+|GFG.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|||
-
-
-## Step n 
-
-   
-
-| Classes  | JUnit test cases |
-|--|--|
-|||
-
-
+|EZShop.java (in data package)| All tests included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
 
 
 # Scenarios
