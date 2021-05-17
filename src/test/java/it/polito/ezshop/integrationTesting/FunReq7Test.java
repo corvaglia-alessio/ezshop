@@ -146,7 +146,7 @@ static EZShop e;
 		e.logout();
 		
 		e.login("validManager", "pass");
-		e.receiveCashPayment(3,10);
+		assertTrue(e.receiveCashPayment(3,10)==5);
 		e.logout();
 		e.login("validCashier", "pass");
 		assertTrue(e.receiveCashPayment(3,10)==-1);
@@ -226,7 +226,7 @@ static EZShop e;
 		e.logout();
 		
 		e.login("validManager", "pass");
-		e.receiveCreditCardPayment(3,"4485370086510891");
+		assertTrue(e.receiveCreditCardPayment(3,"4485370086510891"));
 		e.logout();
 		e.login("validCashier", "pass");
 		assertFalse(e.receiveCreditCardPayment(3,"4485370086510891"));
@@ -300,10 +300,8 @@ static EZShop e;
 		assertTrue(e.returnCashPayment(1)==-1);
 		e.logout();
 		e.login("validCashier", "pass");
-		assertTrue(e.returnCashPayment(1)==-1);
+		assertTrue(e.returnCashPayment(2)==-1);
 		e.logout();
-		
-		
 	}
 	
 	@Test 
@@ -378,7 +376,7 @@ static EZShop e;
 		assertTrue(e.returnCreditCardPayment(1,"4485370086510891")==-1);
 		e.logout();
 		e.login("validCashier", "pass");
-		assertTrue(e.returnCreditCardPayment(1,"4485370086510891")==-1);
+		assertTrue(e.returnCreditCardPayment(2,"4485370086510891")==-1);
 		e.logout();
 		
 
