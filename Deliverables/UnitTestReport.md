@@ -593,7 +593,7 @@ No boundaries
 
 
 
-### **Class *TicketEntry* - method *setTransactionId()***
+### **Class *TicketEntryClass* - method *setTransactionId()***
 
 **Criteria for method *setTransactionId*:**
 
@@ -613,7 +613,7 @@ No boundaries
 
 
 
-### **Class *TicketEntry* - method *setBarCode()***
+### **Class *TicketEntryClass* - method *setBarCode()***
 
 
 **Criteria for method *setBarCode*:**
