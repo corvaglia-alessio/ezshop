@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({checkLuhnTest.class, VerifyBarCodeTest.class})
+@Suite.SuiteClasses({checkLuhnTest.class, VerifyBarCodeTest.class, testUnitsMethods.class})
 public class BlackBoxTestSuite {
 	
 	
