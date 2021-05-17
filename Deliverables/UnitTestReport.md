@@ -41,9 +41,6 @@ Version: 1.0
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
 
 
 
@@ -60,7 +57,7 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.<<testclassName>> |
+|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.testXYZWClass |
 
 
  ### **Class *GFG* - method *checkLuhn***
@@ -160,11 +157,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
 
 
 
@@ -186,21 +178,18 @@ No boundaries
 ### **Class *TicketEntry* - method *setTransactionId()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setTransactionId*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setTransactionId*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
 
 
 
@@ -223,24 +212,18 @@ No boundaries
 ### **Class *TicketEntry* - method *setBarCode()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setBarCode*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setBarCode*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -256,27 +239,21 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setBarCode("0628176957012") -> getBarCode()=="0628176957012" | testUnitMethods.testTicketEntryClass |
 
-### **Class *TicketEntry* - method *setProductDescription()***
+### **Class *TicketEntryClass* - method *setProductDescription()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setProductDescription*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setProductDescription*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -292,27 +269,21 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setProductDescription("kiwi") -> getProductDescription()=="kiwi" | testUnitMethods.testTicketEntryClass |
 
-### **Class *TicketEntry* - method *setPricePerUnit()***
+### **Class *TicketEntryClass* - method *setPricePerUnit()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setPricePerUnit*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setPricePerUnit*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -329,28 +300,21 @@ No boundaries
 |any input |Valid | setPricePerUnit(0.9) -> getPricePerUnit()==0.9 | testUnitMethods.testTicketEntryClass |
 
 
-### **Class *TicketEntry* - method *setAmount()***
+### **Class *TicketEntryClass* - method *setAmount()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setAmount*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setAmount*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
-
 
 **Boundaries**:
 
@@ -365,28 +329,21 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setAmount(4) -> getAmount()==4 | testUnitMethods.testTicketEntryClass |
 
-### **Class *TicketEntry* - method *setDiscountRate()***
+### **Class *TicketEntryClass* - method *setDiscountRate()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *setDiscountRate*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *setDiscountRate*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
-
 
 **Boundaries**:
 
@@ -400,6 +357,124 @@ No boundaries
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |any input |Valid | setDiscountRate(0.5) -> getDiscountRate()==0.5 | testUnitMethods.testTicketEntryClass |
+
+
+### **Class *UserClass* - method *setId()***
+
+
+**Criteria for method *setId*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setId*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setId(2) -> getId()==2 | testUnitMethods.testUserClass |
+
+### **Class *UserClass* - method *setUsername()***
+
+
+**Criteria for method *setUsername*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setUsername*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setUsername("username2") -> getUsername()=="username2" | testUnitMethods.testUserClass |
+
+### **Class *UserClass* - method *setPassword()***
+
+
+**Criteria for method *setPassword*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setPassword*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setPassword("pwd2") -> getPassword()=="pwd2" | testUnitMethods.testUserClass |
+
+
+### **Class *UserClass* - method *setRole()***
+
+
+**Criteria for method *setRole*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setRole*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setRole("Cashier") -> getRole()=="Cashier" | testUnitMethods.testUserClass |
 
 
 
