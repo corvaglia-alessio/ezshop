@@ -440,7 +440,7 @@ public class EZShop implements EZShopInterface {
         if (productId <= 0 || productId == null)
             throw new InvalidProductIdException("Invalid Product ID.");
 
-        if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]"))
+        if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]") && !newPos.isBlank())
             throw new InvalidLocationException("The location is in an invalid format.");
         
         for (ProductType product : inventory.values()){
@@ -579,6 +579,8 @@ public class EZShop implements EZShopInterface {
 
         ProductType product;
 		try {
+            if (order == null)
+                return false;
 			product = this.getProductTypeByBarCode(order.getProductCode());
 			if (product.getLocation() == null || product.getLocation().isBlank())
 	            throw new InvalidLocationException("The product must have a location.");
