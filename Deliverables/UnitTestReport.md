@@ -26,6 +26,43 @@ Version: 1.0
     to start tests
     >
 
+### **Class *className* - method *methodName***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.<<testclassName>> |
+
+
  ### **Class *GFG* - method *checkLuhn***
 
 
@@ -51,10 +88,7 @@ Version: 1.0
 
 **Boundaries**:
 
-| Criteria | Boundary values |
-| -------- | --------------- |
-|          |                 |
-|          |                 |
+No boundaries
 
 
 
@@ -145,10 +179,11 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testBalanceOperationClass |
+|any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testBalanceOperationClass() |
 
 
-### **Class *className* - method *methodName***
+
+### **Class *TicketEntry* - method *setTransactionId()***
 
 
 **Criteria for method *methodName*:**
@@ -182,7 +217,192 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testclassName |
+|any input |Valid | setTransactionId(2) -> getTransactionId()==2 | testUnitMethods.testTicketEntryClass |
+
+
+### **Class *TicketEntry* - method *setBarCode()***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setBarCode("0628176957012") -> getBarCode()=="0628176957012" | testUnitMethods.testTicketEntryClass |
+
+### **Class *TicketEntry* - method *setProductDescription()***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setProductDescription("kiwi") -> getProductDescription()=="kiwi" | testUnitMethods.testTicketEntryClass |
+
+### **Class *TicketEntry* - method *setPricePerUnit()***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setPricePerUnit(0.9) -> getPricePerUnit()==0.9 | testUnitMethods.testTicketEntryClass |
+
+
+### **Class *TicketEntry* - method *setAmount()***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setAmount(4) -> getAmount()==4 | testUnitMethods.testTicketEntryClass |
+
+### **Class *TicketEntry* - method *setDiscountRate()***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setDiscountRate(0.5) -> getDiscountRate()==0.5 | testUnitMethods.testTicketEntryClass |
+
+
+
 
 # White Box Unit Tests
 
