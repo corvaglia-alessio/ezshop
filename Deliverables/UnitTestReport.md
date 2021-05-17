@@ -76,8 +76,7 @@ Version: 1.0
 **Criteria for method *VerifyBarCode*:**
 	
 
- - 
- - 
+ - Validity of input String
 
 
 
@@ -87,10 +86,9 @@ Version: 1.0
 
 | Criteria | Predicate |
 | -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
+|  Validity of input String  |    Valid String    |
+|          |    Invalid String       |
+|          |    Null       |
 
 
 
@@ -98,43 +96,36 @@ Version: 1.0
 
 **Boundaries**:
 
-| Criteria | Boundary values |
-| -------- | --------------- |
-|          |                 |
-|          |                 |
+No boundaries
 
 
 
 **Combination of predicates**:
 
 
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
-
-### **Class *class_name* - method *name***
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+| Valid String | Valid | T1("0628176957012") -> True | verifyTrueString |
+| Invalid String | Valid | T2("1111111111") -> False | verifyFalseString |
+| Null | Valid | T3(null) -> False | verifyNull |
 
 
+### **Class *BalanceOperationClass* - method *setBalanceId***
 
-**Criteria for method *name*:**
+
+
+**Criteria for method *setBalanceId*:**
 	
-
- - 
- - 
+ - any input 
 
 
 
 
-
-**Predicates for method *name*:**
+**Predicates for method *setBalanceId*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
-|          |           |
+|   any input       |    arbitrary values       |
 |          |           |
 |          |           |
 |          |           |
@@ -145,23 +136,53 @@ Version: 1.0
 
 **Boundaries**:
 
-| Criteria | Boundary values |
-| -------- | --------------- |
-|          |                 |
-|          |                 |
 
+No boundaries
 
 
 **Combination of predicates**:
 
 
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testBalanceOperationClass |
+
+
+### **Class *className* - method *methodName***
+
+
+**Criteria for method *methodName*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *methodName*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+|          |           |
+|          |           |
+|          |           |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testclassName |
 
 # White Box Unit Tests
 

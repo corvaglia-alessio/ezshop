@@ -1,1 +1,2 @@
-1;testuser;testpwd;Administrator
+1;adminuser;password;Administrator
+2;cashieruser;pwd;Cashier

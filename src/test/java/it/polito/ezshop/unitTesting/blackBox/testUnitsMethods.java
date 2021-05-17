@@ -3,9 +3,14 @@ package it.polito.ezshop.unitTesting.blackBox;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
+import it.polito.ezshop.data.TicketEntry;
 import it.polito.ezshop.model.*;
 
 
@@ -169,11 +174,61 @@ public class testUnitsMethods {
 
     @Test
     public void testSaleTransactionClass(){
-        //TODO
+        List<TicketEntry> z = new ArrayList<TicketEntry>();
+        TicketEntryClass t = new TicketEntryClass(1, "0628176957012", "apple", 1, 0.9, 0.0);
+        z.add(t);
+        SaleTransactionClass s = new SaleTransactionClass(1, 12.5, 0.0, "Open");
+        SaleTransactionClass s2 = new SaleTransactionClass(3);
+
+        assertEquals(1, (int) s.getTicketNumber());
+        assertEquals(12.5, s.getPrice(), 0.01);
+        assertEquals(0.0, s.getDiscountRate(), 0.01);
+        assertEquals(0, s.getEntries().size());
+        assertEquals("Open", s.getState());
+        assertEquals(3, (int) s2.getTicketNumber());
+        assertEquals(0D, s2.getPrice(), 0.01);
+        assertEquals(0D, s2.getDiscountRate(), 0.01);
+        assertEquals(0, s2.getEntries().size());
+        assertEquals("Open", s2.getState());
+
+
+        s.setTicketNumber(2);
+        s.setPrice(19);
+        s.setDiscountRate(0.1);
+        s.setEntries(z);
+        s.setState("Paid");
+
+        assertEquals(2, (int) s.getTicketNumber());
+        assertEquals(19, s.getPrice(), 0.01);
+        assertEquals(0.1, s.getDiscountRate(), 0.01);
+        assertEquals(1, s.getEntries().size());
+        assertEquals("Paid", s.getState());
     }
 
     @Test
     public void testReturnTransactionClass(){
-        //TODO
+        Map<Integer, Integer> x = new HashMap<Integer, Integer>();
+        x.put(5, 5);
+        ReturnTransaction t = new ReturnTransaction(1, 1);
+        ReturnTransaction t2 = new ReturnTransaction(2, 1, x, "Ongoing");
+
+        assertEquals(1, (int) t.getID());
+        assertEquals(1, (int) t.getSaleTransactionID());
+        assertEquals(0, t.getReturnedProduct().size());
+        assertEquals("Ongoing", t.getStatus());
+        assertEquals(2, (int) t2.getID());
+        assertEquals(1, (int) t2.getSaleTransactionID());
+        assertEquals(1, t2.getReturnedProduct().size());
+        assertEquals("Ongoing", t2.getStatus());
+
+        t.setID(10);
+        t.setReturnProducts(x);
+        t.setSaleTransactionID(10);
+        t.setStatus("Closed");
+
+        assertEquals(10, (int) t.getID());
+        assertEquals(10, (int) t.getSaleTransactionID());
+        assertEquals(1, t.getReturnedProduct().size());
+        assertEquals("Closed", t.getStatus());
     }
 }
