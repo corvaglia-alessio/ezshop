@@ -174,7 +174,7 @@ No boundaries
 |any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testBalanceOperationClass() |
 
 
-### **Class *OrderClass* - method *setBalanceId**
+### **Class *OrderClass* - method *setBalanceId***
 
 
 **Criteria for method *setBalanceId*:**
@@ -221,11 +221,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
 
 
 
@@ -258,11 +253,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
 
 
 
@@ -295,11 +285,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
 
 
 
@@ -332,12 +317,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -370,12 +349,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -410,11 +383,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
 
 
 
@@ -448,12 +416,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -486,12 +448,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -524,12 +480,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -562,12 +512,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -600,12 +544,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
@@ -638,12 +576,6 @@ No boundaries
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
-|          |           |
-|          |           |
-|          |           |
-
-
-
 
 
 **Boundaries**:
