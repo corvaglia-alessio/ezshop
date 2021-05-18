@@ -60,7 +60,7 @@ No boundaries
 |any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.testXYZWClass() |
 
 
- ### **Class *GFG* - method *checkLuhn***
+ ### **Class *CardHandler* - method *checkLuhn***
 
 
 **Criteria for method *checkLuhn()*:**
