@@ -1217,4 +1217,4 @@ No boundaries
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
 |ProductTypeClass|47-59|0, >1|VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
-|GFG|26-43|0,1,>1|checkLuhnTest.testInvalidStrings(), checkLuhnTest.testValidStrings()|
+|CardHandler|26-43|0,1,>1|checkLuhnTest.testInvalidStrings(), checkLuhnTest.testValidStrings()|
