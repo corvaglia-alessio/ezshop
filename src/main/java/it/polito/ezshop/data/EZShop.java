@@ -1347,7 +1347,7 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0) {
         	throw new InvalidTransactionIdException("Transaction id is wrong");
         }
-        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
+        if (creditCard == null || creditCard.isEmpty() || !Cardhandler.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
         
@@ -1403,7 +1403,7 @@ public class EZShop implements EZShopInterface {
         if (returnId == null || returnId <= 0) {
         	throw new InvalidTransactionIdException("Return transaction id is wrong");
         }
-        if (creditCard == null || creditCard.isEmpty() || !GFG.checkLuhn(creditCard)) {
+        if (creditCard == null || creditCard.isEmpty() || !Cardhandler.checkLuhn(creditCard)) {
         	throw new InvalidCreditCardException("credit card number is not valid");
         }
         if(creditCards.containsKey(creditCard) && returns.containsKey(returnId)  && returns.get(returnId).getStatus().equals("Completed")) {

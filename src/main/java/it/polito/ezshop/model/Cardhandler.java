@@ -3,7 +3,7 @@ package it.polito.ezshop.model;
 //Java static method to implement
 //Luhn algorithm
 
-public class GFG {
+public class Cardhandler {
   
 //Returns true if given
 //card number is valid
