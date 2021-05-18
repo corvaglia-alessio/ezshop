@@ -1081,6 +1081,171 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | saleTransactionClass(number, price, discount, entries, state) -> s.getTicketNumber()==number, s.getPrice()==price, s.getDiscountRate()==discount, s.getEntries()==entries, s.getState()==state | testUnitMethods.testSaleTransactionClass() |
 
+### **Class *SaleTransactionClass* - method *setState()***
+
+
+**Criteria for method *setState()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setState()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setState("State1") -> getState() == "State1" | testUnitMethods.testSaleTransactionClass() |
+
+### **Class *SaleTransactionClass* - method *setTicketNumber()***
+
+
+**Criteria for method *setTicketNumber()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setTicketNumber()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setTicketNumber(2) -> getTicketNumber() == 2 | testUnitMethods.testSaleTransactionClass() |
+
+### **Class *SaleTransactionClass* - method *setEntries()***
+
+
+**Criteria for method *setEntries()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setEntries()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setEntries(Entries1) -> getEntries() == Entries1 | testUnitMethods.testSaleTransactionClass() |
+
+### **Class *SaleTransactionClass* - method *setDiscountRate()***
+
+
+**Criteria for method *setDiscountRate()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setDiscountRate()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setDiscountRate(1.0) -> getDiscountRate() == 1.0 | testUnitMethods.testSaleTransactionClass() |
+
+### **Class *SaleTransactionClass* - method *setPrice()***
+
+
+**Criteria for method *setPrice()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setPrice()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setPrice(49.99) -> getPrice() == 49.99 | testUnitMethods.testSaleTransactionClass() |
+
 
 ### **Class *ReturnTransaction* - method *returnTransaction()***
 
@@ -1114,6 +1279,138 @@ No boundaries
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |any input |Valid | returnTransaction(id, saleid, products, status) -> r.getId()==id, r.getSaleTransactionId()==saleid, r.getProducts()==products, r.getStatus()==status | testUnitMethods.testReturnTransactionClass() |
+
+### **Class *ReturnTransaction* - method *setID()***
+
+
+**Criteria for method *setID()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setID()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setID(1) -> getID() == 1 | testUnitMethods.testReturnTransactionClass() |
+
+### **Class *ReturnTransaction* - method *setSaleTransactionID()***
+
+
+**Criteria for method *setSaleTransactionID()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setSaleTransactionID()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setSaleTransactionID(1) -> getSaleTransactionID() == 1 | testUnitMethods.testReturnTransactionClass() |
+
+### **Class *ReturnTransaction* - method *setReturnProducts()***
+
+
+**Criteria for method *setReturnProducts()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setReturnProducts()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setReturnProducts(returnsMap) -> getReturnProducts() == returnsMap | testUnitMethods.testReturnTransactionClass() |
+
+### **Class *ReturnTransaction* - method *setStatus()***
+
+
+**Criteria for method *setStatus()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setStatus()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setStatus("Ongoing") -> getStatus() == "Ongoing" | testUnitMethods.testReturnTransactionClass() |
 
 ### **Class *CustomerClass* - method *customerClass()***
 
