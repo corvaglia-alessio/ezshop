@@ -26,17 +26,17 @@ Version: 1.0
     to start tests
     >
 
-### **Class *className* - method *methodName***
+### **Class *className* - method *methodName()***
 
 
-**Criteria for method *methodName*:**
+**Criteria for method *methodName()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *methodName*:**
+**Predicates for method *methodName()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -57,13 +57,13 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.testXYZWClass |
+|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.testXYZWClass() |
 
 
  ### **Class *GFG* - method *checkLuhn***
 
 
-**Criteria for method *checkLuhn*:**
+**Criteria for method *checkLuhn()*:**
 	
  - validity of input string
 
@@ -71,7 +71,7 @@ No boundaries
 
 
 
-**Predicates for method *checkLuhn*:**
+**Predicates for method *checkLuhn()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -94,17 +94,17 @@ No boundaries
 
 | Criteria 1  | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|valid string | valid|T1("4485370086510891")->true|checkLuhnTest.testValidStrings|
-|invalid string| valid|T2("448537invalid0891")->false|checkLuhnTest.testInvalidStrings|
-|NULL| valid|T3(NULL)->false|checkLuhnTest.testNull|
+|valid string | valid|T1("4485370086510891")->true|testValidStrings()|
+|invalid string| valid|T2("448537invalid0891")->false|testInvalidStrings() |
+|NULL| valid|T3(NULL)->false|testNull() |
 
 
 
- ### **Class *ProductTypeClass* - method *VerifyBarCode***
+ ### **Class *ProductTypeClass* - method *VerifyBarCode()***
 
 
 
-**Criteria for method *VerifyBarCode*:**
+**Criteria for method *VerifyBarCode()*:**
 	
 
  - Validity of input String
@@ -113,7 +113,7 @@ No boundaries
 
 
 
-**Predicates for method *VerifyBarCode*:**
+**Predicates for method *VerifyBarCode()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -136,23 +136,56 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-| Valid String | Valid | T1("0628176957012") -> True | VerifyBarCodeTest.verifyTrueString |
-| Invalid String | Valid | T2("1111111111") -> False | VerifyBarCodeTest.verifyFalseString |
-| Null | Valid | T3(null) -> False | VerifyBarCodeTest.verifyNull |
+| Valid String | Valid | T1("0628176957012") -> True | verifyTrueString() |
+| Invalid String | Valid | T2("1111111111") -> False | verifyFalseString() |
+| Null | Valid | T3(null) -> False | verifyNull() |
+
+### **Class *BalanceOperationClass* - method *balanceOperationClass()***
 
 
-### **Class *BalanceOperationClass* - method *setBalanceId***
-
-
-
-**Criteria for method *setBalanceId*:**
+**Criteria for method *balanceOperationClass()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setBalanceId*:**
+**Predicates for method *balanceOperationClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | balanceOperationClass(balanceId, date, money, type) -> b.getBalanceId()==balanceId, b.getDate()==date, b.getMoney()==money, b.getType()==type | testUnitMethods.testBalanceOperationClass() |
+
+
+### **Class *BalanceOperationClass* - method *setBalanceId***
+
+
+
+**Criteria for method *setBalanceId()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setBalanceId()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -174,16 +207,50 @@ No boundaries
 |any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testBalanceOperationClass() |
 
 
-### **Class *OrderClass* - method *setBalanceId***
+### **Class *OrderClass* - method *orderClass()***
 
 
-**Criteria for method *setBalanceId*:**
+**Criteria for method *orderClass()*:**
 	
  - any input 
 
 
 
-**Predicates for method *setBalanceId*:**
+
+**Predicates for method *orderClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | orderClass(orderId, balanceId, productCode, pricePerUnit, quantity, status) -> o.getOrderId()==orderId, o.getBalanceId()==balanceId, o.getProductCode()==productCode, o.getPricePerUnit()==pricePerUnit, o.getQuantity()==quantity, o.getStatus()==status | testUnitMethods.testOrderClass() |
+
+
+### **Class *OrderClass* - method *setBalanceId()***
+
+
+**Criteria for method *setBalanceId()*:**
+	
+ - any input 
+
+
+
+**Predicates for method *setBalanceId()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -203,20 +270,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testOrderClass |
+|any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testOrderClass() |
 
 
-### **Class *OrderClass* - method *productCode***
+### **Class *OrderClass* - method *productCode()***
 
 
-**Criteria for method *productCode*:**
+**Criteria for method *productCode()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *productCode*:**
+**Predicates for method *productCode()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -235,20 +302,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setProductCode("productCode") -> getProductCode()=="productCode" | testUnitMethods.testOrderClass |
+|any input |Valid | setProductCode("productCode") -> getProductCode()=="productCode" | testUnitMethods.testOrderClass() |
 
 
-### **Class *OrderClass* - method *setPricePerUnit***
+### **Class *OrderClass* - method *setPricePerUnit()***
 
 
-**Criteria for method *setPricePerUnit*:**
+**Criteria for method *setPricePerUnit()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setPricePerUnit*:**
+**Predicates for method *setPricePerUnit()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -267,20 +334,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setPricePerUnit(2.00) -> getPricePerUnit()==2.00 | testUnitMethods.testOrderClass |
+|any input |Valid | setPricePerUnit(2.00) -> getPricePerUnit()==2.00 | testUnitMethods.testOrderClass() |
 
 
-### **Class *OrderClass* - method *setQuantity***
+### **Class *OrderClass* - method *setQuantity()***
 
 
-**Criteria for method *setQuantity*:**
+**Criteria for method *setQuantity()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setQuantity*:**
+**Predicates for method *setQuantity()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -299,20 +366,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setQuantity(5) -> getQuantity()==5 | testUnitMethods.testOrderClass |
+|any input |Valid | setQuantity(5) -> getQuantity()==5 | testUnitMethods.testOrderClass() |
 
 
-### **Class *OrderClass* - method *setStatus***
+### **Class *OrderClass* - method *setStatus()***
 
 
-**Criteria for method *setStatus*:**
+**Criteria for method *setStatus()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setStatus*:**
+**Predicates for method *setStatus()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -330,21 +397,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setStatus("ORDERED") -> getStatus()=="ORDERED" | testUnitMethods.testOrderClass |
+|any input |Valid | setStatus("ORDERED") -> getStatus()=="ORDERED" | testUnitMethods.testOrderClass() |
 
 
 
-### **Class *OrderClass* - method *setOrderId***
+### **Class *OrderClass* - method *setOrderId()***
 
 
-**Criteria for method *setOrderId*:**
+**Criteria for method *setOrderId()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setOrderId*:**
+**Predicates for method *setOrderId()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -362,23 +429,57 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setOrderId(5) -> getOrderId()==5 | testUnitMethods.testOrderClass |
+|any input |Valid | setOrderId(5) -> getOrderId()==5 | testUnitMethods.testOrderClass() |
 
 
-
-### **Class *ProductTypeClass* - method *setQuantity***
-
+### **Class *ProductType* - method *productType()***
 
 
-
-**Criteria for method *setQuantity*:**
+**Criteria for method *productType()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setQuantity*:**
+**Predicates for method *productType()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | productType(description, barcode, pricePerUnit, note, id) -> p.getProductDescription()==description, p.getBarCode()==barcode, p.getPricePerUnit()==pricePerUnit, p.getNote()==note, p.getId()==id | testUnitMethods.testProductTypeClass() |
+
+
+
+### **Class *ProductTypeClass* - method *setQuantity()***
+
+
+
+
+**Criteria for method *setQuantity()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setQuantity()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -397,21 +498,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setQuantity(1) -> getQuantity()==1 | testUnitMethods.testProductTypeClass |
+|any input |Valid | setQuantity(1) -> getQuantity()==1 | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setLocation***
+### **Class *ProductTypeClass* - method *setLocation()***
 
 
 
-**Criteria for method *setLocation*:**
+**Criteria for method *setLocation()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setLocation*:**
+**Predicates for method *setLocation()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -429,21 +530,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setLocation("location") -> getLocation()=="location" | testUnitMethods.testProductTypeClass |
+|any input |Valid | setLocation("location") -> getLocation()=="location" | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setNote***
+### **Class *ProductTypeClass* - method *setNote()***
 
 
 
-**Criteria for method *setNote*:**
+**Criteria for method *setNote()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setNote*:**
+**Predicates for method *setNote()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -461,21 +562,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setNote("note") -> getNote()=="note" | testUnitMethods.testProductTypeClass |
+|any input |Valid | setNote("note") -> getNote()=="note" | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setProductDescription***
+### **Class *ProductTypeClass* - method *setProductDescription()***
 
 
 
-**Criteria for method *setProductDescription*:**
+**Criteria for method *setProductDescription()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setProductDescription*:**
+**Predicates for method *setProductDescription()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -493,21 +594,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setProductDescription("description") -> getProductDescription()=="description" | testUnitMethods.testProductTypeClass |
+|any input |Valid | setProductDescription("description") -> getProductDescription()=="description" | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setBarCode***
+### **Class *ProductTypeClass* - method *setBarCode()***
 
 
 
-**Criteria for method *setBarCode*:**
+**Criteria for method *setBarCode()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setBarCode*:**
+**Predicates for method *setBarCode()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -525,21 +626,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setBarCode("barcode") -> getBarCode()=="barcode" | testUnitMethods.testProductTypeClass |
+|any input |Valid | setBarCode("barcode") -> getBarCode()=="barcode" | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setPricePerUnit***
+### **Class *ProductTypeClass* - method *setPricePerUnit()***
 
 
 
-**Criteria for method *setPricePerUnit*:**
+**Criteria for method *setPricePerUnit()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setPricePerUnit*:**
+**Predicates for method *setPricePerUnit()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -557,21 +658,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setPricePerUnit(1) -> getPricePerUnit()==1 | testUnitMethods.testProductTypeClass |
+|any input |Valid | setPricePerUnit(1) -> getPricePerUnit()==1 | testUnitMethods.testProductTypeClass() |
 
 
-### **Class *ProductTypeClass* - method *setId***
+### **Class *ProductTypeClass* - method *setId()***
 
 
 
-**Criteria for method *setId*:**
+**Criteria for method *setId()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setId*:**
+**Predicates for method *setId()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -589,17 +690,50 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setId(1) -> getId()==1 | testUnitMethods.testProductTypeClass |
+|any input |Valid | setId(1) -> getId()==1 | testUnitMethods.testProductTypeClass() |
+
+### **Class *TicketEntryClass* - method *TicketEntryClass()***
+
+
+**Criteria for method *ticketEntryClass()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *ticketEntryClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | ticketEntryClass(transactionid, barcode, description, amount, pricePerUnit, discount) -> t.getTransactionId()==transactionid, t.getBarCode()==barcode, t.getProductDescription()==description, t.getAmount()==amount, t.getPricePerUnit()==pricePerUnit, t.getDiscountRate()==discount | testUnitMethods.testTicketEntryClass() |
 
 
 
 ### **Class *TicketEntryClass* - method *setTransactionId()***
 
-**Criteria for method *setTransactionId*:**
+**Criteria for method *setTransactionId()*:**
 
 - any input 
 
-**Predicates for method *setTransactionId*:**
+**Predicates for method *setTransactionId()*:**
 | Criteria | Predicate |
 | -------- | --------- |
 |   any input       |    arbitrary values       |
@@ -609,21 +743,21 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setTransactionId(2) -> getTransactionId()==2 | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setTransactionId(2) -> getTransactionId()==2 | testUnitMethods.testTicketEntryClass() |
 
 
 
 ### **Class *TicketEntryClass* - method *setBarCode()***
 
 
-**Criteria for method *setBarCode*:**
+**Criteria for method *setBarCode()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setBarCode*:**
+**Predicates for method *setBarCode()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -641,19 +775,19 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setBarCode("0628176957012") -> getBarCode()=="0628176957012" | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setBarCode("0628176957012") -> getBarCode()=="0628176957012" | testUnitMethods.testTicketEntryClass() |
 
 ### **Class *TicketEntryClass* - method *setProductDescription()***
 
 
-**Criteria for method *setProductDescription*:**
+**Criteria for method *setProductDescription()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setProductDescription*:**
+**Predicates for method *setProductDescription()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -671,19 +805,19 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setProductDescription("kiwi") -> getProductDescription()=="kiwi" | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setProductDescription("kiwi") -> getProductDescription()=="kiwi" | testUnitMethods.testTicketEntryClass() |
 
 ### **Class *TicketEntryClass* - method *setPricePerUnit()***
 
 
-**Criteria for method *setPricePerUnit*:**
+**Criteria for method *setPricePerUnit()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setPricePerUnit*:**
+**Predicates for method *setPricePerUnit()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -701,20 +835,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setPricePerUnit(0.9) -> getPricePerUnit()==0.9 | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setPricePerUnit(0.9) -> getPricePerUnit()==0.9 | testUnitMethods.testTicketEntryClass() |
 
 
 ### **Class *TicketEntryClass* - method *setAmount()***
 
 
-**Criteria for method *setAmount*:**
+**Criteria for method *setAmount()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setAmount*:**
+**Predicates for method *setAmount()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -731,19 +865,19 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setAmount(4) -> getAmount()==4 | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setAmount(4) -> getAmount()==4 | testUnitMethods.testTicketEntryClass() |
 
 ### **Class *TicketEntryClass* - method *setDiscountRate()***
 
 
-**Criteria for method *setDiscountRate*:**
+**Criteria for method *setDiscountRate()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setDiscountRate*:**
+**Predicates for method *setDiscountRate()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -760,20 +894,53 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setDiscountRate(0.5) -> getDiscountRate()==0.5 | testUnitMethods.testTicketEntryClass |
+|any input |Valid | setDiscountRate(0.5) -> getDiscountRate()==0.5 | testUnitMethods.testTicketEntryClass() |
+
+### **Class *UserClass* - method *userClass()***
+
+
+**Criteria for method *userClass()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *userClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | userClass(id, username, password, role) -> u.getId()==id, u.getUsername()==username, u.getPassword()==password, u.getRole()==role | testUnitMethods.testUserClass() |
 
 
 ### **Class *UserClass* - method *setId()***
 
 
-**Criteria for method *setId*:**
+**Criteria for method *setId()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setId*:**
+**Predicates for method *setId()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -790,19 +957,19 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setId(2) -> getId()==2 | testUnitMethods.testUserClass |
+|any input |Valid | setId(2) -> getId()==2 | testUnitMethods.testUserClass() |
 
 ### **Class *UserClass* - method *setUsername()***
 
 
-**Criteria for method *setUsername*:**
+**Criteria for method *setUsername()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setUsername*:**
+**Predicates for method *setUsername()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -819,19 +986,19 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setUsername("username2") -> getUsername()=="username2" | testUnitMethods.testUserClass |
+|any input |Valid | setUsername("username2") -> getUsername()=="username2" | testUnitMethods.testUserClass() |
 
 ### **Class *UserClass* - method *setPassword()***
 
 
-**Criteria for method *setPassword*:**
+**Criteria for method *setPassword()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setPassword*:**
+**Predicates for method *setPassword()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -848,20 +1015,20 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setPassword("pwd2") -> getPassword()=="pwd2" | testUnitMethods.testUserClass |
+|any input |Valid | setPassword("pwd2") -> getPassword()=="pwd2" | testUnitMethods.testUserClass() |
 
 
 ### **Class *UserClass* - method *setRole()***
 
 
-**Criteria for method *setRole*:**
+**Criteria for method *setRole()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *setRole*:**
+**Predicates for method *setRole()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -878,7 +1045,141 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | setRole("Cashier") -> getRole()=="Cashier" | testUnitMethods.testUserClass |
+|any input |Valid | setRole("Cashier") -> getRole()=="Cashier" | testUnitMethods.testUserClass() |
+
+
+### **Class *SaleTransactionClass* - method *saleTransactionClass()***
+
+
+**Criteria for method *saleTransactionClass()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *saleTransactionClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | saleTransactionClass(number, price, discount, entries, state) -> s.getTicketNumber()==number, s.getPrice()==price, s.getDiscountRate()==discount, s.getEntries()==entries, s.getState()==state | testUnitMethods.testSaleTransactionClass() |
+
+
+### **Class *ReturnTransaction* - method *returnTransaction()***
+
+
+**Criteria for method *returnTransaction()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *returnTransaction()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | returnTransaction(id, saleid, products, status) -> r.getId()==id, r.getSaleTransactionId()==saleid, r.getProducts()==products, r.getStatus()==status | testUnitMethods.testReturnTransactionClass() |
+
+### **Class *CustomerClass* - method *customerClass()***
+
+
+**Criteria for method *customerClass()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *customerClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | customerClass(id, name, card, points) -> c.getCustomerId()==id, c.getCustomerName()==name, c.getCustomerCard()==card, c.getPoints()==points | testUnitMethods.testCustomerClass() |
+
+### **Class *CreditCardClass* - method *creditCardClass()***
+
+
+**Criteria for method *creditCardClass()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *creditCardClass()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | creditCardClass(number, balance) -> c.getCreditCardId()==number, c.getBalance()==balance | testUnitMethods.testCreditCardClass() |
 
 
 
