@@ -10,6 +10,18 @@ Version: 1.0
 
 - [Black Box Unit Tests](#black-box-unit-tests)
 
+    - [Card Handler](#class-cardhandler---method-checkluhn)
+    - [BarCode Handler](#class-producttypeclass---method-verifybarcode)
+    - [BalanceOperationClass](#class-balanceoperationclass---method-balanceoperationclass)
+    - [OrderClass](#class-orderclass---method-orderclass)
+    - [ProductTypeClass](#class-producttypeclass---method-producttypeclass)
+    - [TicketEntryClass](#class-ticketentryclass---method-ticketentryclass)
+    - [UserClass](#class-userclass---method-userclass)
+    - [SaleTransactionClass](#class-saletransactionclass---method-saletransactionclass)
+    - [ReturnTransactionClass](#class-returntransaction---method-returntransaction)
+    - [CustomerClass](#class-customerclass---method-customerclass)
+    - [CreditCardClass](#class-creditcardclass---method-creditcardclass)
+
 
 
 
@@ -98,7 +110,8 @@ No boundaries
 |invalid string| valid|T2("448537invalid0891")->false|verifyCheckLuhn.testInvalidStrings() |
 |NULL| valid|T3(NULL)->false|verifyCheckLuhn.testNull() |
 
-
+---
+---
 
  ### **Class *ProductTypeClass* - method *VerifyBarCode()***
 
@@ -139,6 +152,9 @@ No boundaries
 | Valid String | Valid | T1("0628176957012") -> True | verifyBarCode.verifyTrueString() |
 | Invalid String | Valid | T2("1111111111") -> False | verifyBarCode.verifyFalseString() |
 | Null | Valid | T3(null) -> False | verifyBarCode.verifyNull() |
+
+---
+---
 
 ### **Class *BalanceOperationClass* - method *balanceOperationClass()***
 
@@ -205,6 +221,9 @@ No boundaries
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testBalanceOperationClass() |
+
+---
+---
 
 
 ### **Class *OrderClass* - method *orderClass()***
@@ -431,18 +450,21 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setOrderId(5) -> getOrderId()==5 | testUnitMethods.testOrderClass() |
 
+---
+---
 
-### **Class *ProductType* - method *productType()***
+
+### **Class *ProductTypeClass* - method *productTypeClass()***
 
 
-**Criteria for method *productType()*:**
+**Criteria for method *productTypeClass()*:**
 	
  - any input 
 
 
 
 
-**Predicates for method *productType()*:**
+**Predicates for method *productTypeClass()*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
@@ -463,7 +485,7 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|any input |Valid | productType(description, barcode, pricePerUnit, note, id) -> p.getProductDescription()==description, p.getBarCode()==barcode, p.getPricePerUnit()==pricePerUnit, p.getNote()==note, p.getId()==id | testUnitMethods.testProductTypeClass() |
+|any input |Valid | productTypeClass(description, barcode, pricePerUnit, note, id) -> p.getProductDescription()==description, p.getBarCode()==barcode, p.getPricePerUnit()==pricePerUnit, p.getNote()==note, p.getId()==id | testUnitMethods.testProductTypeClass() |
 
 
 
@@ -692,6 +714,9 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setId(1) -> getId()==1 | testUnitMethods.testProductTypeClass() |
 
+---
+---
+
 ### **Class *TicketEntryClass* - method *TicketEntryClass()***
 
 
@@ -896,6 +921,9 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setDiscountRate(0.5) -> getDiscountRate()==0.5 | testUnitMethods.testTicketEntryClass() |
 
+---
+---
+
 ### **Class *UserClass* - method *userClass()***
 
 
@@ -928,6 +956,7 @@ No boundaries
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |any input |Valid | userClass(id, username, password, role) -> u.getId()==id, u.getUsername()==username, u.getPassword()==password, u.getRole()==role | testUnitMethods.testUserClass() |
+
 
 
 ### **Class *UserClass* - method *setId()***
@@ -1047,6 +1076,8 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setRole("Cashier") -> getRole()=="Cashier" | testUnitMethods.testUserClass() |
 
+---
+---
 
 ### **Class *SaleTransactionClass* - method *saleTransactionClass()***
 
@@ -1246,6 +1277,9 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setPrice(49.99) -> getPrice() == 49.99 | testUnitMethods.testSaleTransactionClass() |
 
+---
+---
+
 
 ### **Class *ReturnTransaction* - method *returnTransaction()***
 
@@ -1412,6 +1446,9 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | setStatus("Ongoing") -> getStatus() == "Ongoing" | testUnitMethods.testReturnTransactionClass() |
 
+---
+---
+
 ### **Class *CustomerClass* - method *customerClass()***
 
 
@@ -1478,7 +1515,9 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | creditCardClass(number, balance) -> c.getCreditCardId()==number, c.getBalance()==balance | testUnitMethods.testCreditCardClass() |
 
-
+---
+---
+---
 
 
 # White Box Unit Tests
