@@ -94,9 +94,9 @@ No boundaries
 
 | Criteria 1  | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|valid string | valid|T1("4485370086510891")->true|testValidStrings|
-|invalid string| valid|T2("448537invalid0891")->false|testInvalidStrings|
-|NULL| valid|T3(NULL)->false|testNull|
+|valid string | valid|T1("4485370086510891")->true|checkLuhnTest.testValidStrings|
+|invalid string| valid|T2("448537invalid0891")->false|checkLuhnTest.testInvalidStrings|
+|NULL| valid|T3(NULL)->false|checkLuhnTest.testNull|
 
 
 
@@ -136,9 +136,9 @@ No boundaries
 
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-| Valid String | Valid | T1("0628176957012") -> True | verifyTrueString |
-| Invalid String | Valid | T2("1111111111") -> False | verifyFalseString |
-| Null | Valid | T3(null) -> False | verifyNull |
+| Valid String | Valid | T1("0628176957012") -> True | VerifyBarCodeTest.verifyTrueString |
+| Invalid String | Valid | T2("1111111111") -> False | VerifyBarCodeTest.verifyFalseString |
+| Null | Valid | T3(null) -> False | VerifyBarCodeTest.verifyNull |
 
 
 ### **Class *BalanceOperationClass* - method *setBalanceId***
