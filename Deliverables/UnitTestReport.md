@@ -1192,6 +1192,7 @@ No boundaries
     <Report here all the created JUnit test cases, and the units/classes under test >
     <For traceability write the class and method name that contains the test case>
 
+**No additional WB tests defined since coverage of all leaf classes is over 90%**
 
 | Unit name | JUnit test case |
 |--|--|
@@ -1211,8 +1212,9 @@ No boundaries
     <Identify significant loops in the units and reports the test cases
     developed to cover zero, one or multiple iterations >
 
+**The following loop-tests come out automatically from BB tests previously definied**
+
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
-|||||
-|||||
-||||||
+|ProductTypeClass|47-59|0, >1|VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
+|GFG|26-43|0,1,>1|checkLuhnTest.testInvalidStrings(), checkLuhnTest.testValidStrings()|
