@@ -25,7 +25,7 @@ Version: 1.0
 
      <report the here the dependency graph of the classes in EzShop, using plantuml>
 
-![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKla3ia3Od9fWcnGw71b47wf2BIo8n62z--K2WOEbb-tfDuiwrAeYqdLv-HPnBAdIzvBWpMGPU4Jk2L-97WtFtmENoN-Qk_dQPki-d-zkvocjnw_C8tIiGUvnb26WjFtNzdBmXHzoJ1fArgoH2BdINOu28bDA_ZCiE8kaARy2Z4bVohge4IregxZz4_eGTMMMp5-6NrniAtQlVtO0Wftbk6H3-eH7wOuh4t3Zp6X2ieG7OSFYGgP79RS6Wv_G00)
+![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKka3ia3Od9fWcnGw71b47wfCBII8n62z--cvOMgYm_xp6ysLObqPQYgKlWGaB9kfnAPh2EkaPOWLFYHuGnzyFx-9dBnt0xpNQpiJzxTpdDvdTymnUAn0xd0Y4DcMVxtzaBVD0zYU_ILZKdI8-TnVV1HR9lJgUre1DrXJRXIOWhkMTL8qNyLSnz2cw17bXbxIkTAxVQ3np045AyjWG9RbG9_EYAnw7pmJ54N44UicF_9a4Xizc2VKln2m00)
      
 # Integration approach
 
