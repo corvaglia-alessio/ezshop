@@ -3,9 +3,11 @@
 
 Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date: 23 April 2021
+Date: 19 May 2021
 
-Version: 1.0
+Version: 1.1
+
+* Updated low level design after the coding part with respect to version 1.0
 
 
 # Contents
