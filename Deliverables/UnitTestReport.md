@@ -30,13 +30,6 @@ Version: 1.0
 
 # Black Box Unit Tests
 
-    <Define here criteria, predicates and the combination of predicates for each function of each class.
-    Define test cases to cover all equivalence classes and boundary conditions.
-    In the table, report the description of the black box test case and (traceability) the correspondence with the JUnit test case writing the 
-    class and method name that contains the test case>
-    <JUnit test classes must be in src/test/java/it/polito/ezshop   You find here, and you can use,  class TestEzShops.java that is executed  
-    to start tests
-    >
 
 ### **Class *CardHandler* - method *checkLuhn***
 
@@ -1762,30 +1755,14 @@ No boundaries
 # White Box Unit Tests
 
 ### Test cases definition
-    
-    <JUnit test classes must be in src/test/java/it/polito/ezshop>
-    <Report here all the created JUnit test cases, and the units/classes under test >
-    <For traceability write the class and method name that contains the test case>
 
 **No additional WB tests defined since coverage of all leaf classes is over 90%**
 
-| Unit name | JUnit test case |
-|--|--|
-|||
-|||
-||||
-
 ### Code coverage report
-
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
 
 ![coverage](unitTestCoverage.png)
 
 ### Loop coverage analysis
-
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
 
 **The following loop-tests come out automatically from BB tests previously definied**
 
