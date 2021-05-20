@@ -18,3 +18,4 @@ public interface Customer {
 
     void setPoints(Integer points);
 }
+

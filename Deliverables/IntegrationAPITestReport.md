@@ -1,10 +1,10 @@
 # Integration and API Test Documentation
 
-Authors:
+Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date:
+Date: 14 May 2021
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -24,6 +24,8 @@ Version:
 # Dependency graph 
 
      <report the here the dependency graph of the classes in EzShop, using plantuml>
+
+![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKka3ia3Od9fWcnGw71b47wfCBII8n62z--cvOMgYm_xp6ysLObqPQYgKlWGaB9kfnAPh2EkaPOWLFYHuGnzyFx-9dBnt0xpNQpiJzxTpdDvdTymnUAn0xd0Y4DcMVxtzaBVD0zYU_ILZKdI8-TnVV1HR9lJgUre1DrXJRXIOWhkMTL8qNyLSnz2cw17bXbxIkTAxVQ3np045AyjWG9RbG9_EYAnw7pmJ54N44UicF_9a4Xizc2VKln2m00)
      
 # Integration approach
 
@@ -32,7 +34,10 @@ Version:
     <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
     <One step will  correspond to API testing>
     
-
+<b>Approach used: Bottom-Up</b>
+     
+<b>Step 1:</b> Unit testing
+<b>Step 2:</b> API testing
 
 #  Tests
 
@@ -42,24 +47,14 @@ Version:
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
+|GFG.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|||
-
-
-## Step n 
-
-   
-
-| Classes  | JUnit test cases |
-|--|--|
-|||
-
-
+|EZShop.java (in data package)| All tests included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
 
 
 # Scenarios
@@ -78,6 +73,25 @@ Version:
 |  1     |  ... |  
 |  2     |  ... |
 
+## Scenario UC2-4
+
+| Scenario |  List all users |
+| ------------- |:-------------:| 
+|  Precondition     | Admin A exists and is logged in |
+|  Post condition     |  List of users is returned |
+| Step#        | Description  |
+|  1     |  A asks the application to retrieve the user list |  
+
+## Scenario UC9-2
+
+| Scenario |  Record a balance operation |
+| ------------- |:-------------:| 
+|  Precondition     | User U exists and is logged in |
+|  Post condition     | Balance operation is recorded |
+|   | The system balance is modified |
+| Step#        | Description  |
+|  1     | User U pays for an order, issue a sale or a return and the balance is updated  |  
+
 
 
 # Coverage of Scenarios and FR
@@ -91,12 +105,20 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  ..         | FRx                             |             |             
-|  ..         | FRy                             |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+|  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
+|  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
+|  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
+| 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() |                             
+| 5-1         |                   FR1              |        FunReq1Test.testLogin()     |      
+| 5-2         |                   FR1              |        FunReq1Test.testLogout()     |           
+| 6-1         |                   FR6              |        FunReq6Test.testStartSaleTransaction(),  FunReq6Test.testAddProductToSale(), FunReq6Test.testDeleteProductFromSale(), FunReq6Test.testEndSaleTransaction(), FunReq6Test.testGetSaleTransaction()     |  
+| 6-2         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToProduct()     |  
+| 6-3         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToSale()     |  
+| 6-4         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testComputePointsForSale()    |  
+| 6-5         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testDeleteSaleTransaction()    |  
+| 6-6         |                   FR6              |        Same as scenario 6.1   |  
+|  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
+|  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 
 
 
