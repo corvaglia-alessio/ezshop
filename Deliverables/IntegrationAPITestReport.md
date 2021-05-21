@@ -48,13 +48,22 @@ Version: 1.0
 | Classes  | JUnit test cases |
 |--|--|
 |ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
-|GFG.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
+|CardHandler.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
+|BalanceOperationClass.java|testUnitsMethods.testBalanceOperationClass()|
+|CreditCardClass.java|testUnitsMethods.testCreditCardClass()|
+|Customer.java|testUnitsMethods.testCustomerClass()|
+|OrderClass.java|testUnitsMethods.testOrderClass()|
+|ProductTypeClass.java|testUnitsMethods.testProductTypeClass()|
+|UserClass.java|testUnitsMethods.testUserClass()|
+|TicketEntryClass.java|testUnitsMethods.testTicketEntryClass()|
+|SaleTransactionClass.java|testUnitsMethods.testSaleTransactionClass()|
+|ReturnTransactionClass.java|testUnitsMethods.testReturnTransactionClass()|
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|EZShop.java (in data package)| All tests included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
+|EZShop.java (in data package)| All test cases included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
 
 
 # Scenarios
