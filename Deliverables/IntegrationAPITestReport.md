@@ -119,13 +119,21 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
 | 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() |                             
 | 5-1         |                   FR1              |        FunReq1Test.testLogin()     |      
-| 5-2         |                   FR1              |        FunReq1Test.testLogout()     |           
+| 5-2         |                   FR1              |        FunReq1Test.testLogout()     |   
+| 4-1         |                   FR5              |        FunReq5Test.defineCustomerTest()     |   
+| 4-2         |                   FR5              |        FunReq5Test.attachCardToCustomerTest(), FunReq5Test.createCardTest()   |   
+| 4-3         |                   FR5              |        FunReq5Test.modifyCustomerTest()     |   
+| 4-4         |                   FR5              |        FunReq5Test.modifyCustomerTest()     |           
 | 6-1         |                   FR6              |        FunReq6Test.testStartSaleTransaction(),  FunReq6Test.testAddProductToSale(), FunReq6Test.testDeleteProductFromSale(), FunReq6Test.testEndSaleTransaction(), FunReq6Test.testGetSaleTransaction()     |  
 | 6-2         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToProduct()     |  
 | 6-3         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToSale()     |  
 | 6-4         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testComputePointsForSale()    |  
 | 6-5         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testDeleteSaleTransaction()    |  
 | 6-6         |                   FR6              |        Same as scenario 6.1   |  
+| 7-1         |                   FR7              |   FunReq7Test.receiveCreditCardPaymentTest()        |  
+| 7-2         |                   FR7              |   FunReq7Test.receiveCreditCardPaymentTest()        |  
+| 7-3         |                   FR7              |   FunReq7Test.receiveCreditCardPaymentTest()        |  
+| 7-4         |                   FR7              |   FunReq7Test.receiveCashPaymentTest()       |  
 |  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
 |  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 
