@@ -1178,14 +1178,13 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        if (!ProductTypeClass.VerifyBarCode(productCode)) {
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
+        }        if (!ProductTypeClass.VerifyBarCode(productCode)) {
             throw new InvalidProductCodeException("The product code is invalid.");
         }
         if (amount <= 0) {
             throw new InvalidQuantityException("The quantity is less than or equal to 0.");
-        }
-        if (returnId == null || returnId <= 0) {
-            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
         }
 
         ProductType rp = getProductTypeByBarCode(productCode);
