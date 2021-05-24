@@ -1,2 +1,0 @@
-1;adminuser;password;Administrator
-2;cashieruser;pwd;Cashier

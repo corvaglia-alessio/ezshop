@@ -30,49 +30,8 @@ Version: 1.0
 
 # Black Box Unit Tests
 
-    <Define here criteria, predicates and the combination of predicates for each function of each class.
-    Define test cases to cover all equivalence classes and boundary conditions.
-    In the table, report the description of the black box test case and (traceability) the correspondence with the JUnit test case writing the 
-    class and method name that contains the test case>
-    <JUnit test classes must be in src/test/java/it/polito/ezshop   You find here, and you can use,  class TestEzShops.java that is executed  
-    to start tests
-    >
 
-### **Class *className* - method *methodName()***
-
-
-**Criteria for method *methodName()*:**
-	
- - any input 
-
-
-
-
-**Predicates for method *methodName()*:**
-
-| Criteria | Predicate |
-| -------- | --------- |
-|   any input       |    arbitrary values       |
-
-
-
-
-
-**Boundaries**:
-
-
-No boundaries
-
-
-**Combination of predicates**:
-
-
-| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|
-|any input |Valid | setMethodName(fill_it) -> getMethodName()==fill_it | testUnitMethods.testXYZWClass() |
-
-
- ### **Class *CardHandler* - method *checkLuhn***
+### **Class *CardHandler* - method *checkLuhn***
 
 
 **Criteria for method *checkLuhn()*:**
@@ -113,7 +72,7 @@ No boundaries
 ---
 ---
 
- ### **Class *ProductTypeClass* - method *VerifyBarCode()***
+### **Class *ProductTypeClass* - method *VerifyBarCode()***
 
 
 
@@ -221,6 +180,102 @@ No boundaries
 | Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |any input |Valid | setBalanceId(1) -> getBalanceId()==1 | testUnitMethods.testBalanceOperationClass() |
+
+### **Class *BalanceOperationClass* - method *setDate***
+
+
+
+**Criteria for method *setDate()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setDate()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setDate(LocalDate.now()) -> getDate()==LocalDate.now() | testUnitMethods.testBalanceOperationClass() |
+
+### **Class *BalanceOperationClass* - method *setMoney***
+
+
+
+**Criteria for method *setMoney()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setMoney()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setMoney(2.0) -> getMoney()==2.0 | testUnitMethods.testBalanceOperationClass() |
+
+### **Class *BalanceOperationClass* - method *setType***
+
+
+
+**Criteria for method *setType()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setType()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setType("type") -> getType()=="type" | testUnitMethods.testBalanceOperationClass() |
 
 ---
 ---
@@ -1482,6 +1537,125 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | customerClass(id, name, card, points) -> c.getCustomerId()==id, c.getCustomerName()==name, c.getCustomerCard()==card, c.getPoints()==points | testUnitMethods.testCustomerClass() |
 
+### **Class *CustomerClass* - method *setCustomerName()***
+
+
+**Criteria for method *setCustomerName()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setCustomerName()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setCustomerName("username") -> getCustomerName()=="username" | testUnitMethods.testCustomerClass() |
+
+### **Class *CustomerClass* - method *setCustomerCard()***
+
+
+**Criteria for method *setCustomerCard()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setCustomerCard()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setCustomerCard("card") -> getCustomerCard()=="card" | testUnitMethods.testCustomerClass() |
+
+### **Class *CustomerClass* - method *setId()***
+
+
+**Criteria for method *setId()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setId()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setId(2) -> getId()==2 | testUnitMethods.testCustomerClass() |
+
+### **Class *CustomerClass* - method *setPoints()***
+
+
+**Criteria for method *setPoints()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setPoints()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setPoints(2) -> getPoints()==2 | testUnitMethods.testCustomerClass() |
+
+---
+---
+
 ### **Class *CreditCardClass* - method *creditCardClass()***
 
 
@@ -1515,6 +1689,64 @@ No boundaries
 |-------|-------|-------|-------|
 |any input |Valid | creditCardClass(number, balance) -> c.getCreditCardId()==number, c.getBalance()==balance | testUnitMethods.testCreditCardClass() |
 
+### **Class *CreditCardClass* - method *setCreditCardId()***
+
+
+**Criteria for method *setCreditCardId()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setCreditCardId()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setCreditCardId("cardId") -> getCreditCardId()=="cardId" | testUnitMethods.testCreditCardClass() |
+
+### **Class *CreditCardClass* - method *setBalance()***
+
+
+**Criteria for method *setBalance()*:**
+	
+ - any input 
+
+
+
+
+**Predicates for method *setBalance()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|   any input       |    arbitrary values       |
+
+**Boundaries**:
+
+
+No boundaries
+
+
+**Combination of predicates**:
+
+
+| Criteria 1 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|any input |Valid | setBalance(100.0) -> getBalance()==100.0 | testUnitMethods.testCreditCardClass() |
+
 ---
 ---
 ---
@@ -1523,30 +1755,14 @@ No boundaries
 # White Box Unit Tests
 
 ### Test cases definition
-    
-    <JUnit test classes must be in src/test/java/it/polito/ezshop>
-    <Report here all the created JUnit test cases, and the units/classes under test >
-    <For traceability write the class and method name that contains the test case>
 
 **No additional WB tests defined since coverage of all leaf classes is over 90%**
 
-| Unit name | JUnit test case |
-|--|--|
-|||
-|||
-||||
-
 ### Code coverage report
-
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
 
 ![coverage](unitTestCoverage.png)
 
 ### Loop coverage analysis
-
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
 
 **The following loop-tests come out automatically from BB tests previously definied**
 
