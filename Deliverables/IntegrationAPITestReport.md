@@ -149,6 +149,6 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
-|                            |           |
+|               NFR2 - Performance          |  Load ~1000 products, ~1000 customers, ~10000 transactions, ~1000 orders if the application is able to perform the operation in less than 0.5 sec         |
 
 
