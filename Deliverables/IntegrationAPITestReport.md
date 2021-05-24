@@ -105,6 +105,8 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
+|  1-1         | FR3  | FunReq3Test.testCreateProductType() |
+|  1-3         | FR3  | FunReq3Test.testUpdateProductType() |
 |  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
 |  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
 |  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
@@ -117,6 +119,8 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 6-4         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testComputePointsForSale()    |  
 | 6-5         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testDeleteSaleTransaction()    |  
 | 6-6         |                   FR6              |        Same as scenario 6.1   |  
+| 8-1 | FR7 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCreditCardPaymentTest() |
+| 8-2 | FR7 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCashPaymentTest() |
 |  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
 |  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 
