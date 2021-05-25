@@ -37,13 +37,12 @@ Version: 1.0
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString()|
-|CardHandler.java|checkLuhnTest.testNull(), VerifyBarCodeTest.testInvalidStrings(), VerifyBarCodeTest.testValidStrings()|
+|ProductTypeClass.java|VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString() testUnitsMethods.testProductTypeClass()|
+|CardHandler.java|checkLuhnTest.testNull(), checkLuhnTest.testInvalidStrings(), checkLuhnTest.testValidStrings()|
 |BalanceOperationClass.java|testUnitsMethods.testBalanceOperationClass()|
 |CreditCardClass.java|testUnitsMethods.testCreditCardClass()|
 |Customer.java|testUnitsMethods.testCustomerClass()|
 |OrderClass.java|testUnitsMethods.testOrderClass()|
-|ProductTypeClass.java|testUnitsMethods.testProductTypeClass()|
 |UserClass.java|testUnitsMethods.testUserClass()|
 |TicketEntryClass.java|testUnitsMethods.testTicketEntryClass()|
 |SaleTransactionClass.java|testUnitsMethods.testSaleTransactionClass()|
@@ -136,6 +135,8 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
-|               NFR2 - Performance          |  Load ~1000 products, ~1000 customers, ~10000 transactions, ~1000 orders to test if the application is able to perform the operation in less than 0.5 sec         |
+|               NFR2         |  Load ~1000 products, ~1000 customers, ~10000 transactions, ~1000 orders to test if the application is able to perform the operation in less than 0.5 sec         |
+| NFR4 | VerifyBarCodeTest.verifyNull(), VerifyBarCodeTest.verifyFalseString(), VerifyBarCodeTest.verifyTrueString() |
+| NFR5 | checkLuhnTest.testNull(), checkLuhnTest.testInvalidStrings(), checkLuhnTest.testValidStrings() |
 
 

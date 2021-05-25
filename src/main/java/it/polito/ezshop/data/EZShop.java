@@ -556,6 +556,7 @@ public class EZShop implements EZShopInterface {
         if (order == null || !order.getStatus().equals("ISSUED"))
             return false;
         
+        //additional check even if this is not specified in the interface
         if (this.currentBalance < orders.get(orderId).getPricePerUnit() * orders.get(orderId).getQuantity())
             return false;
 
