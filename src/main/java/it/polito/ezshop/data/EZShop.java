@@ -555,6 +555,9 @@ public class EZShop implements EZShopInterface {
         Order order = orders.get(orderId);
         if (order == null || !order.getStatus().equals("ISSUED"))
             return false;
+        
+        if (this.currentBalance < orders.get(orderId).getPricePerUnit() * orders.get(orderId).getQuantity())
+            return false;
 
         this.orders.get(orderId).setStatus("PAYED");
         this.recordBalanceUpdate(order.getPricePerUnit() * order.getQuantity() * -1);
