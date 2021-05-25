@@ -62,15 +62,6 @@ Version: 1.0
 If needed, define here additional scenarios for the application. Scenarios should be named
 referring the UC in the OfficialRequirements that they detail
 
-## Scenario UCx.y
-
-| Scenario |  name |
-| ------------- |:-------------:| 
-|  Precondition     |  |
-|  Post condition     |   |
-| Step#        | Description  |
-|  1     |  ... |  
-|  2     |  ... |
 
 ## Scenario UC2-4
 
@@ -102,7 +93,7 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
 |  1-1         | FR3  | FunReq3Test.testCreateProductType() |
-|  1-2         | FR3  |                                     |
+|  1-2         | FR  |                                     |
 |  1-3         | FR3  | FunReq3Test.testUpdateProductType() |
 |  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
 |  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
@@ -145,6 +136,6 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
-|               NFR2 - Performance          |  Load ~1000 products, ~1000 customers, ~10000 transactions, ~1000 orders if the application is able to perform the operation in less than 0.5 sec         |
+|               NFR2 - Performance          |  Load ~1000 products, ~1000 customers, ~10000 transactions, ~1000 orders to test if the application is able to perform the operation in less than 0.5 sec         |
 
 
