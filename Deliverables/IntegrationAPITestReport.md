@@ -93,15 +93,15 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
 |  1-1         | FR3  | FunReq3Test.testCreateProductType() |
-|  1-2         | FR  |                                     |
+|  1-2         | FR4  | FunReq4Test.testUpdatePosition()    |
 |  1-3         | FR3  | FunReq3Test.testUpdateProductType() |
 |  2-1         | FR1                            |      FunReq1Test.testCreateUser()       |             
 |  2-2         | FR1                             |       FunReq1Test.testDeleteUser()       |             
 |  2-3         |    FR1                             |        FunReq1Test.testUpdateUserRights()      |             
 | 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() | 
-|  3-1         | FR  | |
-|  3-2         | FR  |  |
-|  3-3         | FR  |  |
+|  3-1         | FR4  | FunReq4Test.testIssueOrder() |
+|  3-2         | FR4  | FunReq4Test.testPayOrder() |
+|  3-3         | FR4  | FunReq4Test.testRecordOrderArrival() |
 | 4-1         |                   FR5              |        FunReq5Test.defineCustomerTest()     |   
 | 4-2         |                   FR5              |        FunReq5Test.attachCardToCustomerTest(), FunReq5Test.createCardTest()   |   
 | 4-3         |                   FR5              |        FunReq5Test.modifyCustomerTest()     |   
