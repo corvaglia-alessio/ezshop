@@ -652,12 +652,15 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard)
-            throws InvalidCustomerNameException, InvalidCustomerCardException, UnauthorizedException {
+            throws InvalidCustomerNameException, InvalidCustomerCardException, UnauthorizedException, InvalidCustomerIdException {
 
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
+        
+        if(id == null || id <= 0)
+        	throw new InvalidCustomerIdException("Invalid customer Id");
         if (newCustomerName == null || newCustomerName.equals("")) {
             throw new InvalidCustomerNameException("Invalid customer Name");
         }
