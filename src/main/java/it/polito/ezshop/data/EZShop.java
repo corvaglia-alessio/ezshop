@@ -665,10 +665,25 @@ public class EZShop implements EZShopInterface {
             throw new InvalidCustomerNameException("Invalid customer Name");
         }
 
+        if(newCustomerCard != null && !newCustomerCard.isEmpty()) {
+        	if (newCustomerCard.length() != 10) {
+                throw new InvalidCustomerCardException("Invalid customer Card");
+            }
+
+            try {
+                Double.parseDouble(newCustomerCard);
+            } catch (NumberFormatException nfe) {
+                throw new InvalidCustomerCardException("Invalid customer Card");
+            }
+            
+            if(!Cardhandler.checkLuhn(newCustomerCard))
+            	throw new InvalidCustomerCardException("Invalid customer Card");
+        }
+        
         if (!customers.containsKey(id)) {
             return false;
         }
-
+        
         if (newCustomerCard == null) {
             customers.get(id).setCustomerName(newCustomerName);
             FileReaderAndWriter.CustomersWriter(customers);
@@ -680,16 +695,6 @@ public class EZShop implements EZShopInterface {
             customers.get(id).setCustomerCard("");
             FileReaderAndWriter.CustomersWriter(customers);
             return true;
-        }
-
-        if (newCustomerCard.length() != 10) {
-            throw new InvalidCustomerCardException("Invalid customer Card");
-        }
-
-        try {
-            Double.parseDouble(newCustomerCard);
-        } catch (NumberFormatException nfe) {
-            throw new InvalidCustomerCardException("Invalid customer Card");
         }
 
         if (customers.values().stream().filter((c) -> c.getId() != id)
