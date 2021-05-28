@@ -861,8 +861,13 @@ public class EZShop implements EZShopInterface {
 
         if (productCode == null || productCode.equals("") || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
+        
+        SaleTransactionClass s = sales.get(transactionId);
 
-        if (sales.get(transactionId).getState().compareTo("Open") != 0)
+        if(s==null)
+            return false;
+
+        if (s.getState().compareTo("Open") != 0)
             return false;
 
         if (getProductTypeByBarCode(productCode) == null)
@@ -1002,6 +1007,9 @@ public class EZShop implements EZShopInterface {
             throw new InvalidDiscountRateException("Discount not valid");
 
         SaleTransactionClass t = sales.get(transactionId);
+
+        if(t==null)
+            return false;
 
         if (t.getState().compareTo("Paid") == 0)
             return false;
