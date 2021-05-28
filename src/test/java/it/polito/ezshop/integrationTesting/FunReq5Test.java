@@ -190,7 +190,7 @@ public class FunReq5Test {
 		/*end BeforeEach*/
 		
 		e.logout();
-		assertThrows(UnauthorizedException.class, () -> {e.modifyCustomer(null, null, null);});
+		assertThrows(UnauthorizedException.class, () -> {e.deleteCustomer(null);});
 		
 		e.login("validUser", "pass");
 		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(null);});
@@ -235,9 +235,9 @@ public class FunReq5Test {
 		assertThrows(UnauthorizedException.class, () -> {e.getCustomer(5);});
 		
 		e.login("validUser", "pass");
-		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(null);});
-		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(0);});
-		assertThrows(InvalidCustomerIdException.class,() -> {e.deleteCustomer(-1);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.getCustomer(null);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.getCustomer(0);});
+		assertThrows(InvalidCustomerIdException.class,() -> {e.getCustomer(-1);});
 		
 		assertNull(e.getCustomer(5));
 		assertTrue(e.getCustomer(1).getId()==1);
@@ -305,7 +305,7 @@ public class FunReq5Test {
 		/*end BeforeEach*/
 		
 		e.logout();
-		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
+		assertThrows(UnauthorizedException.class, () -> {e.attachCardToCustomer(null,null);});
 		
 		e.login("validUser", "pass");
 		
@@ -358,15 +358,15 @@ public class FunReq5Test {
 		/*end BeforeEach*/
 		
 		e.logout();
-		assertThrows(UnauthorizedException.class, () -> {e.getAllCustomers();});
+		assertThrows(UnauthorizedException.class, () -> {e.modifyPointsOnCard("random", 4);});
 		
 		e.login("validUser", "pass");
 		String card = e.createCard();
 		String card2 = e.createCard();
-		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("12345678",1);});
-		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("qwerty7890",1);});
-		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer(null,1);});
-		assertThrows(InvalidCustomerCardException.class,() -> {e.attachCardToCustomer("",1);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.modifyPointsOnCard(null, 4);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.modifyPointsOnCard("12345678", 4);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.modifyPointsOnCard("qwerty7890", 4);});
+		assertThrows(InvalidCustomerCardException.class,() -> {e.modifyPointsOnCard("", 4);});
 		
 		e.attachCardToCustomer(card, 1);
 		

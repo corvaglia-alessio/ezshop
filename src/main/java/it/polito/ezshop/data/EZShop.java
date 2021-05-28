@@ -555,6 +555,10 @@ public class EZShop implements EZShopInterface {
         Order order = orders.get(orderId);
         if (order == null || !order.getStatus().equals("ISSUED"))
             return false;
+        
+        //additional check even if this is not specified in the interface
+        if (this.currentBalance < orders.get(orderId).getPricePerUnit() * orders.get(orderId).getQuantity())
+            return false;
 
         this.orders.get(orderId).setStatus("PAYED");
         this.recordBalanceUpdate(order.getPricePerUnit() * order.getQuantity() * -1);
@@ -1178,14 +1182,13 @@ public class EZShop implements EZShopInterface {
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        if (!ProductTypeClass.VerifyBarCode(productCode)) {
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
+        }        if (!ProductTypeClass.VerifyBarCode(productCode)) {
             throw new InvalidProductCodeException("The product code is invalid.");
         }
         if (amount <= 0) {
             throw new InvalidQuantityException("The quantity is less than or equal to 0.");
-        }
-        if (returnId == null || returnId <= 0) {
-            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
         }
 
         ProductType rp = getProductTypeByBarCode(productCode);

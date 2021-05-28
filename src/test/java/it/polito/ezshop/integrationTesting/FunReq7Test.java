@@ -1,5 +1,6 @@
 package it.polito.ezshop.integrationTesting;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -232,6 +233,103 @@ static EZShop e;
 		assertFalse(e.receiveCreditCardPayment(3,"4485370086510891"));
 		e.logout();
 		
+	}
+
+	@Test
+	public void startReturnTransaction() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException {
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validAdministrator", "pass", "Administrator");
+
+		assertThrows(UnauthorizedException.class, () -> {e.startReturnTransaction(null);});
+
+		e.login("validAdministrator", "pass");
+
+		int stID = e.startSaleTransaction();
+
+		assertThrows(InvalidTransactionIdException.class, () -> {e.startReturnTransaction(null);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.startReturnTransaction(0);});
+
+		int id1 = e.startReturnTransaction(stID);
+		int id2 = e.startReturnTransaction(stID);
+
+		assertEquals(1, id1);
+		assertEquals(2, id2);
+	}
+
+	@Test 
+	public void returnProductTest() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, InvalidQuantityException {
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validAdministrator", "pass", "Administrator");
+
+		assertThrows(UnauthorizedException.class, () -> {e.returnProduct(null, null, 0);});
+
+		e.login("validAdministrator", "pass");
+
+		int stID = e.startSaleTransaction();
+		int rtID = e.startReturnTransaction(stID);
+
+		e.createProductType("product1", "123456789012", 3.00, "p1");
+		e.getProductTypeByBarCode("123456789012").setQuantity(10);
+		e.addProductToSale(stID, "123456789012", 2);
+
+		e.endSaleTransaction(stID);
+
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProduct(null, "123456789012", 1);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProduct(0, "123456789012", 1);});
+		assertThrows(InvalidProductCodeException.class, () -> {e.returnProduct(rtID, "123456789011", 1);});
+		assertThrows(InvalidQuantityException.class, () -> {e.returnProduct(rtID, "123456789012", 0);});
+
+		assertFalse(e.returnProduct(rtID, "123456789012", 10));
+		assertTrue(e.returnProduct(rtID, "123456789012", 1));
+		
+	}
+
+	@Test
+	public void endReturnTransactionTest() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException {
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validAdministrator", "pass", "Administrator");
+
+		assertThrows(UnauthorizedException.class, () -> {e.returnProduct(null, null, 0);});
+
+		e.login("validAdministrator", "pass");
+
+		int stID = e.startSaleTransaction();
+		int rtID = e.startReturnTransaction(stID);
+
+		assertThrows(InvalidTransactionIdException.class, () -> {e.endReturnTransaction(null, false);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.endReturnTransaction(0, false);});
+
+		assertFalse(e.endReturnTransaction(15000, false));
+		assertTrue(e.endReturnTransaction(rtID, false));
+
+	}
+
+	@Test
+	public void deleteReturnTransaction() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException {
+		EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validAdministrator", "pass", "Administrator");
+
+		assertThrows(UnauthorizedException.class, () -> {e.returnProduct(null, null, 0);});
+
+		e.login("validAdministrator", "pass");
+
+		int stID = e.startSaleTransaction();
+		int rtID = e.startReturnTransaction(stID);
+		int rtID2 = e.startReturnTransaction(stID);
+
+		assertThrows(InvalidTransactionIdException.class, () -> {e.endReturnTransaction(null, false);});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.endReturnTransaction(0, false);});
+
+		e.endReturnTransaction(rtID2, false);
+		e.returnCashPayment(rtID2);
+		assertFalse(e.deleteReturnTransaction(rtID2));
+
+		assertTrue(e.deleteReturnTransaction(rtID));
+		assertFalse(e.deleteReturnTransaction(rtID));
 	}
 	
 	@Test 

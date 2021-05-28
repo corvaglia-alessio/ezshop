@@ -81,11 +81,11 @@ public class FunReq3Test {
 		e.createUser("adminuser", "password", "Administrator");
 		e.createUser("cashieruser", "pwd", "Cashier");
 
-		assertThrows(UnauthorizedException.class, () -> {e.createProductType("apple", "628176957012", 2.0, "red apples");});
+		assertThrows(UnauthorizedException.class, () -> {e.deleteProductType(5);});
 
 		e.login("cashieruser", "pwd");
 
-		assertThrows(UnauthorizedException.class, () -> {e.createProductType("apple", "628176957012", 2.0, "red apples");});
+		assertThrows(UnauthorizedException.class, () -> {e.deleteProductType(5);});
 
 		e.logout();
 		e.login("adminuser", "password");
