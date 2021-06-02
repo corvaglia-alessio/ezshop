@@ -57,7 +57,7 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 <Report screen captures of the package-level tangles by opening the items in the "composition perspective" 
 (double click on the tangle from the Views->Complexity page)>
 ```
-
+![tangles](tangles.png)
 # Summary analysis
 ```
 <Discuss here main differences of the current structure of your project vs the design delivered on April 30>
