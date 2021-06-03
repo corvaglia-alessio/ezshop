@@ -63,3 +63,20 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 <Discuss here main differences of the current structure of your project vs the design delivered on April 30>
 <Discuss if the current structure shows weaknesses that should be fixed>
 ```
+The main differences between the current design and the previous one are the following ones:
+- classes like LoyaltyCard and position were removed. Their attributes were inserted within other classes.
+- the classes returnTransaction and saleTransaction have no more a direct relationship.
+- the classes order and productType have no more a direct relationship.
+- the class creditCard was added.
+- the class FileReaderAndWriter was added to provide persistency.
+
+The current design is characterized by an high degree of tangling (97%) and 67% of fat.
+
+Fat could be reduced by: 
+- introducing high level components to manage collections in the EZShop class like: users, inventory, sales,...
+- moving checks within classes implementing Units like: UserClass, OrderClass, BalanceOperationClass,...
+
+Tangling could be reduced by:
+- having the EZShop implementation and all the other classes implementing the interfaces in the same package
+
+
