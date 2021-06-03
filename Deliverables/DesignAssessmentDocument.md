@@ -33,8 +33,8 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 | Packages                                  |    6     |
 | Classes (outer)                           |    41     |
 | Classes (all)                             |    41     |
-| NI (number of bytecode instructions)      |   7418      |
-| LOC (non comment non blank lines of code) |   ~3190      |
+| NI (number of bytecode instructions)      |   7428      |
+| LOC (non comment non blank lines of code) |   ~3194      |
 
 
 
