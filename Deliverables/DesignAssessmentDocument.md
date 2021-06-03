@@ -47,7 +47,8 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 | Item | Tangled | Fat  | Size | XS   |
 | ---- | ------- | ---- | ---- | ---- |
 | ezshop.it.polto.ezshop     |     5.52%    |  4    |  7418    |   409   |
-|      |         |      |      |      |
+
+![complexity-pie-chart](screen.png)
 
 
 
@@ -58,6 +59,7 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 (double click on the tangle from the Views->Complexity page)>
 ```
 ![tangles](tangles.png)
+![tangles2](PCKLEVELTANGLES.png)
 # Summary analysis
 ```
 <Discuss here main differences of the current structure of your project vs the design delivered on April 30>
@@ -70,7 +72,7 @@ The main differences between the current design and the previous one are the fol
 - the class creditCard was added.
 - the class FileReaderAndWriter was added to provide persistency.
 
-The current design is characterized by an high degree of tangling (97%) and 67% of fat.
+The current design is characterized by an high degree of tangling (97%) and 62% of fat.
 
 Fat could be reduced by: 
 - introducing high level components to manage collections in the EZShop class like: users, inventory, sales,...
