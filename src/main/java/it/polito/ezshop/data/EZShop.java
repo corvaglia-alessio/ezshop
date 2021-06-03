@@ -414,7 +414,10 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if (productId <= 0 || productId == null)
+        if (productId == null)
+            throw new InvalidProductIdException("Invalid Product ID.");
+
+        if (productId <= 0)
             throw new InvalidProductIdException("Invalid Product ID.");
 
         ProductType productToUpdate = inventory.get(productId);
@@ -439,7 +442,7 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if (productId <= 0 || productId == null)
+        if ( productId == null || productId <= 0)
             throw new InvalidProductIdException("Invalid Product ID.");
 
         if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]+") && !newPos.isBlank())
@@ -551,7 +554,10 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if (orderId <= 0 || orderId == null)
+        if (orderId == null)
+            throw new InvalidOrderIdException("Id must be a positive integer.");
+
+        if (orderId <= 0)
             throw new InvalidOrderIdException("Id must be a positive integer.");
 
         Order order = orders.get(orderId);
@@ -578,7 +584,7 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if (orderId <= 0 || orderId == null)
+        if (orderId == null || orderId <= 0 )
             throw new InvalidOrderIdException("Id must be a positive integer.");
 
         OrderClass order = orders.get(orderId);
