@@ -682,8 +682,8 @@ public class EZShop implements EZShopInterface {
                 throw new InvalidCustomerCardException("Invalid customer Card");
             }
             
-            if(!Cardhandler.checkLuhn(newCustomerCard))
-            	throw new InvalidCustomerCardException("Invalid customer Card");
+            /*if(!Cardhandler.checkLuhn(newCustomerCard))
+            	throw new InvalidCustomerCardException("Invalid customer Card");*/
         }
         
         if (!customers.containsKey(id)) {
