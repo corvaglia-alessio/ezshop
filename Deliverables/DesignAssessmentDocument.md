@@ -76,9 +76,9 @@ The current design is characterized by an high degree of tangling (97%) and 62% 
 
 Fat could be reduced by: 
 - introducing high level components to manage collections in the EZShop class like: users, inventory, sales,...
-- moving checks within classes implementing Units like: UserClass, OrderClass, BalanceOperationClass,...
+- moving checks from EZShop to classes implementing Units like: UserClass, OrderClass, BalanceOperationClass,...
 
 Tangling could be reduced by:
-- having the EZShop implementation and all the other classes implementing the interfaces in the same package
+- having the EZShop implementation and all the other classes, implementing the interfaces, in the same package.
 
 
