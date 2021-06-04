@@ -157,9 +157,9 @@ public class FunReq5Test {
 		assertTrue(e.getCustomer(1).getCustomerName().equals("cus8"));
 		
 		/*try index out of range*/
-		assertFalse(e.modifyCustomer(0, "qweqwe", customerCard));
+		assertThrows(InvalidCustomerIdException.class, ()-> {e.modifyCustomer(0, "qweqwe", customerCard);}); //it was an assert false
 		assertFalse(e.modifyCustomer(10, "qweqwe", customerCard));
-		assertFalse(e.modifyCustomer(-1, "qweqwe", customerCard));
+		assertThrows(InvalidCustomerIdException.class, ()-> {e.modifyCustomer(-1, "qweqwe", customerCard);}); //it was an assert false
 		e.logout();
 		
 		e.login("validUser", "pass");
