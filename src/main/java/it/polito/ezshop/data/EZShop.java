@@ -70,7 +70,7 @@ public class EZShop implements EZShopInterface {
         // creditCards init
         this.creditCards = FileReaderAndWriter.CreditCardsReader();
 
-        //RIFDs init
+        //RFIDs init
         this.products = FileReaderAndWriter.RFIDReader();
     }
 
@@ -104,6 +104,9 @@ public class EZShop implements EZShopInterface {
 
         this.returns.clear();
         FileReaderAndWriter.ReturnsWriter(returns);
+
+        this.products.clear();
+        FileReaderAndWriter.RFIDWriter(products);
 
     }
 
@@ -624,6 +627,7 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, 
 InvalidLocationException, InvalidRFIDException {
+    //TODO
         return false;
     }
     @Override
@@ -921,12 +925,14 @@ InvalidLocationException, InvalidRFIDException {
 
     @Override
     public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
+        //TODO
         return false;
     }
     
 
     @Override
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
+        //TODO
         return false;
     }
 
@@ -1272,6 +1278,7 @@ InvalidLocationException, InvalidRFIDException {
     @Override
     public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException 
     {
+       //TODO
         return false;
     }
 
