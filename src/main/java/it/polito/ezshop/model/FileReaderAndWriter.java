@@ -515,10 +515,10 @@ public class FileReaderAndWriter {
         return true;
     }
 
-    static public Boolean RFIDWriter(Map<String, Integer> products) {
+    static public Boolean RFIDWriter(Map<String, Product> products) {
         String x = "";
-        for (String rfid : products.keySet()) {
-            x = x + rfid + ";" + products.get(rfid) + "\n";
+        for (Product p : products.values()) {
+            x = x + p.getRFID() + ";" + p.getProductId() + ";" + (p.getSold()==true ? "1" : "0") + "\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/products.txt");
         PrintWriter out = null;
@@ -536,8 +536,8 @@ public class FileReaderAndWriter {
         return true;
     }
 
-    static public Map<String, Integer> RFIDReader() {
-        Map<String, Integer> products = new HashMap<String, Integer>();
+    static public Map<String, Product> RFIDReader() {
+        Map<String, Product> products = new HashMap<String, Product>();
 
         File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/products.txt");
         Scanner s = null;
@@ -546,7 +546,8 @@ public class FileReaderAndWriter {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
                 String[] res = line.split(";");
-                products.put(res[0], Integer.parseInt(res[1]));
+                Product p = new Product(res[0], Integer.parseInt(res[1]), res[2].equals("1") ? true : false );
+                products.put(res[0], p);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
