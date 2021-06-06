@@ -517,7 +517,7 @@ public class FileReaderAndWriter {
 
     static public Boolean RFIDWriter(Map<String, Integer> products) {
         String x = "";
-        for (String rfid : products.keys()) {
+        for (String rfid : products.keySet()) {
             x = x + rfid + ";" + products.get(rfid) + "\n";
         }
         File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/products.txt");
