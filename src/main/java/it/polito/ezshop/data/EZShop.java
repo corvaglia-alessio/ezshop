@@ -24,6 +24,8 @@ public class EZShop implements EZShopInterface {
     private User loggedInUser;
     private double currentBalance;
 
+    public Map<String, Integer> products; //key: the RFID, value: the product type ID
+
     public EZShop() {
 
         // user init
@@ -67,6 +69,9 @@ public class EZShop implements EZShopInterface {
 
         // creditCards init
         this.creditCards = FileReaderAndWriter.CreditCardsReader();
+
+        //RIFDs init
+        this.products = FileReaderAndWriter.RFIDReader();
     }
 
     @Override
