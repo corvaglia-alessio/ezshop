@@ -982,11 +982,52 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
-            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
-        // TODO
-        return false;
+
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
+        //TODO
+    	if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+        if (transactionId == null || transactionId <= 0)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(RFID == null || RFID.isEmpty() || RFID.length()!= 10)
+        	throw new InvalidRFIDException("Wrong RFID");
+        
+
+        if (!sales.containsKey(transactionId) || sales.get(transactionId).getState().compareTo("Open") != 0)
+            return false;
+        
+        if(!RFIDs.containsKey(RFID))
+        	return false;
+        
+        Integer pId = RFIDs.get(RFID).getProductId();
+        
+        if(!this.inventory.containsKey(pId)) {
+        	return false;
+        }
+        
+        String barCode = this.inventory.get(pId).getBarCode();
+        
+        Optional<TicketEntry> opt = this.sales.get(transactionId).getEntries().stream().
+        		filter((t) -> t.getBarCode().equals(barCode)).findFirst();
+        
+        if(opt.isEmpty())
+        	return false;
+        
+        TicketEntry tE = opt.get();
+        
+        if(tE.getAmount()== 0)
+        	return false;
+        
+        tE.setAmount(tE.getAmount()-1);
+        this.sales.get(transactionId).setPrice( this.sales.get(transactionId).getPrice()-tE.getPricePerUnit());
+        return true;
+        
     }
+    
 
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
