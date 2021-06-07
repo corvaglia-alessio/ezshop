@@ -933,7 +933,28 @@ InvalidLocationException, InvalidRFIDException {
     @Override
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
         //TODO
-        return false;
+    	if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+        if (transactionId == null || transactionId <= 0)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(RFID == null || RFID.isEmpty())
+        	throw new InvalidRFIDException("Wrong RFID");
+        
+        if (sales.get(transactionId).getState().compareTo("Open") != 0)
+            return false;
+        
+        if(!RFIDs.containsKey(RFID))
+        	return false;
+        
+        Integer pId = RFIDs.get(RFID).getProductId();
+        
+        this.inventory.get(pId).setQuantity(this.inventory.get(pId).getQuantity()-1);
+        return true;
+        
     }
 
 
