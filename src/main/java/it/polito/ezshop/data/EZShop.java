@@ -3,7 +3,6 @@ package it.polito.ezshop.data;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
