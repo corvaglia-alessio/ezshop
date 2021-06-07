@@ -4,12 +4,10 @@ public class Product {
 
     private String RFID;
     private Integer ProductId;
-    private boolean sold;
 
-    public Product(String rfid, Integer productid, boolean sold ){
+    public Product(String rfid, Integer productid){
         this.RFID = rfid;
         this.ProductId = productid;
-        this.sold = sold;
     }
 
     public String getRFID(){
@@ -18,13 +16,5 @@ public class Product {
 
     public Integer getProductId(){
         return this.ProductId;
-    }
-
-    public boolean getSold(){
-        return this.sold;
-    }
-
-    public void setSold(boolean sold){
-        this.sold = sold;
     }
 }

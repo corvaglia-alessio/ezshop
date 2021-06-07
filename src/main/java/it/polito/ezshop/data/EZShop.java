@@ -951,9 +951,6 @@ public class EZShop implements EZShopInterface {
 
         if(p==null)
             return false;
-        
-        if(p.getSold())
-            return false;
 
         ProductType pt = inventory.get(p.getProductId());
 
@@ -980,10 +977,6 @@ public class EZShop implements EZShopInterface {
 
         sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (1 * pt.getPricePerUnit()));
         pt.setQuantity(pt.getQuantity() - 1);
-        p.setSold(true);
-
-        if(!FileReaderAndWriter.RFIDWriter(RFIDs)) //TODO: write RFIDs here otherwise they won't never be  updated (it requires modification to closeSaleTransaction())
-            return false;
 
         return true;
     }
