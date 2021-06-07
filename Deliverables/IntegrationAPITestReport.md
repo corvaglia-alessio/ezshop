@@ -5,7 +5,8 @@ Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 Date: 7 May 2021
 
 Version: 1.1
-    - Added test for Change2
+
+    * Added test for Change2
 
 # Contents
 
