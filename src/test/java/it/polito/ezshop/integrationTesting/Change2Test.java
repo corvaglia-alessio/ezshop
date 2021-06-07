@@ -59,7 +59,7 @@ public class Change2Test {
         e.recordOrderArrivalRFID(i, "0000000001");
 
 		e.startSaleTransaction();
-        
+
 		assertFalse(e.addProductToSaleRFID(2, "0000001212")); //non existing rfid
 
 		assertTrue(e.addProductToSaleRFID(2, "0000000001")); //okay
@@ -78,4 +78,21 @@ public class Change2Test {
 		assertEquals(1, e.getSaleTransaction(2).getEntries().size());
         assertEquals(2, e.getSaleTransaction(2).getEntries().get(0).getAmount());
 	}
+
+    @Test
+    public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
+        //TODO
+    }
+
+    @Test
+    public void testRecordOrderArrivalRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
+        //TODO
+    }
+
+    @Test
+    public void testReturnProductRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
+        //TODO
+
+    }
 }
+
