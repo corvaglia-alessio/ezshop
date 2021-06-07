@@ -3,6 +3,7 @@ package it.polito.ezshop.data;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -926,10 +927,66 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
-            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
-        // TODO
-        return false;
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
+        
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+        if (transactionId == null || transactionId <= 0)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if(RFID == null || RFID.isEmpty() || RFID.length() != 10)
+            throw new InvalidRFIDException("Invalid RFID");
+
+        SaleTransactionClass s = sales.get(transactionId);
+
+        if (s == null)
+            return false;
+
+        if (s.getState().compareTo("Open") != 0)
+            return false;
+
+        Product p = RFIDs.get(RFID);
+
+        if(p==null)
+            return false;
+        
+        if(p.getSold())
+            return false;
+
+        ProductType pt = inventory.get(p.getProductId());
+
+        if (pt==null || pt.getQuantity() <= 0)
+            return false;
+        
+        List<TicketEntry> x = sales.get(transactionId).getEntries();
+        TicketEntry t = null;
+
+        for (TicketEntry e : x)
+            if (e.getBarCode().equals(pt.getBarCode())) {
+                t = e;
+            }
+
+        if (t == null) { // product not present
+            t = new TicketEntryClass(transactionId, pt.getBarCode(),
+                    pt.getProductDescription(), 1,
+                    pt.getPricePerUnit(), 0D);
+            x.add(t);
+            sales.get(transactionId).setEntries(x);
+        } else { // product already present
+            t.setAmount(t.getAmount() + 1);
+        }
+
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (1 * pt.getPricePerUnit()));
+        pt.setQuantity(pt.getQuantity() - 1);
+        p.setSold(true);
+
+        if(!FileReaderAndWriter.RFIDWriter(RFIDs)) //TODO: write RFIDs here otherwise they won't never be  updated (it requires modification to closeSaleTransaction())
+            return false;
+
+        return true;
     }
 
     @Override
@@ -1290,7 +1347,7 @@ public class EZShop implements EZShopInterface {
             throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
         }
 
-        if (RFID == null || RFID.isEmpty() || RFID.length() == 10) {
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 10) {
             throw new InvalidRFIDException("THE RFID is invalid.");
         }
 
