@@ -1011,6 +1011,16 @@ public class EZShop implements EZShopInterface {
         
         String barCode = this.inventory.get(pId).getBarCode();
         
+        try {
+			deleteProductFromSale(transactionId,barCode,1);
+		} catch (InvalidProductCodeException e) {
+			return false;
+		} catch (InvalidQuantityException e) {
+			return false;
+		}
+        
+        return true;
+        /*
         TicketEntry tE = this.sales.get(transactionId).getEntries().stream().
         		filter((t) -> t.getBarCode().equals(barCode)).findFirst().get();
         
@@ -1020,10 +1030,14 @@ public class EZShop implements EZShopInterface {
         if(tE.getAmount()== 0)
         	return false;
         
-        tE.setAmount(tE.getAmount()-1);
+        if(tE.getAmount() == 1)
+        	this.sales.get(transactionId).getEntries().remove(tE);
+        else
+        	tE.setAmount(tE.getAmount()-1);
+        
         this.sales.get(transactionId).setPrice( this.sales.get(transactionId).getPrice()-tE.getPricePerUnit());
         return true;
-        
+        */
     }
     
 
