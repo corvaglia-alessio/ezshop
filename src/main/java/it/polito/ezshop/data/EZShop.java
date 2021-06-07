@@ -1011,13 +1011,11 @@ public class EZShop implements EZShopInterface {
         
         String barCode = this.inventory.get(pId).getBarCode();
         
-        Optional<TicketEntry> opt = this.sales.get(transactionId).getEntries().stream().
-        		filter((t) -> t.getBarCode().equals(barCode)).findFirst();
+        TicketEntry tE = this.sales.get(transactionId).getEntries().stream().
+        		filter((t) -> t.getBarCode().equals(barCode)).findFirst().get();
         
-        if(opt.isEmpty())
+        if(tE==null)
         	return false;
-        
-        TicketEntry tE = opt.get();
         
         if(tE.getAmount()== 0)
         	return false;
