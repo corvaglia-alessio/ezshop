@@ -64,8 +64,6 @@ public class Change2Test {
 
 		assertTrue(e.addProductToSaleRFID(2, "0000000001")); //okay
 
-        assertFalse(e.addProductToSaleRFID(2, "0000000001")); //already sold
-
 		assertEquals(1, (int) e.getProductTypeByBarCode("123456789012").getQuantity());
 
 		assertTrue(e.addProductToSaleRFID(2, "0000000002")); //okay
