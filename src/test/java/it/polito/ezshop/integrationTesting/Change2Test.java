@@ -81,7 +81,7 @@ public class Change2Test {
 
     @Test
     public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
-        //TODO
+        //TODO:  put where needed barcode associated to RFID and run test
     	EZShop e = new EZShop();
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
@@ -113,9 +113,7 @@ public class Change2Test {
         e.addProductToSaleRFID(2, "0000000001");
         assertFalse(e.deleteProductFromSaleRFID(2, "0000100000"));	//RFID does not exists
         assertFalse(e.deleteProductFromSaleRFID(2, "0000000002"));  //RFID exists but belongs to product type not in TicketEntry list
-        
-        //TODO: put where needed barcode associated to RFID
-        
+                
         double price_before = e.getSaleTransaction(2).getPrice();
         Integer previous_quantity = e.getProductTypeByBarCode("/*put barcode associated to RFID*/").getQuantity();
         
