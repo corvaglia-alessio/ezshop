@@ -82,6 +82,59 @@ public class Change2Test {
     @Test
     public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
         //TODO
+    	EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.deleteProductFromSaleRFID(1, "0000000001");});
+	
+		e.login("validAdministrator", "pass");
+
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(null, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(-1, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(0, "0000000001");});
+
+		assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, null);});
+        assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, "");});
+        assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, "001");});
+        
+        assertFalse(e.deleteProductFromSaleRFID(1, "0000000001")); //non existing transaction
+
+        e.startSaleTransaction();
+        e.endSaleTransaction(1);
+        
+        assertFalse(e.deleteProductFromSaleRFID(1, "0000000001"));   //transaction already closed
+        
+        e.startSaleTransaction();
+        
+        e.addProductToSaleRFID(2, "0000000001");
+        assertFalse(e.deleteProductFromSaleRFID(2, "0000100000"));	//RFID does not exists
+        assertFalse(e.deleteProductFromSaleRFID(2, "0000000002"));  //RFID exists but belongs to product type not in TicketEntry list
+        
+        //TODO: put where needed barcode associated to RFID
+        
+        double price_before = e.getSaleTransaction(2).getPrice();
+        Integer previous_quantity = e.getProductTypeByBarCode("/*put barcode associated to RFID*/").getQuantity();
+        
+        assertTrue(e.deleteProductFromSaleRFID(2,  "0000000001"));        
+        assertTrue(e.getSaleTransaction(2).getPrice() == price_before - e.getProductTypeByBarCode("/*put barcode associated to RFID*/").getPricePerUnit());
+        assertTrue(e.getProductTypeByBarCode("/*put barcode associated to RFID*/").getQuantity() == previous_quantity-1);
+        assertTrue(e.getSaleTransaction(2).getEntries().stream().
+        		filter((t)->t.getBarCode().equals("/*put barcode associated to RFID*/")).
+        		findAny().isEmpty());	//check that product with quantity == 0 was removed from list
+        e.logout();
+        
+        /*testing login works also with other types of user: ShopManager, Cashier*/
+        e.login("validManager", "pass");
+		e.deleteProductFromSaleRFID(2, "0000000005");
+		e.logout();
+		
+		e.login("validUser","pass");
+		e.deleteProductFromSaleRFID(2, "0000000005");
+		e.logout();
     }
 
     @Test
