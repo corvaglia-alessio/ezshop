@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.data.EZShop;
@@ -21,8 +22,15 @@ import it.polito.ezshop.exceptions.InvalidRoleException;
 import it.polito.ezshop.exceptions.InvalidTransactionIdException;
 import it.polito.ezshop.exceptions.InvalidUsernameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
+import it.polito.ezshop.model.Product;
 
 public class Change2Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
     
     @Test
 	public void testAddProductToSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
@@ -54,17 +62,15 @@ public class Change2Test {
 
 		e.createProductType("product", "123456789012", 12, "product");
 		e.updatePosition(1, "1-f-1");
-        e.recordBalanceUpdate(1000); //to pay the order
-        Integer i = e.payOrderFor("123456789012", 2, 10);
-        e.recordOrderArrivalRFID(i, "0000000001");
+        e.updateQuantity(1, 2);
+		e.RFIDs.put("0000000001", new Product("0000000001", 1));
+		e.RFIDs.put("0000000002", new Product("0000000002", 1));
 
 		e.startSaleTransaction();
 
 		assertFalse(e.addProductToSaleRFID(2, "0000001212")); //non existing rfid
 
 		assertTrue(e.addProductToSaleRFID(2, "0000000001")); //okay
-
-        assertFalse(e.addProductToSaleRFID(2, "0000000001")); //already sold
 
 		assertEquals(1, (int) e.getProductTypeByBarCode("123456789012").getQuantity());
 
@@ -142,8 +148,49 @@ public class Change2Test {
 
     @Test
     public void testReturnProductRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
-        //TODO
+        EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.returnProductRFID(1, "0000000001");});
+	
+		e.login("validAdministrator", "pass");
 
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(null, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(-1, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(0, "0000000001");});
+
+		assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, null);});
+        assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "");});
+        assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "001");});
+		assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "00000000001");});
+
+		int stID = e.startSaleTransaction();	
+		int id1 = e.createProductType("Tomato", "628176957012", 2.0, "nothing to see here");
+		int id2 = e.createProductType("Banana", "628176957029", 3.0, "nothing to see here too");
+
+		e.getProductTypeByBarCode("628176957012").setQuantity(10);
+		e.addProductToSale(stID, "628176957012", 2);
+
+		Product p1 = new Product("0000000001", id1);
+		Product p12 = new Product("0000000002", id1);
+		Product p2 = new Product("0000000003", id2);
+
+		e.RFIDs.put("0000000001", p1);
+		e.RFIDs.put("0000000002", p12);
+		e.RFIDs.put("0000000003", p2);
+
+		e.endSaleTransaction(stID);
+
+		int rtID = e.startReturnTransaction(stID);
+
+		assertTrue(e.returnProductRFID(rtID, "0000000001"));
+		assertFalse(e.returnProductRFID(rtID, "0000000003"));
+		assertFalse(e.returnProductRFID(1000, "0000000001"));
+		assertFalse(e.returnProductRFID(rtID, "0000000010"));
     }
 }
 

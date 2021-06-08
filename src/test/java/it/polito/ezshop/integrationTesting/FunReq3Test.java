@@ -1,5 +1,6 @@
 package it.polito.ezshop.integrationTesting;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,6 +15,12 @@ import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
 public class FunReq3Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 
 	@Test 
 	public void testCreateProductType() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException {

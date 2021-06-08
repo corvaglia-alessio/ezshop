@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 /*
 import org.junit.jupiter.api.BeforeAll;
@@ -15,6 +16,12 @@ import it.polito.ezshop.exceptions.*;
 
 
 public class FunReq5Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 	
 	
 	/*

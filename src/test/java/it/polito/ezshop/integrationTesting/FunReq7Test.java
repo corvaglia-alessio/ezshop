@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 /*
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,12 @@ import it.polito.ezshop.exceptions.*;
 
 
 public class FunReq7Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 	/*
 static EZShop e;
 	

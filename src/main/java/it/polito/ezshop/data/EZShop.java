@@ -926,8 +926,9 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
+            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
@@ -936,7 +937,7 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if(RFID == null || RFID.isEmpty() || RFID.length() != 10)
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 10)
             throw new InvalidRFIDException("Invalid RFID");
 
         SaleTransactionClass s = sales.get(transactionId);
@@ -949,14 +950,14 @@ public class EZShop implements EZShopInterface {
 
         Product p = RFIDs.get(RFID);
 
-        if(p==null)
+        if (p == null)
             return false;
 
         ProductType pt = inventory.get(p.getProductId());
 
-        if (pt==null || pt.getQuantity() <= 0)
+        if (pt == null || pt.getQuantity() <= 0)
             return false;
-        
+
         List<TicketEntry> x = sales.get(transactionId).getEntries();
         TicketEntry t = null;
 
@@ -966,8 +967,7 @@ public class EZShop implements EZShopInterface {
             }
 
         if (t == null) { // product not present
-            t = new TicketEntryClass(transactionId, pt.getBarCode(),
-                    pt.getProductDescription(), 1,
+            t = new TicketEntryClass(transactionId, pt.getBarCode(), pt.getProductDescription(), 1,
                     pt.getPricePerUnit(), 0D);
             x.add(t);
             sales.get(transactionId).setEntries(x);
@@ -983,9 +983,10 @@ public class EZShop implements EZShopInterface {
 
     @Override
 
-    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        //TODO
-    	if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
+            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+        // TODO
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
@@ -993,53 +994,48 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if(RFID == null || RFID.isEmpty() || RFID.length()!= 10)
-        	throw new InvalidRFIDException("Wrong RFID");
-        
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 10)
+            throw new InvalidRFIDException("Wrong RFID");
 
         if (!sales.containsKey(transactionId) || sales.get(transactionId).getState().compareTo("Open") != 0)
             return false;
-        
-        if(!RFIDs.containsKey(RFID))
-        	return false;
-        
+
+        if (!RFIDs.containsKey(RFID))
+            return false;
+
         Integer pId = RFIDs.get(RFID).getProductId();
-        
-        if(!this.inventory.containsKey(pId)) {
-        	return false;
+
+        if (!this.inventory.containsKey(pId)) {
+            return false;
         }
-        
+
         String barCode = this.inventory.get(pId).getBarCode();
-        
+
         try {
-			deleteProductFromSale(transactionId,barCode,1);
-		} catch (InvalidProductCodeException e) {
-			return false;
-		} catch (InvalidQuantityException e) {
-			return false;
-		}
-        
+            deleteProductFromSale(transactionId, barCode, 1);
+        } catch (InvalidProductCodeException e) {
+            return false;
+        } catch (InvalidQuantityException e) {
+            return false;
+        }
+
         return true;
         /*
-        TicketEntry tE = this.sales.get(transactionId).getEntries().stream().
-        		filter((t) -> t.getBarCode().equals(barCode)).findFirst().get();
-        
-        if(tE==null)
-        	return false;
-        
-        if(tE.getAmount()== 0)
-        	return false;
-        
-        if(tE.getAmount() == 1)
-        	this.sales.get(transactionId).getEntries().remove(tE);
-        else
-        	tE.setAmount(tE.getAmount()-1);
-        
-        this.sales.get(transactionId).setPrice( this.sales.get(transactionId).getPrice()-tE.getPricePerUnit());
-        return true;
-        */
+         * TicketEntry tE = this.sales.get(transactionId).getEntries().stream().
+         * filter((t) -> t.getBarCode().equals(barCode)).findFirst().get();
+         * 
+         * if(tE==null) return false;
+         * 
+         * if(tE.getAmount()== 0) return false;
+         * 
+         * if(tE.getAmount() == 1)
+         * this.sales.get(transactionId).getEntries().remove(tE); else
+         * tE.setAmount(tE.getAmount()-1);
+         * 
+         * this.sales.get(transactionId).setPrice(
+         * this.sales.get(transactionId).getPrice()-tE.getPricePerUnit()); return true;
+         */
     }
-    
 
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
@@ -1382,7 +1378,7 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean returnProductRFID(Integer returnId, String RFID)
             throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
-        
+
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
@@ -1401,11 +1397,11 @@ public class EZShop implements EZShopInterface {
         ReturnTransaction rt = this.returns.get(returnId);
         SaleTransaction st = null;
 
-        if(p != null) {
+        if (p != null) {
             rp = inventory.get(p.getProductId());
         }
 
-        if(rt != null) {
+        if (rt != null) {
             st = getSaleTransaction(rt.getSaleTransactionID());
         }
 
@@ -1419,12 +1415,14 @@ public class EZShop implements EZShopInterface {
             }).collect(Collectors.toList());
 
             if (listTE.size() > 0) {
-                TicketEntry te = listTE.get(0);
-                if (te.getAmount() >= 1) {
-                    int amountReturned = rt.getReturnedProduct().get(rp.getId());
-                    rt.getReturnedProduct().replace(rp.getId(), amountReturned + 1);
-                    return true;
+                if(rt.getReturnedProduct().containsKey(rp.getId())) {
+                    int amount = rt.getReturnedProduct().get(rp.getId());
+                    rt.getReturnedProduct().replace(rp.getId(), amount + 1);
                 }
+                else {
+                    rt.getReturnedProduct().put(rp.getId(), 1);
+                }
+                return true;
             }
         }
 
