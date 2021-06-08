@@ -55,9 +55,9 @@ public class Change2Test {
 
 		e.createProductType("product", "123456789012", 12, "product");
 		e.updatePosition(1, "1-f-1");
-        e.recordBalanceUpdate(1000); //to pay the order
-        Integer i = e.payOrderFor("123456789012", 2, 10);
-        e.recordOrderArrivalRFID(i, "0000000001");
+        e.updateQuantity(1, 2);
+		e.RFIDs.put("0000000001", new Product("0000000001", 1));
+		e.RFIDs.put("0000000002", new Product("0000000002", 1));
 
 		e.startSaleTransaction();
 

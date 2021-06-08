@@ -1,2 +1,0 @@
-1;8;null;Tomato;628176957012;2.0;nothing to see here
-2;0;null;Banana;628176957029;3.0;nothing to see here too

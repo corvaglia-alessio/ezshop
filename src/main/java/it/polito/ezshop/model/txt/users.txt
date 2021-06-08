@@ -1,3 +1,0 @@
-1;validUser;pass;Cashier
-2;validAdministrator;pass;Administrator
-3;validManager;pass;ShopManager
