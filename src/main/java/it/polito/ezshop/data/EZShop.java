@@ -1415,8 +1415,13 @@ public class EZShop implements EZShopInterface {
             }).collect(Collectors.toList());
 
             if (listTE.size() > 0) {
-                int amountReturned = rt.getReturnedProduct().get(rp.getId());
-                rt.getReturnedProduct().replace(rp.getId(), amountReturned + 1);
+                if(rt.getReturnedProduct().containsKey(rp.getId())) {
+                    int amount = rt.getReturnedProduct().get(rp.getId());
+                    rt.getReturnedProduct().replace(rp.getId(), amount + 1);
+                }
+                else {
+                    rt.getReturnedProduct().put(rp.getId(), 1);
+                }
                 return true;
             }
         }

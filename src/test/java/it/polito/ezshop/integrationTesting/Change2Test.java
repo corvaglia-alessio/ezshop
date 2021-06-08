@@ -21,6 +21,7 @@ import it.polito.ezshop.exceptions.InvalidRoleException;
 import it.polito.ezshop.exceptions.InvalidTransactionIdException;
 import it.polito.ezshop.exceptions.InvalidUsernameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
+import it.polito.ezshop.model.Product;
 
 public class Change2Test {
     
@@ -140,8 +141,49 @@ public class Change2Test {
 
     @Test
     public void testReturnProductRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
-        //TODO
+        EZShop e = new EZShop();
+		e.reset();
+		e.createUser("validUser", "pass", "Cashier");
+		e.createUser("validAdministrator", "pass", "Administrator");
+		e.createUser("validManager", "pass", "ShopManager");
+		
+		e.logout();
+		assertThrows(UnauthorizedException.class, () -> {e.returnProductRFID(1, "0000000001");});
+	
+		e.login("validAdministrator", "pass");
 
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(null, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(-1, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(0, "0000000001");});
+
+		assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, null);});
+        assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "");});
+        assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "001");});
+		assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "00000000001");});
+
+		int stID = e.startSaleTransaction();	
+		int id1 = e.createProductType("Tomato", "628176957012", 2.0, "nothing to see here");
+		int id2 = e.createProductType("Banana", "628176957029", 3.0, "nothing to see here too");
+
+		e.getProductTypeByBarCode("628176957012").setQuantity(10);
+		e.addProductToSale(stID, "628176957012", 2);
+
+		Product p1 = new Product("0000000001", id1);
+		Product p12 = new Product("0000000002", id1);
+		Product p2 = new Product("0000000003", id2);
+
+		e.RFIDs.put("0000000001", p1);
+		e.RFIDs.put("0000000002", p12);
+		e.RFIDs.put("0000000003", p2);
+
+		e.endSaleTransaction(stID);
+
+		int rtID = e.startReturnTransaction(stID);
+
+		assertTrue(e.returnProductRFID(rtID, "0000000001"));
+		assertFalse(e.returnProductRFID(rtID, "0000000003"));
+		assertFalse(e.returnProductRFID(1000, "0000000001"));
+		assertFalse(e.returnProductRFID(rtID, "0000000010"));
     }
 }
 
