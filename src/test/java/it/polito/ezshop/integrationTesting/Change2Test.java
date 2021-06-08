@@ -122,7 +122,7 @@ public class Change2Test {
         assertTrue(e.getProductTypeByBarCode("/*put barcode associated to RFID*/").getQuantity() == previous_quantity-1);
         assertTrue(e.getSaleTransaction(2).getEntries().stream().
         		filter((t)->t.getBarCode().equals("/*put barcode associated to RFID*/")).
-        		findAny().isEmpty());	//check that product with quantity == 0 was removed from list
+        		findAny().get()==null);	//check that product with quantity == 0 was removed from list
         e.logout();
         
         /*testing login works also with other types of user: ShopManager, Cashier*/
