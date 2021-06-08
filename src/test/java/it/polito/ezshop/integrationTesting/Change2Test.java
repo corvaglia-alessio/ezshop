@@ -87,8 +87,7 @@ public class Change2Test {
 
     @Test
     public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
-        //TODO:  put where needed barcode associated to RFID and run test
-    	//start setting up environment
+
     	EZShop e = new EZShop();
 		e.reset();
 		e.createUser("validUser", "pass", "Cashier");
