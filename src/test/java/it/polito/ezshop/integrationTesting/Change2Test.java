@@ -41,40 +41,40 @@ public class Change2Test {
 		e.reset();
 		e.createUser("adminuser", "pwd", "Administrator");
 		
-		assertThrows(UnauthorizedException.class, () -> {e.addProductToSaleRFID(1, "0000000001");});
+		assertThrows(UnauthorizedException.class, () -> {e.addProductToSaleRFID(1, "000000000001");});
 
 		e.login("adminuser", "pwd");
 
-		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(null, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(-1, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(0, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(null, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(-1, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.addProductToSaleRFID(0, "000000000001");});
 
 		assertThrows(InvalidRFIDException.class, () -> {e.addProductToSaleRFID(1, null);});
         assertThrows(InvalidRFIDException.class, () -> {e.addProductToSaleRFID(1, "");});
         assertThrows(InvalidRFIDException.class, () -> {e.addProductToSaleRFID(1, "001");});
 
-        assertFalse(e.addProductToSaleRFID(1, "0000000001")); //non existing transaction
+        assertFalse(e.addProductToSaleRFID(1, "000000000001")); //non existing transaction
 
 		e.startSaleTransaction();
 		e.endSaleTransaction(1);
 
-		assertFalse(e.addProductToSaleRFID(1, "0000000001")); //already closed
+		assertFalse(e.addProductToSaleRFID(1, "000000000001")); //already closed
 
 		e.createProductType("product", "123456789012", 12, "product");
 		e.updatePosition(1, "1-f-1");
         e.updateQuantity(1, 2);
-		e.RFIDs.put("0000000001", new Product("0000000001", 1));
-		e.RFIDs.put("0000000002", new Product("0000000002", 1));
+		e.RFIDs.put("000000000001", new Product("000000000001", 1));
+		e.RFIDs.put("000000000002", new Product("000000000002", 1));
 
 		e.startSaleTransaction();
 
-		assertFalse(e.addProductToSaleRFID(2, "0000001212")); //non existing rfid
+		assertFalse(e.addProductToSaleRFID(2, "000000001212")); //non existing rfid
 
-		assertTrue(e.addProductToSaleRFID(2, "0000000001")); //okay
+		assertTrue(e.addProductToSaleRFID(2, "000000000001")); //okay
 
 		assertEquals(1, (int) e.getProductTypeByBarCode("123456789012").getQuantity());
 
-		assertTrue(e.addProductToSaleRFID(2, "0000000002")); //okay
+		assertTrue(e.addProductToSaleRFID(2, "000000000002")); //okay
 
 		assertEquals(0, (int) e.getProductTypeByBarCode("123456789012").getQuantity());
 
@@ -100,50 +100,50 @@ public class Change2Test {
 		
 		e.getProductTypeByBarCode("628176957012").setQuantity(1);
 		
-		Product p1 = new Product("0000000001", id1);
-		Product p12 = new Product("0000000002", id1);
-		Product p2 = new Product("0000000003", id2);
+		Product p1 = new Product("000000000001", id1);
+		Product p12 = new Product("000000000002", id1);
+		Product p2 = new Product("000000000003", id2);
 
-		e.RFIDs.put("0000000001", p1);
-		e.RFIDs.put("0000000002", p12);
-		e.RFIDs.put("0000000003", p2);
+		e.RFIDs.put("000000000001", p1);
+		e.RFIDs.put("000000000002", p12);
+		e.RFIDs.put("000000000003", p2);
 		
 		e.logout();
 		//end setting up environment
-		assertThrows(UnauthorizedException.class, () -> {e.deleteProductFromSaleRFID(1, "0000000001");});
+		assertThrows(UnauthorizedException.class, () -> {e.deleteProductFromSaleRFID(1, "000000000001");});
 	
 		e.login("validAdministrator", "pass");
 
-		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(null, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(-1, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(0, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(null, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(-1, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.deleteProductFromSaleRFID(0, "000000000001");});
 
 		assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, null);});
         assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, "");});
         assertThrows(InvalidRFIDException.class, () -> {e.deleteProductFromSaleRFID(1, "001");});
         
-        assertFalse(e.deleteProductFromSaleRFID(1, "0000000001")); //non existing transaction
+        assertFalse(e.deleteProductFromSaleRFID(1, "000000000001")); //non existing transaction
 
         e.startSaleTransaction();
         e.endSaleTransaction(1);
         
-        assertFalse(e.deleteProductFromSaleRFID(1, "0000000001"));   //transaction already closed
+        assertFalse(e.deleteProductFromSaleRFID(1, "000000000001"));   //transaction already closed
         
         int Tid = e.startSaleTransaction();
         
-        e.addProductToSaleRFID(2, "0000000001");
+        e.addProductToSaleRFID(2, "000000000001");
         
         
-        assertFalse(e.deleteProductFromSaleRFID(2, "0000100000"));	//RFID does not exists
-        assertFalse(e.deleteProductFromSaleRFID(2, "0000000003"));  //RFID exists but belongs to product type not in TicketEntry list
+        assertFalse(e.deleteProductFromSaleRFID(2, "000000100000"));	//RFID does not exists
+        assertFalse(e.deleteProductFromSaleRFID(2, "000000000003"));  //RFID exists but belongs to product type not in TicketEntry list
                 
         double price_before = 2.0;
         
-        int pId = e.RFIDs.get("0000000001").getProductId();
+        int pId = e.RFIDs.get("000000000001").getProductId();
         String barCode = e.getAllProductTypes().stream().filter((p)->p.getId() == pId).findFirst().get().getBarCode();
         Integer previous_quantity = 0;
         
-        assertTrue(e.deleteProductFromSaleRFID(2,  "0000000001"));
+        assertTrue(e.deleteProductFromSaleRFID(2,  "000000000001"));
         
         e.endSaleTransaction(2);
         assertTrue(e.getSaleTransaction(2).getPrice() == price_before - e.getProductTypeByBarCode(barCode).getPricePerUnit().doubleValue());
@@ -155,11 +155,11 @@ public class Change2Test {
         
         /*testing login works also with other types of user: ShopManager, Cashier*/
         e.login("validManager", "pass");
-		e.deleteProductFromSaleRFID(2, "0000000005");
+		e.deleteProductFromSaleRFID(2, "000000000005");
 		e.logout();
 		
 		e.login("validUser","pass");
-		e.deleteProductFromSaleRFID(2, "0000000005");
+		e.deleteProductFromSaleRFID(2, "000000000005");
 		e.logout();
     }
 
@@ -177,13 +177,13 @@ public class Change2Test {
 		e.createUser("validManager", "pass", "ShopManager");
 		
 		e.logout();
-		assertThrows(UnauthorizedException.class, () -> {e.returnProductRFID(1, "0000000001");});
+		assertThrows(UnauthorizedException.class, () -> {e.returnProductRFID(1, "000000000001");});
 	
 		e.login("validAdministrator", "pass");
 
-		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(null, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(-1, "0000000001");});
-		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(0, "0000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(null, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(-1, "000000000001");});
+		assertThrows(InvalidTransactionIdException.class, () -> {e.returnProductRFID(0, "000000000001");});
 
 		assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, null);});
         assertThrows(InvalidRFIDException.class, () -> {e.returnProductRFID(1, "");});
@@ -197,22 +197,22 @@ public class Change2Test {
 		e.getProductTypeByBarCode("628176957012").setQuantity(10);
 		e.addProductToSale(stID, "628176957012", 2);
 
-		Product p1 = new Product("0000000001", id1);
-		Product p12 = new Product("0000000002", id1);
-		Product p2 = new Product("0000000003", id2);
+		Product p1 = new Product("000000000001", id1);
+		Product p12 = new Product("000000000002", id1);
+		Product p2 = new Product("000000000003", id2);
 
-		e.RFIDs.put("0000000001", p1);
-		e.RFIDs.put("0000000002", p12);
-		e.RFIDs.put("0000000003", p2);
+		e.RFIDs.put("000000000001", p1);
+		e.RFIDs.put("000000000002", p12);
+		e.RFIDs.put("000000000003", p2);
 
 		e.endSaleTransaction(stID);
 
 		int rtID = e.startReturnTransaction(stID);
 
-		assertTrue(e.returnProductRFID(rtID, "0000000001"));
-		assertFalse(e.returnProductRFID(rtID, "0000000003"));
-		assertFalse(e.returnProductRFID(1000, "0000000001"));
-		assertFalse(e.returnProductRFID(rtID, "0000000010"));
+		assertTrue(e.returnProductRFID(rtID, "000000000001"));
+		assertFalse(e.returnProductRFID(rtID, "000000000003"));
+		assertFalse(e.returnProductRFID(1000, "000000000001"));
+		assertFalse(e.returnProductRFID(rtID, "000000000010"));
     }
 }
 

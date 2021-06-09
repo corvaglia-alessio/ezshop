@@ -628,6 +628,7 @@ public class EZShop implements EZShopInterface {
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom)
             throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException {
         // TODO
+        // For Federico, RFIDs are 12 char long        
         return false;
     }
 
@@ -937,7 +938,7 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if (RFID == null || RFID.isEmpty() || RFID.length() != 10)
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12)
             throw new InvalidRFIDException("Invalid RFID");
 
         SaleTransactionClass s = sales.get(transactionId);
@@ -994,7 +995,7 @@ public class EZShop implements EZShopInterface {
         if (transactionId == null || transactionId <= 0)
             throw new InvalidTransactionIdException("Wrong transaction id");
 
-        if (RFID == null || RFID.isEmpty() || RFID.length() != 10)
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12)
             throw new InvalidRFIDException("Wrong RFID");
 
         if (!sales.containsKey(transactionId) || sales.get(transactionId).getState().compareTo("Open") != 0)
@@ -1387,7 +1388,7 @@ public class EZShop implements EZShopInterface {
             throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
         }
 
-        if (RFID == null || RFID.isEmpty() || RFID.length() != 10) {
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12) {
             throw new InvalidRFIDException("THE RFID is invalid.");
         }
 
