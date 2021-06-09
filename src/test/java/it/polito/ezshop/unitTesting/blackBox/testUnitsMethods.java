@@ -14,7 +14,7 @@ import it.polito.ezshop.data.TicketEntry;
 import it.polito.ezshop.model.*;
 
 
-public class testUnitsMethods {
+public class TestUnitsMethods {
 
     @Test
     public void testBalanceOperationClass(){
