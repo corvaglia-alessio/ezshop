@@ -35,8 +35,6 @@ public class Change2Test {
     @Test
 	public void testAddProductToSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
 
-        //TODO: to test, since the recordOrderArrivalRFID() is needed
-
 		EZShop e = new EZShop();
 		e.reset();
 		e.createUser("adminuser", "pwd", "Administrator");
@@ -129,7 +127,7 @@ public class Change2Test {
         
         assertFalse(e.deleteProductFromSaleRFID(1, "000000000001"));   //transaction already closed
         
-        int Tid = e.startSaleTransaction();
+        e.startSaleTransaction();
         
         e.addProductToSaleRFID(2, "000000000001");
         
