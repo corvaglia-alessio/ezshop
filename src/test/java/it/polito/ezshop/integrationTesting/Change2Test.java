@@ -165,7 +165,46 @@ public class Change2Test {
 
     @Test
     public void testRecordOrderArrivalRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidRFIDException, InvalidOrderIdException {
-        //TODO
+        EZShop e = new EZShop();
+		e.reset();
+
+		e.createUser("adminuser", "password", "Administrator");
+		e.createUser("cashieruser", "pwd", "Cashier");
+
+		String basic_RFID = "000000000001";
+
+		assertThrows(UnauthorizedException.class, () -> {e.recordOrderArrivalRFID(1, basic_RFID);});
+
+		e.login("cashieruser", "pwd");
+
+		assertThrows(UnauthorizedException.class, () -> {e.recordOrderArrivalRFID(1, basic_RFID);});
+
+		e.logout();
+		e.login("adminuser", "password");
+
+		e.createProductType("apple", "628176957012", 2.0, "green apples");
+		e.createProductType("banana", "628176957074", 2.0, "yellow bananas");
+		e.updatePosition(1, "1-a-0");
+		int issued_order = e.issueOrder("628176957012", 100, 2.0);
+		
+		e.recordBalanceUpdate(500.0);
+		int payed_order_id = e.payOrderFor("628176957012", 100, 2.0);
+		int order_no_location_id = e.payOrderFor("628176957074", 1, 2.0);
+
+		assertThrows(InvalidOrderIdException.class, () -> {e.recordOrderArrivalRFID(-1, basic_RFID);});
+		assertThrows(InvalidOrderIdException.class, () -> {e.recordOrderArrivalRFID(null, basic_RFID);});
+		assertThrows(InvalidLocationException.class, () -> {e.recordOrderArrivalRFID(order_no_location_id, basic_RFID);});
+		assertThrows(InvalidRFIDException.class, () -> {e.recordOrderArrivalRFID(payed_order_id, null);});
+		assertThrows(InvalidRFIDException.class, () -> {e.recordOrderArrivalRFID(payed_order_id, "");});
+		assertThrows(InvalidRFIDException.class, () -> {e.recordOrderArrivalRFID(payed_order_id, "00001");});
+
+		assertFalse(e.recordOrderArrivalRFID(404, basic_RFID));
+		assertFalse(e.recordOrderArrivalRFID(issued_order, basic_RFID));
+		assertTrue(e.recordOrderArrivalRFID(payed_order_id, basic_RFID));
+		assertFalse(e.recordOrderArrivalRFID(payed_order_id, basic_RFID));
+
+		assertTrue(e.RFIDs.size() == 100);
+		assertTrue(e.RFIDs.get("000000000050").getRFID().equals("000000000050"));
     }
 
     @Test
