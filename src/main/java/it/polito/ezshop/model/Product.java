@@ -18,11 +18,11 @@ public class Product {
         return this.ProductId;
     }
 
-    private Integer getIntegerRFID(){
-        return Integer.parseInt(this.RFID);
+    private Long getLongRFID(){
+        return Long.parseLong(this.RFID);
     }
 
-    private String padToRFID(Integer rfid){
+    private String padToRFID(Long rfid){
         String result = rfid.toString();
 
         if (result.length() > 12){
@@ -39,7 +39,7 @@ public class Product {
     }
 
     public String getRFIDFromOffest(int offset){
-        Integer rfid = this.getIntegerRFID();
+        Long rfid = this.getLongRFID();
         rfid += offset;
         return this.padToRFID(rfid);
     }
