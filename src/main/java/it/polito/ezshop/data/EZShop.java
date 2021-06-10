@@ -627,9 +627,52 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom)
             throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException {
-        // TODO
-        // For Federico, RFIDs are 12 char long        
-        return false;
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+    
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+    
+        if (RFIDfrom == null || RFIDfrom.isEmpty() || RFIDfrom.length() != 12) {
+            throw new InvalidRFIDException("THE RFID is invalid.");
+        }
+        
+        if (orderId == null || orderId <= 0)
+            throw new InvalidOrderIdException("Id must be a positive integer.");
+            
+    
+        OrderClass order = orders.get(orderId);
+    
+        ProductType product;
+        try {
+            if (order == null)
+                return false;
+            product = this.getProductTypeByBarCode(order.getProductCode());
+            if (product.getLocation() == null || product.getLocation().isEmpty())
+                throw new InvalidLocationException("The product must have a location.");
+    
+            if (order == null || !order.getStatus().equals("PAYED"))
+                return false;
+    
+            this.orders.get(orderId).setStatus("COMPLETED");
+    
+            this.updateQuantity(product.getId(), order.getQuantity());
+    
+            FileReaderAndWriter.OrdersWriter(this.orders);
+
+            Product prod = new Product(RFIDfrom, product.getId());
+            for (int i = 0; i < order.getQuantity(); i++){
+                this.RFIDs.put(prod.getRFIDFromOffest(i), new Product(prod.getRFIDFromOffest(i), product.getId()));
+            }
+            
+            return true;
+    
+        } catch (InvalidProductCodeException e) {
+            return false;
+        } catch (InvalidProductIdException e) {
+            return false;
+        }
+    
     }
 
     @Override
@@ -983,7 +1026,6 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
             InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
         // TODO
