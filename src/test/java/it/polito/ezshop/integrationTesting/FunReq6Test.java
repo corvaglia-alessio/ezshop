@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.data.EZShop;
@@ -26,6 +27,12 @@ import it.polito.ezshop.exceptions.InvalidUsernameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
 import it.polito.ezshop.model.FileReaderAndWriter;
 public class FunReq6Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 
 	@Test 
 	public void testStartSaleTransaction() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException, InvalidTransactionIdException {

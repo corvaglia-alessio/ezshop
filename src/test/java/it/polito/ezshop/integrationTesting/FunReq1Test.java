@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.data.EZShop;
@@ -20,6 +21,12 @@ import it.polito.ezshop.exceptions.InvalidUsernameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
 
 public class FunReq1Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 
 	@Test 
 	public void testCreateUser() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {

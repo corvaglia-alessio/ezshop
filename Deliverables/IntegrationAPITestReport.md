@@ -2,9 +2,11 @@
 
 Authors: Martin CAM / Alessio CORVAGLIA / Alessandro IANDOLI / Federico MUSTICH
 
-Date: 14 May 2021
+Date: 7 June 2021
 
-Version: 1.0
+Version: 1.1
+
+* Added test for Change2
 
 # Contents
 
@@ -23,7 +25,7 @@ Version: 1.0
 
 # Dependency graph 
 
-![Dependency Graph](http://www.plantuml.com/plantuml/png/TOz1QiCm44NtEeKka3ia3Od9fWcnGw71b47wfCBII8n62z--cvOMgYm_xp6ysLObqPQYgKlWGaB9kfnAPh2EkaPOWLFYHuGnzyFx-9dBnt0xpNQpiJzxTpdDvdTymnUAn0xd0Y4DcMVxtzaBVD0zYU_ILZKdI8-TnVV1HR9lJgUre1DrXJRXIOWhkMTL8qNyLSnz2cw17bXbxIkTAxVQ3np045AyjWG9RbG9_EYAnw7pmJ54N44UicF_9a4Xizc2VKln2m00)
+![Dependency Graph](http://www.plantuml.com/plantuml/png/TSz1Qa8n4CRnVKwH2tW7hQYugU9xKgY4CYGVDfXCmcIoUBSl50f2utBu_GbVrar9jETasYDo9Q5iVScrC5WdNHAim2lnFS6Os-vp-Yxrwt0zEhjQsRzxSpuwytpyuXibOezJXP36mix-RxQ247LB4eRQcvOC6Tb9mXZEKaBtEYyLxgKEv0BjmhCGD_AlzawKy9oOsnpz0xfZbMMGZ5-vjl7q0nX2YlUU8T5FAf7lmt1_6FnW7nCke03PSFYGg11drk3GS_e1)
      
 # Integration approach
     
@@ -52,7 +54,7 @@ Version: 1.0
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|EZShop.java (in data package)| All test cases included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java. All these classes are included in the IntegrationTesting package|
+|EZShop.java (in data package)| All test cases included in the following classes: FunReq1Test.java, FunReq3Test.java, FunReq4Test.java, FunReq5Test.java, FunReq6Test.java, FunReq7Test.java, FunReq8Test.java, Change2Test.java All these classes are included in the IntegrationTesting package|
 
 
 # Scenarios
@@ -100,14 +102,14 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 2-4    |      FR1       | FunReq1Test.testGetAllUsers(), FunReq1Test.testGetUser() | 
 |  3-1         | FR4  | FunReq4Test.testIssueOrder() |
 |  3-2         | FR4  | FunReq4Test.testPayOrder() |
-|  3-3         | FR4  | FunReq4Test.testRecordOrderArrival() |
+|  3-3         | FR4  | FunReq4Test.testRecordOrderArrival() Change2Test.testRecordOrderArrivalRFID() |
 | 4-1         |                   FR5              |        FunReq5Test.defineCustomerTest()     |   
 | 4-2         |                   FR5              |        FunReq5Test.attachCardToCustomerTest(), FunReq5Test.createCardTest()   |   
 | 4-3         |                   FR5              |        FunReq5Test.modifyCustomerTest()     |   
 | 4-4         |                   FR5              |        FunReq5Test.modifyCustomerTest()     |         
 | 5-1         |                   FR1              |        FunReq1Test.testLogin()     |      
 | 5-2         |                   FR1              |        FunReq1Test.testLogout()     |     
-| 6-1         |                   FR6              |        FunReq6Test.testStartSaleTransaction(),  FunReq6Test.testAddProductToSale(), FunReq6Test.testDeleteProductFromSale(), FunReq6Test.testEndSaleTransaction(), FunReq6Test.testGetSaleTransaction()     |  
+| 6-1         |                   FR6              |        FunReq6Test.testStartSaleTransaction(),  FunReq6Test.testAddProductToSale(), FunReq6Test.testDeleteProductFromSale(), FunReq6Test.testEndSaleTransaction(), FunReq6Test.testGetSaleTransaction(), Change2Test.testAddProductToSaleRFID(), Change2Test.testDeleteProductFromSaleRFID()     |  
 | 6-2         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToProduct()     |  
 | 6-3         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testApplyDiscountRateToSale()     |  
 | 6-4         |                   FR6              |        Same as scenario 6.1 + FunReq6Test.testComputePointsForSale()    |  
@@ -117,8 +119,8 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 7-2         |                   FR7              |   FunReq7Test.receiveCreditCardPaymentTest()        |  
 | 7-3         |                   FR7              |   FunReq7Test.receiveCreditCardPaymentTest()        |  
 | 7-4         |                   FR7              |   FunReq7Test.receiveCashPaymentTest()       |  
-| 8-1 | FR7 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCreditCardPaymentTest() |
-| 8-2 | FR7 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCashPaymentTest() |
+| 8-1 | FR6 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCreditCardPaymentTest() Change2Test.testReturnProductRFID() |
+| 8-2 | FR6 | FunReq7Test.startReturnTransactionTest(), FunReq7Test.returnProductTest(), FunReq7Test.endReturnTransactionTest(), FunReq7Test.returnCashPaymentTest() Change2Test.testReturnProductRFID() |
 |  9-1           |       FR8   |  FunReq8Test.testGetCreditsAndDebits()   FunReq8Test.testComputeBalance()   |
 |  9-2           |       FR8          |             FunReq8Test.testRecordBalanceUpdate()     |
 |  10-1          |       FR7           |            FunReq7Test.returnCreditCardPaymentTest()                 |

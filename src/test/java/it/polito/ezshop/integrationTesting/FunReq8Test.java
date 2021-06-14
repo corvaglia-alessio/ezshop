@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.data.EZShop;
@@ -16,6 +17,12 @@ import it.polito.ezshop.exceptions.InvalidUsernameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
 
 public class FunReq8Test {
+
+	@AfterClass
+    public static void clearEzShop(){
+        EZShop e = new EZShop();
+        e.reset();
+    }
 
 	@Test 
 	public void testComputeBalance() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException, UnauthorizedException {

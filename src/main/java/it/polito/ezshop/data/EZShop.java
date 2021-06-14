@@ -24,6 +24,8 @@ public class EZShop implements EZShopInterface {
     private User loggedInUser;
     private double currentBalance;
 
+    public Map<String, Product> RFIDs; // key: the RFID, value: product object
+
     public EZShop() {
 
         // user init
@@ -67,6 +69,9 @@ public class EZShop implements EZShopInterface {
 
         // creditCards init
         this.creditCards = FileReaderAndWriter.CreditCardsReader();
+
+        // RFIDs init
+        this.RFIDs = FileReaderAndWriter.RFIDReader();
     }
 
     @Override
@@ -99,6 +104,9 @@ public class EZShop implements EZShopInterface {
 
         this.returns.clear();
         FileReaderAndWriter.ReturnsWriter(returns);
+
+        this.RFIDs.clear();
+        FileReaderAndWriter.RFIDWriter(RFIDs);
 
     }
 
@@ -442,7 +450,7 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if ( productId == null || productId <= 0)
+        if (productId == null || productId <= 0)
             throw new InvalidProductIdException("Invalid Product ID.");
 
         if (!newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]+") && !newPos.isEmpty())
@@ -584,7 +592,7 @@ public class EZShop implements EZShopInterface {
         if (this.loggedInUser.getRole().equals("Cashier"))
             throw new UnauthorizedException("Function not available for the current user.");
 
-        if (orderId == null || orderId <= 0 )
+        if (orderId == null || orderId <= 0)
             throw new InvalidOrderIdException("Id must be a positive integer.");
 
         OrderClass order = orders.get(orderId);
@@ -617,10 +625,69 @@ public class EZShop implements EZShopInterface {
     }
 
     @Override
-    public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, 
-InvalidLocationException, InvalidRFIDException {
-        return false;
+    public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom)
+            throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException {
+        if (this.loggedInUser == null)
+            throw new UnauthorizedException("No one is logged in.");
+    
+        if (this.loggedInUser.getRole().equals("Cashier"))
+            throw new UnauthorizedException("Function not available for the current user.");
+
+        if (orderId == null || orderId <= 0)
+            throw new InvalidOrderIdException("Id must be a positive integer.");
+    
+        if (RFIDfrom == null || RFIDfrom.isEmpty() || RFIDfrom.length() != 12) {
+            throw new InvalidRFIDException("THE RFID is invalid.");
+        }
+                
+        OrderClass order = orders.get(orderId);
+    
+        ProductType product;
+        try {
+            if (order == null)
+                return false;
+
+            product = this.getProductTypeByBarCode(order.getProductCode());
+
+            if(product == null)
+                return false;
+
+            if (product.getLocation() == null || product.getLocation().isEmpty())
+                throw new InvalidLocationException("The product must have a location.");
+    
+            if (order == null || !order.getStatus().equals("PAYED"))
+                return false;
+            
+            Product p = new Product(RFIDfrom, product.getId());
+            for(int i=0; i< order.getQuantity(); i++){
+                if(RFIDs.containsKey(p.getRFIDFromOffest(i)))
+                    throw new InvalidRFIDException("At least one of the RFIDs is not unique");
+            }
+    
+            this.orders.get(orderId).setStatus("COMPLETED");
+    
+            this.updateQuantity(product.getId(), order.getQuantity());
+    
+            FileReaderAndWriter.OrdersWriter(this.orders);
+
+            Product prod = new Product(RFIDfrom, product.getId());
+            for (int i = 0; i < order.getQuantity(); i++){
+                this.RFIDs.put(prod.getRFIDFromOffest(i), new Product(prod.getRFIDFromOffest(i), product.getId()));
+            }
+
+            if(!FileReaderAndWriter.RFIDWriter(this.RFIDs))
+                return false;
+            
+            return true;
+    
+        } catch (InvalidProductCodeException e) {
+            return false;
+        } catch (InvalidProductIdException e) {
+            return false;
+        }
+    
     }
+
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
         if (this.loggedInUser == null)
@@ -663,21 +730,22 @@ InvalidLocationException, InvalidRFIDException {
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard)
-            throws InvalidCustomerNameException, InvalidCustomerCardException, UnauthorizedException, InvalidCustomerIdException {
+            throws InvalidCustomerNameException, InvalidCustomerCardException, UnauthorizedException,
+            InvalidCustomerIdException {
 
         if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
                 && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
             throw new UnauthorizedException("Function not available for the current user");
         }
-        
-        if(id == null || id <= 0)
-        	throw new InvalidCustomerIdException("Invalid customer Id");
+
+        if (id == null || id <= 0)
+            throw new InvalidCustomerIdException("Invalid customer Id");
         if (newCustomerName == null || newCustomerName.equals("")) {
             throw new InvalidCustomerNameException("Invalid customer Name");
         }
 
-        if(newCustomerCard != null && !newCustomerCard.isEmpty()) {
-        	if (newCustomerCard.length() != 10) {
+        if (newCustomerCard != null && !newCustomerCard.isEmpty()) {
+            if (newCustomerCard.length() != 10) {
                 throw new InvalidCustomerCardException("Invalid customer Card");
             }
 
@@ -687,11 +755,11 @@ InvalidLocationException, InvalidRFIDException {
                 throw new InvalidCustomerCardException("Invalid customer Card");
             }
         }
-        
+
         if (!customers.containsKey(id)) {
             return false;
         }
-        
+
         if (newCustomerCard == null) {
             customers.get(id).setCustomerName(newCustomerName);
             FileReaderAndWriter.CustomersWriter(customers);
@@ -874,10 +942,10 @@ InvalidLocationException, InvalidRFIDException {
 
         if (productCode == null || productCode.equals("") || ProductTypeClass.VerifyBarCode(productCode) == false)
             throw new InvalidProductCodeException("Not a valid product");
-        
+
         SaleTransactionClass s = sales.get(transactionId);
 
-        if(s==null)
+        if (s == null)
             return false;
 
         if (s.getState().compareTo("Open") != 0)
@@ -915,16 +983,113 @@ InvalidLocationException, InvalidRFIDException {
     }
 
     @Override
-    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
+            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+        if (transactionId == null || transactionId <= 0)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12)
+            throw new InvalidRFIDException("Invalid RFID");
+
+        SaleTransactionClass s = sales.get(transactionId);
+
+        if (s == null)
+            return false;
+
+        if (s.getState().compareTo("Open") != 0)
+            return false;
+
+        Product p = RFIDs.get(RFID);
+
+        if (p == null)
+            return false;
+
+        ProductType pt = inventory.get(p.getProductId());
+
+        if (pt == null || pt.getQuantity() <= 0)
+            return false;
+
+        List<TicketEntry> x = sales.get(transactionId).getEntries();
+        TicketEntry t = null;
+
+        for (TicketEntry e : x)
+            if (e.getBarCode().equals(pt.getBarCode())) {
+                t = e;
+            }
+
+        if (t == null) { // product not present
+            t = new TicketEntryClass(transactionId, pt.getBarCode(), pt.getProductDescription(), 1,
+                    pt.getPricePerUnit(), 0D);
+            x.add(t);
+            sales.get(transactionId).setEntries(x);
+        } else { // product already present
+            t.setAmount(t.getAmount() + 1);
+        }
+
+        sales.get(transactionId).setPrice(sales.get(transactionId).getPrice() + (1 * pt.getPricePerUnit()));
+        pt.setQuantity(pt.getQuantity() - 1);
+
+        return true;
     }
-    
 
     @Override
-    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
-    }
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException,
+            InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
 
+        if (transactionId == null || transactionId <= 0)
+            throw new InvalidTransactionIdException("Wrong transaction id");
+
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12)
+            throw new InvalidRFIDException("Wrong RFID");
+
+        if (!sales.containsKey(transactionId) || sales.get(transactionId).getState().compareTo("Open") != 0)
+            return false;
+
+        if (!RFIDs.containsKey(RFID))
+            return false;
+
+        Integer pId = RFIDs.get(RFID).getProductId();
+
+        if (!this.inventory.containsKey(pId)) {
+            return false;
+        }
+
+        String barCode = this.inventory.get(pId).getBarCode();
+
+        try {
+            return deleteProductFromSale(transactionId, barCode, 1);
+        } catch (InvalidProductCodeException e) {
+            return false;
+        } catch (InvalidQuantityException e) {
+            return false;
+        }
+
+        /*
+         * TicketEntry tE = this.sales.get(transactionId).getEntries().stream().
+         * filter((t) -> t.getBarCode().equals(barCode)).findFirst().get();
+         * 
+         * if(tE==null) return false;
+         * 
+         * if(tE.getAmount()== 0) return false;
+         * 
+         * if(tE.getAmount() == 1)
+         * this.sales.get(transactionId).getEntries().remove(tE); else
+         * tE.setAmount(tE.getAmount()+1);
+         * 
+         * this.sales.get(transactionId).setPrice(
+         * this.sales.get(transactionId).getPrice()-tE.getPricePerUnit()); return true;
+         */
+    }
 
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
@@ -1033,7 +1198,7 @@ InvalidLocationException, InvalidRFIDException {
 
         SaleTransactionClass t = sales.get(transactionId);
 
-        if(t==null)
+        if (t == null)
             return false;
 
         if (t.getState().compareTo("Paid") == 0)
@@ -1234,7 +1399,7 @@ InvalidLocationException, InvalidRFIDException {
         ReturnTransaction rt = this.returns.get(returnId);
         SaleTransaction st = null;
 
-        if(rt != null) {
+        if (rt != null) {
             st = getSaleTransaction(rt.getSaleTransactionID());
         }
 
@@ -1265,8 +1430,56 @@ InvalidLocationException, InvalidRFIDException {
     }
 
     @Override
-    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException 
-    {
+    public boolean returnProductRFID(Integer returnId, String RFID)
+            throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
+
+        if (loggedInUser == null || (!loggedInUser.getRole().equals("Administrator")
+                && !loggedInUser.getRole().equals("ShopManager") && !loggedInUser.getRole().equals("Cashier"))) {
+            throw new UnauthorizedException("Function not available for the current user");
+        }
+
+        if (returnId == null || returnId <= 0) {
+            throw new InvalidTransactionIdException("The ID of the return transaction is invalid.");
+        }
+
+        if (RFID == null || RFID.isEmpty() || RFID.length() != 12) {
+            throw new InvalidRFIDException("THE RFID is invalid.");
+        }
+
+        Product p = RFIDs.get(RFID);
+        ProductType rp = null;
+        ReturnTransaction rt = this.returns.get(returnId);
+        SaleTransaction st = null;
+
+        if (p != null) {
+            rp = inventory.get(p.getProductId());
+        }
+
+        if (rt != null) {
+            st = getSaleTransaction(rt.getSaleTransactionID());
+        }
+
+        if (rp != null && rt != null && st != null) {
+            String barCode = rp.getBarCode();
+            List<TicketEntry> listTE = st.getEntries().stream().filter((ticket) -> {
+                if (ticket.getBarCode() == barCode) {
+                    return true;
+                }
+                return false;
+            }).collect(Collectors.toList());
+
+            if (listTE.size() > 0) {
+                if(rt.getReturnedProduct().containsKey(rp.getId())) {
+                    int amount = rt.getReturnedProduct().get(rp.getId());
+                    rt.getReturnedProduct().replace(rp.getId(), amount + 1);
+                }
+                else {
+                    rt.getReturnedProduct().put(rp.getId(), 1);
+                }
+                return true;
+            }
+        }
+
         return false;
     }
 

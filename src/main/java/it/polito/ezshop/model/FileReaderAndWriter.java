@@ -514,4 +514,48 @@ public class FileReaderAndWriter {
 
         return true;
     }
+
+    static public Boolean RFIDWriter(Map<String, Product> products) {
+        String x = "";
+        for (Product p : products.values()) {
+            x = x + p.getRFID() + ";" + p.getProductId() + "\n";
+        }
+        File outputFile = new File("./src/main/java/it/polito/ezshop/model/txt/products.txt");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(outputFile);
+            out.print(x);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (out != null)
+                out.close();
+        }
+
+        return true;
+    }
+
+    static public Map<String, Product> RFIDReader() {
+        Map<String, Product> products = new HashMap<String, Product>();
+
+        File inputFile = new File("./src/main/java/it/polito/ezshop/model/txt/products.txt");
+        Scanner s = null;
+        try {
+            s = new Scanner(inputFile);
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                String[] res = line.split(";");
+                Product p = new Product(res[0], Integer.parseInt(res[1]));
+                products.put(res[0], p);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+        return products;
+    }
 }
